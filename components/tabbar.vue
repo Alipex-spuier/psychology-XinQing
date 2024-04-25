@@ -110,11 +110,11 @@
 				<text class="txtBtn" :class="{'txtBtnSel' :active==1}">音乐列表</text>
 			</view>
 			<view class="itmMain">
-				<view class="imgseTs" v-if="platforms != 'android'" @click.stop="switchTabFunc(2, '')"></view>
-				<view class="fixTpm" v-if="platforms == 'android'">
-					<view class="imgseTsAnds" ref='leftWidth' :style="'left:'+leftWidth+'px'"  @click.stop="switchTabFunc(2, '')"></view>
-					<!-- -->
+				<navigator url="../pages/scan/camera">
+				<view class="fixTpm">
+					<view class="imgseTsAnds" ref='leftWidth' :style="'left:'+leftWidth+'px'"></view>
 				</view>
+				</navigator>
 			</view>
 			<view class="itmMain" @click.stop="switchTabFunc(3, '/pages/help')">
 				<image class="imgse" :fade-show='false' v-if="active!=3" src="/static/shop.png"></image>
@@ -127,11 +127,12 @@
 				<text class="txtBtn" :class="{'txtBtnSel' :active==4}">个人中心</text>
 			</view>
 		</view>
-		
+		<canvas id="canvas-clipper" canvas-id="canvas-clipper" type="2d" :style="{width: canvasSiz.width+'px',height: canvasSiz.height+'px',position: 'absolute',left:'-500000px',top: '-500000px'}" />
 	</view>
 </template>
 
 <script>
+var _this;
 export default{
 	data(){
 		return{
@@ -139,7 +140,18 @@ export default{
 			platforms: '', // 终端调整兼容
 			leftWidth: 0, // 安卓 端使用
 			flagTypeInfo: false, // 检测当前是否是IPHONE 异形屏幕
+			windowWidth: '',
+			windowHeight: '',
+			imagesrc: null,
+			canvasSiz: {
+			    width: 188,
+			    height: 273
+			}
 		}
+	},
+	onLoad() {
+	    _this = this;
+	    this.init();
 	},
 	mounted() {
 		this.flagTypeInfo = this.$is_bang;
@@ -179,7 +191,98 @@ export default{
 		switchTabFunc(index, Urls) {
 				uni.setStorageSync('setStatusIndexFunc', index)
 				this._mainFuncInit() // 回调父级函数
-				this.active = index
+				this.active = index				
+		},
+		// 设置图片
+		setImage(e) {
+		    console.log(e);
+		    _this.zjzClipper(e.path);
+		},
+		
+		// 证件照裁切
+		zjzClipper(path) {
+		    uni.getImageInfo({
+		        src: path,
+		        success: function(image) {
+		            console.log(image);
+		            _this.canvasSiz.width = 188;
+		            _this.canvasSiz.height = 273;
+		
+		            let ctx = uni.createCanvasContext('canvas-clipper', _this);
+		
+		            ctx.drawImage(
+		                path,
+		                parseInt(0.15 * image.width),
+		                parseInt(0.17 * image.height),
+		                parseInt(0.69 * image.width),
+		                parseInt(0.65 * image.height),
+		                0,
+		                0,
+		                188,
+		                273
+		            );
+		
+		            ctx.draw(false, () => {
+		                uni.canvasToTempFilePath({
+		                    destWidth: 188,
+		                    destHeight: 273,
+		                    canvasId: 'canvas-clipper',
+		                    fileType: 'jpg',
+		                    success: function(res) {
+		                        _this.uploadImage(res.tempFilePath);
+		                    }
+		                }, _this);
+		            });
+		        }
+		    });
+		},
+		
+		// 上传图片到服务器
+		uploadImage(filePath) {
+		    const uploadTask = uni.uploadFile({
+		        url: 'http://170.106.183.24:8084/classifyImage',
+		        filePath: filePath,
+		        name: 'image',  
+		        formData: {
+		            'user': 'test'  
+		        },
+		        success: (uploadRes) => {
+		            console.log('Server response:', uploadRes.data);  
+		            try {
+		                const response = JSON.parse(uploadRes.data);
+		                uni.showModal({
+		                    title: 'Upload Success',
+		                    content: `Emotion: ${response.emotion}, Gender: ${response.gender}`,
+		                    showCancel: false
+		                });
+		            } catch (e) {
+		                console.error('Error parsing JSON:', e);
+		                uni.showModal({
+		                    title: 'Parsing Error',
+		                    content: 'Failed to parse server response as JSON. Response was: ' + uploadRes.data,
+		                    showCancel: false
+		                });
+		            }
+		        },
+		        fail: (err) => {
+		            console.error('Upload failed:', err);
+		            uni.showModal({
+		                title: 'Upload Failed',
+		                content: `Error: ${err.errMsg}`,
+		                showCancel: false
+		            });
+		        }
+		    });
+		},
+		
+		// 初始化
+		init() {
+		    uni.getSystemInfo({
+		        success: function(res) {
+		            _this.windowWidth = res.windowWidth;
+		            _this.windowHeight = res.windowHeight;
+		        }
+		    });
 		}
 	}
 }
