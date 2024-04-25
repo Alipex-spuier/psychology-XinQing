@@ -107,12 +107,10 @@
 			<view class="itmMain" @click.stop="switchTabFunc(1, '/pages/home')">
 				<image class="imgse" :fade-show='false' v-if="active!=1" src="/static/type.png"></image>
 				<image class="imgse" :fade-show='false' v-if="active===1" src="/static/type_active.png"></image>
-				<text class="txtBtn" :class="{'txtBtnSel' :active==1}">地图</text>
+				<text class="txtBtn" :class="{'txtBtnSel' :active==1}">音乐列表</text>
 			</view>
 			<view class="itmMain">
 				<view class="imgseTs" v-if="platforms != 'android'" @click.stop="switchTabFunc(2, '')"></view>
-				<!-- <image class="imgse" v-if="active===2" src="/static/home_active.png"></image>
-				<text class="txtBtn" :class="{'txtBtnSel' :active==2}"></text> -->
 				<view class="fixTpm" v-if="platforms == 'android'">
 					<view class="imgseTsAnds" ref='leftWidth' :style="'left:'+leftWidth+'px'"  @click.stop="switchTabFunc(2, '')"></view>
 					<!-- -->
@@ -121,7 +119,7 @@
 			<view class="itmMain" @click.stop="switchTabFunc(3, '/pages/help')">
 				<image class="imgse" :fade-show='false' v-if="active!=3" src="/static/shop.png"></image>
 				<image class="imgse" :fade-show='false' v-if="active===3" src="/static/shop_active.png"></image>
-				<text class="txtBtn" :class="{'txtBtnSel' :active==3}">帮助</text>
+				<text class="txtBtn" :class="{'txtBtnSel' :active==3}">我的收藏</text>
 			</view>
 			<view class="itmMain" @click.stop="switchTabFunc(4, '/pages/userCent')">
 				<image class="imgse" :fade-show='false' v-if="active!=4" src="/static/my.png"></image>
@@ -179,14 +177,9 @@ export default{
 		 * @param {string} Urls 当前点击带进来的链接
 		 * */ 
 		switchTabFunc(index, Urls) {
-			if(index != 2){
 				uni.setStorageSync('setStatusIndexFunc', index)
 				this._mainFuncInit() // 回调父级函数
 				this.active = index
-			}
-			if (index == 2) {
-				console.log('弹出自定义')
-			} 
 		}
 	}
 }

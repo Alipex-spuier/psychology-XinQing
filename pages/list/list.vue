@@ -1,6 +1,6 @@
 <template>
 	<div>
-		地图
+		列表
 	</div>
 </template>
 
@@ -8,7 +8,7 @@
 	export default {
 		methods:{
 			getData(){
-				console.log('地图')
+				console.log('列表')
 			}
 		}
 	}

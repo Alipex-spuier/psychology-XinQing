@@ -1,6 +1,6 @@
 <template>
 	<div>
-		帮助
+		喜欢
 	</div>
 </template>
 
@@ -8,7 +8,7 @@
 	export default {
 		methods:{
 			getData(){
-				console.log('帮助')
+				console.log('喜欢')
 			}
 		}
 	}

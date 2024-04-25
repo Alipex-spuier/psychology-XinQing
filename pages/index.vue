@@ -2,8 +2,9 @@
 	<view class="mainVieW">
 		<!-- 主站 -->
 		<HOMES ref='Home' v-if='active==0'></HOMES> 
-		<MAPS ref='maps' v-if='active==1'></MAPS>
-		<HELPS ref='htlp' v-if='active==3'></HELPS>
+		<LIST ref='list' v-if='active==1'></LIST>
+		<SCAN ref='SCAN' v-if='active==2'></SCAN>
+		<FAVORITE ref='fav' v-if='active==3'></FAVORITE>
 		<USERCENTER ref='userCent' v-if='active==4'></USERCENTER>
 		
 		<tab-bar class="fixs" ref='commentTabbat' :actives='active'></tab-bar>
@@ -11,10 +12,11 @@
 </template>
 <script>
 	
-import HOMES from '../components/home.vue'
-import USERCENTER from '../components/userCent.vue'
-import HELPS from '../components/help.vue'
-import MAPS from '../components/map.vue'
+import HOMES from './home/home.vue'
+import LIST from './list/list.vue'
+import SCAN from './scan/scan.vue'
+import FAVORITE from './favorite/favorite.vue'
+import USERCENTER from './userCent/userCent.vue'
 
 /**
  * @name 次功能适用于APP  H5  小程序
@@ -34,9 +36,10 @@ export default{
 	},
 	components:{
 		HOMES,
+		LIST,
+		SCAN,
+		FAVORITE,
 		USERCENTER,
-		HELPS,
-		MAPS,
 		tabBar
 	},
 	onLoad() {
@@ -67,21 +70,18 @@ export default{
 				switch(this.active){
 					case 0: 
 						uni.setStorageSync('setStatusIndexFunc', 0)
-						this.$refs.Home.getData(); 
 						break;
 					case 1: 
 						uni.setStorageSync('setStatusIndexFunc', 1)
-						this.$refs.maps.getData();
 						break;
 					case 2: 
+						uni.setStorageSync('setStatusIndexFunc', 2)
 						break;
 					case 3:
 						uni.setStorageSync('setStatusIndexFunc', 3)
-						this.$refs.htlp.getData(); 
 						break;
 					case 4:
 						uni.setStorageSync('setStatusIndexFunc', 4)
-						this.$refs.userCent.getData(); 
 						break;
 				}
 			})
