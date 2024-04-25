@@ -5,7 +5,31 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
-		}
+		},
+		{
+			"path": "pages/scan/scan",
+			"style": {
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"backgroundColor":"#FFFFFF"
+			}
+		},
+		{
+			"path" : "pages/player/player",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+            "path" : "pages/scan/camera",
+            "style" :                                                                                    
+            {
+                "navigationStyle":"custom",
+                "backgroundColor":"#000000"
+            }
+            
+        }
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
