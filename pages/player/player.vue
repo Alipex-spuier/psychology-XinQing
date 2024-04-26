@@ -36,7 +36,13 @@ export default {
     };
   },
   onLoad(options){
-	  this.sortedMusic=JSON.parse(options.sortedMusic);
+	  this.sortedMusic=JSON.parse(decodeURIComponent(options.sortedMusic));
+  },
+  onUnload() {
+  	this.innerAudioContext.stop();
+  },
+  onHide() {
+  	this.innerAudioContext.stop();
   },
   methods: {
     togglePlay() {

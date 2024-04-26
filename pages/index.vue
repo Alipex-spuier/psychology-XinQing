@@ -213,8 +213,9 @@ export default{
 					return b.caculatedScore - a.caculatedScore
 				}
 			})	
+			const sortedMusicSent=JSON.stringify(sortedMusic) 
 			uni.navigateTo({
-				url: './player/player?sortedMusic='+JSON.stringify(sortedMusic)  
+				url: './player/player?sortedMusic='+ encodeURIComponent(sortedMusicSent)
 			})
 		},
 		getTime(){

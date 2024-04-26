@@ -152,7 +152,7 @@ if (typeof uni !== 'undefined' && uni && uni.requireGlobal) {
 window.__uniConfig = {
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "音乐",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
