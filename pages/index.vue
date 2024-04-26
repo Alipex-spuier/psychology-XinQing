@@ -49,6 +49,7 @@ export default{
 	onLoad() {
 		_this = this;
 		this.init();
+		this.getAllMusic();
 		let temp = uni.getStorageSync('setStatusIndexFunc') || 0
 		uni.setStorageSync('setStatusIndexFunc', temp)
 		this.active = temp
@@ -68,7 +69,6 @@ export default{
 		 * */
 		_mainFuncInit(){
 			this.active = uni.getStorageSync('setStatusIndexFunc') || 0
-			console.log(this.active)
 			if(this.tempActive == this.active && this.active != 4){
 				return
 			}
@@ -98,7 +98,6 @@ export default{
 		},
 		// 设置图片
 		setImage(e) {
-		    console.log(e);
 		    _this.zjzClipper(e.path);
 		},
 		
@@ -107,7 +106,6 @@ export default{
 		    uni.getImageInfo({
 		        src: path,
 		        success: function(image) {
-		            console.log(image);
 		            _this.canvasSiz.width = 188;
 		            _this.canvasSiz.height = 273;
 		
@@ -150,14 +148,15 @@ export default{
 		            'user': 'test'  
 		        },
 		        success: (uploadRes) => {
-		            console.log('Server response:', uploadRes.data);  
 		            try {
 		                const response = JSON.parse(uploadRes.data);
-		                uni.showModal({
-		                    title: 'Upload Success',
-		                    content: `Emotion: ${response.emotion}, Gender: ${response.gender}`,
-		                    showCancel: false
-		                });
+						let gender="male";
+						if(response.gender=="man"){
+							gender="male"
+						}else if(response.gender=="woman"){
+							gender="female"
+						}
+		                this.sortMusic(response.emotion,gender);
 		            } catch (e) {
 		                console.error('Error parsing JSON:', e);
 		                uni.showModal({
@@ -186,6 +185,59 @@ export default{
 		            _this.windowHeight = res.windowHeight;
 		        }
 		    });
+		},
+		sortMusic(emotion,gender){
+			let allMusicTmp=uni.getStorageSync("allMusic");
+			let allMusic=allMusicTmp.data.records;
+			let sortedMusic=[];
+			let emotionPart=0.3;
+			let genderPart=0.7;
+			let time = this.getTime();
+			if(time === "bad"&&emotion !== "surprise"&& emotion !== "happy"){
+				emotionPart=0.7;
+				genderPart=0.3;
+			}
+			let caculatedScore=null;
+			//排序
+			for (var i =0;i<allMusic.length;i++){
+				if(allMusic[i].emotion == emotion && allMusic[i].gender==gender){
+					allMusic[i].caculatedScore = (allMusic[i].emotionRecommendScore * emotionPart + allMusic[i].genderRecommendScore * genderPart) / (genderPart + emotionPart);
+					console.log(1)
+					sortedMusic.push(allMusic[i]);
+				}
+			}
+			sortedMusic.sort(function(a,b){
+				if(a.caculatedScore === b.caculatedScore){ //降序
+					return b.recommendId - a.recommendId
+				}else{
+					return b.caculatedScore - a.caculatedScore
+				}
+			})	
+			uni.navigateTo({
+				url: './player/player?sortedMusic='+JSON.stringify(sortedMusic)  
+			})
+		},
+		getTime(){
+		    const now = new Date();
+		    const hours = now.getHours();
+		
+		    if (hours >= 0 && hours < 7) {
+				return "bad"
+		    }
+		},
+		getAllMusic() {
+		  uni.request({
+		    url: 'http://170.106.183.24:8080/music/getAllMusicWithRecommendByPage/1/140',
+		    method: 'GET',
+		    success: (response) => {
+				const res =response.data;
+				this.saveMusic(res)
+			}
+		  });
+		},
+		saveMusic(data){
+			let allMusic=data;
+			uni.setStorageSync("allMusic",allMusic);
 		}
 	}
 }

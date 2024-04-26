@@ -81,7 +81,6 @@ export default {
 			//#ifdef APP-PLUS
 			if (plus.os.name == 'Android') {
 				this.poenCarmeInterval = setInterval(function() {
-					console.log(_this.camerastate);
 					if (!_this.camerastate) _this.startPreview();
 				}, 2500);
 			}
@@ -104,7 +103,6 @@ export default {
 		startPreview() {
 			this.livePusher.startPreview({
 				success: a => {
-					console.log(a);
 				}
 			});
 		},
@@ -120,7 +118,6 @@ export default {
 		//状态
 		statechange(e) {
 			//状态改变
-			console.log(e);
 			if (e.detail.code == 1007) {
 				_this.camerastate = true;
 			} else if (e.detail.code == -1301) {
@@ -154,7 +151,6 @@ export default {
 		setImage() {
 			let pages = getCurrentPages();
 			let prevPage = pages[pages.length - 2]; //上一个页面
-			console.log(prevPage)
 			prevPage.$vm.setImage({ path: _this.snapshotsrc, dotype: this.dotype });
 		}
 	}

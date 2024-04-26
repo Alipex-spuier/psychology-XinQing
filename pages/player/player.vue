@@ -30,8 +30,13 @@ export default {
       comment: "",
       user: "",
       songs: "",
-      sings: ""
+      sings: "",
+	  sortedMusic:[],
+	  singNum:0
     };
+  },
+  onLoad(options){
+	  this.sortedMusic=JSON.parse(options.sortedMusic);
   },
   methods: {
     togglePlay() {
@@ -39,25 +44,24 @@ export default {
       this.isPlayer ? this.innerAudioContext.play() : this.innerAudioContext.stop();
     },
     change() {
-      uni.showLoading({ title: '加载中' });
-      uni.request({
-        url: 'https://tenapi.cn/v2/comment',
-        method: 'GET',
-        success: (response) => this.updateData(response.data.data),
-        fail: () => uni.showToast({ title: '加载失败', icon: 'error' }),
-        complete: () => uni.hideLoading()
-      });
-    },
-    updateData(data) {
-		console.log(data)
-      this.cover = data.cover;
-      this.comment = data.comment;
-      this.user = data.name;
-      this.songs = data.songs;
-      this.sings = data.sings;
-      this.innerAudioContext.src = data.url;
-      this.innerAudioContext.autoplay = true;
-      this.isPlayer = true;  // Ensure playback state is synced
+		if (this.singNum < this.sortedMusic.length) {
+		uni.showLoading({ title: '加载中' });
+		this.cover = this.sortedMusic[this.singNum].albumCover;
+		this.comment = this.sortedMusic[this.singNum].hotComment;
+		this.user = this.sortedMusic[this.singNum].commentAuthor;
+		this.songs = this.sortedMusic[this.singNum].title;
+		this.sings = this.sortedMusic[this.singNum].author;
+		this.innerAudioContext.src = this.sortedMusic[this.singNum].url;
+		this.innerAudioContext.autoplay = true;
+		this.isPlayer = true;  // Ensure playback state is synced
+		uni.hideLoading();
+		this.singNum++
+		}else{
+			uni.showToast({
+				title:"没有更多歌曲了",
+				icon:"fail"
+			})
+		}
     }
   },
   created() {
