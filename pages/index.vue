@@ -245,7 +245,12 @@ export default{
 </script>
 <style scoped>
 .fixs{
+	border:0;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
 	position: fixed;
-	z-index:100;
+	z-index:1000;
 }
 </style>
