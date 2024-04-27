@@ -5,6 +5,7 @@ $mycolor:#fa436a;
   height: 100%;
   background-color: #f8f8f8;
   position: absolute;
+  position: fixed;
   left: 0;
   padding-bottom: 140upx;
   z-index: 900;
@@ -16,10 +17,10 @@ $mycolor:#fa436a;
 	top: 115upx!important;
 }
 .left .classTitle {
-  height: 80upx;
-  line-height: 80upx;
+  height: 100upx;
+  line-height: 100upx;
   text-align: center;
-  font-size: 24upx;
+  font-size: 30upx;
   position: relative;
   color: #333;
 }
@@ -124,11 +125,12 @@ $mycolor:#fa436a;
 
 .goods_right {
   /* float: left; */
-  padding: 0 10upx;
+  padding: 0upx 30upx;
   overflow: hidden;
 }
 
 .goods_right .goods_name {
+	margin-top: 20upx;
   font-size: 28upx;
   overflow: hidden;
   font-weight: bold;
@@ -158,22 +160,18 @@ $mycolor:#fa436a;
   margin-right: 15upx;
 }
 .goods_right .price{
-  margin-top: 4px;
+  margin-top: 0px;
   line-height: 40upx;
   font-size: 24upx;
   overflow: hidden;
 }
-.price .money{
-  margin-right: 20upx;
-  font-size: 30upx;
-  font-weight: 600;
-  color: $mycolor;
-}
-.hx_money{
-  text-decoration: line-through;
+.price .author{
+  margin-right: 100upx;
+  font-size: 20upx;
+  font-weight: 100;
   color: #999;
-  font-size: 22upx;
 }
+
 .gouwuche{
   font-size: 28upx;
   float: right;

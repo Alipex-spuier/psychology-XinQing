@@ -44,6 +44,9 @@ export default {
   onHide() {
   	this.innerAudioContext.stop();
   },
+  onBackPress(){
+	  this.innerAudioContext.stop();
+  },
   methods: {
     togglePlay() {
       this.isPlayer = !this.isPlayer;

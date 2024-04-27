@@ -202,7 +202,6 @@ export default{
 			for (var i =0;i<allMusic.length;i++){
 				if(allMusic[i].emotion == emotion && allMusic[i].gender==gender){
 					allMusic[i].caculatedScore = (allMusic[i].emotionRecommendScore * emotionPart + allMusic[i].genderRecommendScore * genderPart) / (genderPart + emotionPart);
-					console.log(1)
 					sortedMusic.push(allMusic[i]);
 				}
 			}

@@ -19,13 +19,16 @@
 					<image :src="item.img"></image>
 					<view class="goods_right">
 						<view class="goods_name">{{item.title}}</view>
+						<view class="price">
+							<text class="author">- {{item.author}}</text>
+						</view>
 					</view>
 				</view>
 				<view class="nodata">—— 到底啦 ——</view>
 			</view>
 			<view class="zanwu" v-if="dataList.length == 0">
 				<text class="iconfont icon-none" style="font-size: 32upx"></text>
-				<text style="font-size: 24upx">暂无商品</text>
+				<text style="font-size: 24upx">暂无音乐</text>
 			</view>
 		</scroll-view>
 
@@ -146,5 +149,5 @@
 	};
 </script>
 <style scoped lang="scss">
-	@import "./twoCate.scss";
+	@import "./list.scss";
 </style>
