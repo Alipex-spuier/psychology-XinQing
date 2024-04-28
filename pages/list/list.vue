@@ -17,6 +17,9 @@
 		components: {
 			LIST
 		},
+		created() {
+			this.cateClick(this.categoryList[0])
+		},
 		data() {
 			return {
 				//分类列表
@@ -57,7 +60,7 @@
 
 				}],
 				// 选中序列
-				currentTwo: -1,
+				currentTwo: 0,
 
 				// 右边列表数据
 				dataList: [],
