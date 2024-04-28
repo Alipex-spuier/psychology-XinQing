@@ -1,26 +1,26 @@
 <template>
 	<view class="page">
 		<view class="user">
-			<image class="avatar" src="/static/userCent/avatar.png"></image>
+			<image class="avatar" src="/static/center5/avatar.png"></image>
 			<view class="name">
 				<text>易师傅</text>
 				<text>工作党</text>
 			</view>
-			<image class="right" src="/static/userCent/right.png"></image>
+			<image class="right" src="/static/center5/right.png"></image>
 		</view>
 		
 		<view class="card">
 			<view class="important">
 				<view class="item">
-					<image :src="'/static/userCent/wallet.png'"></image>
+					<image :src="'/static/center5/wallet.png'"></image>
 					<text>我的钱包</text>
 				</view>
 				<view class="item">
-					<image :src="'/static/userCent/collect.png'"></image>
+					<image :src="'/static/center5/collect.png'"></image>
 					<text>我的收藏</text>
 				</view>
 				<view class="item">
-					<image :src="'/static/userCent/order.png'"></image>
+					<image :src="'/static/center5/order.png'"></image>
 					<text>商品订单</text>
 				</view>
 			</view>
@@ -45,9 +45,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="hide">
-			
-		</view>
+		
 	</view>
 </template>
 
@@ -57,14 +55,14 @@
 		data() {
 			return {
 				menus1: [
-					{id: 1, name: '个人资料', icon: '/static/userCent/idcard.png', arrow: true},
-					{id: 2, name: '我的咨询', icon: '/static/userCent/comment.png', arrow: true},
-					{id: 3, name: '我的消息', icon: '/static/userCent/bell.png', arrow: true}
+					{id: 1, name: '我的书籍', icon: '/static/center5/book.png', arrow: true},
+					{id: 2, name: '我的账户', icon: '/static/center5/self.png', arrow: true},
+					{id: 3, name: '图书捐赠', icon: '/static/center5/heart.png', arrow: true}
 				],
 				menus2: [
-					{id: 4, name: 'BUG反馈', icon: '/static/userCent/bug.png', arrow: true},
-					{id: 5, name: '联系客服', icon: '/static/userCent/whatsapp.png', arrow: true},
-					{id: 6, name: '系统设置', icon: '/static/userCent/setting.png', arrow: true},
+					{id: 4, name: '联系客服', icon: '/static/center5/kefu.png', arrow: true},
+					{id: 5, name: '分享应用', icon: '/static/center5/share.png', arrow: false},
+					{id: 6, name: '退出登录', icon: '/static/center5/out.png', arrow: false},
 				]
 			}
 		}
@@ -73,7 +71,7 @@
 
 <style lang="scss">
 	.page {
-		background: linear-gradient(180deg, #4CAF50, #fff);
+		background: linear-gradient(180deg, #00946c, #fff);
 		min-height: 100vh;
 		
 		.user{
@@ -82,7 +80,7 @@
 			padding: 25rpx;
 			
 			&:active{
-				background: #3c8a3e;
+				background: #006246;
 			}
 			
 			.avatar{
@@ -189,9 +187,6 @@
 				}
 			}
 		}
-		.hide{
-			width: 100vw;
-			height: 15vh;
-		}
+		
 	}
 </style>

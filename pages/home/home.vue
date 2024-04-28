@@ -132,7 +132,7 @@
 					},
 					{
 						icon:"\u{e620}",
-						text:'宝藏歌曲',
+						text:'历史纪录',
 						class:"nav4-color"
 					},
 				],
