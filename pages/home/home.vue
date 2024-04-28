@@ -4,11 +4,11 @@
 		<view class="banner-bar">
 			<view class="search-input-wrapper">
 				<view class="banner-header">
-					<view class="header-title">音乐</view>
-					<view class="header-sub-title">音乐平台</view>
+					<view class="header-title">清·听</view>
+					<view class="header-sub-title"></view>
 				</view>
 				<text class="search-input-icon">{{'\u{e619}'}}</text>
-				<input class="uni-input search-input" placeholder="搜索音乐信息" />
+				<input class="uni-input search-input" placeholder="搜索" />
 			</view>
 		</view>
 		<swiper class="swiper" :circular="circular" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
@@ -28,7 +28,7 @@
 			<view class="notice-bar">
 				<view class="notice-bar-wrapper">
 					<view class="notice-bar-left">
-						<text class="notice-bar-text">音乐平台理念</text>
+						<text class="notice-bar-text"> 听 你 想 听 </text>
 					</view>
 				</view>
 			</view>
@@ -116,55 +116,55 @@
 				],
 				nav:[
 					{
-						icon:"\u{e605}",
+						icon:"\u{e63b}",
 						text:'搜一搜',
 						class:"nav1-color"
 					},
 					{
-						icon:"\u{e67e}",
+						icon:"\u{e601}",
 						text:'推荐歌单',
 						class:"nav2-color"
 					},
 					{
-						icon:"\u{e6ba}",
+						icon:"\u{e600}",
 						text:'心情指南',
 						class:"nav3-color"
 					},
 					{
-						icon:"\u{e620}",
+						icon:"\u{e763}",
 						text:'历史纪录',
 						class:"nav4-color"
 					},
 				],
 				ruk:[
 					{
-						image:"https://img0.baidu.com/it/u=702958856,3919797999&fm=253&fmt=auto&app=138&f=JPEG?w=640&h=426",
-						text:"刘公岛官方"
+						image:"http://170.106.183.24:8081/photo/134.jpg",
+						text:"Skyline Mirage"
 					},
 					{
-						image:"https://img2.baidu.com/it/u=1729981459,3867296434&fm=253&fmt=auto&app=138&f=JPEG?w=600&h=400",
-						text:"退役驱逐舰"
+						image:"http://170.106.183.24:8081/photo/78.jpg",
+						text:"Told Me"
 					}
 				],
 				line:[
 					{
-						image:"https://img0.baidu.com/it/u=1893845159,3805671064&fm=253&fmt=auto&app=138&f=JPEG?w=677&h=408",
-						textTitle:'刘公岛景区',
-						textSubTitle:'历史的印迹｜心灵的旅行',
+						image:"../static/happy.jpg",
+						textTitle:'开心',
+						textSubTitle:'情绪的高地｜欢乐的源泉',
 						price:15
 						
 					},
 					{
-						image:"https://img2.baidu.com/it/u=1729981459,3867296434&fm=253&fmt=auto&app=138&f=JPEG?w=600&h=400",
-						textTitle:'退役驱逐舰景区',
-						textSubTitle:'军事主题｜研学教育',
+						image:"../static/surprise.jpg",
+						textTitle:'惊喜',
+						textSubTitle:'意外的收获｜愉悦的惊奇',
 						price:15
 						
 					},
 					{
-						image:"https://img2.baidu.com/it/u=3977521327,1380190115&fm=253&fmt=auto&app=138&f=JPEG?w=690&h=450",
-						textTitle:'刘公岛景区',
-						textSubTitle:'帆船赛事｜游艇观光',
+						image:"../static/neutral.jpg",
+						textTitle:'平静',
+						textSubTitle:'内心的宁静｜生活的沉淀',
 						price:15
 						
 					}
@@ -205,10 +205,14 @@
 
 <style>
 	@font-face {
+		
 		font-family: texticons;
 		font-weight: normal;
 		font-style: normal;
 		src: url('https://at.alicdn.com/t/c/font_4082971_rjo1s6t6mpj.ttf?t=1710063944182') format('truetype');
+		src: url('https://at.alicdn.com/t/c/font_4528601_ny9blfp6n89.woff2?t=1714297680581') format('woff2'),
+		       url('https://at.alicdn.com/t/c/font_4528601_ny9blfp6n89.woff?t=1714297680581') format('woff'),
+		       url('https://at.alicdn.com/t/c/font_4528601_ny9blfp6n89.ttf?t=1714297680581') format('truetype');
 	}
 
 	page,
