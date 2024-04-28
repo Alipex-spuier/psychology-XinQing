@@ -15,14 +15,6 @@ import HOMES from './home/home.vue'
 import LIST from './list/list.vue'
 import FAVORITE from './favorite/favorite.vue'
 import USERCENTER from './userCent/userCent.vue'
-
-/**
- * @name 次功能适用于APP  H5  小程序
- * 小程序不需要 import 导入 tabbar
- * APP 端如需使用自定义tabbar  需要单独 import 导包形式 进行components 注入组件 
- * 该组件样式BUG问题已全部修复可以直接使用
- * */ 
- 
 import tabBar from '../components/tabbar.vue'
 var _this;
 export default{
@@ -64,9 +56,6 @@ export default{
 		}
 	},
 	methods:{
-		/**
-		 * @name 公共点击函数
-		 * */
 		_mainFuncInit(){
 			this.active = uni.getStorageSync('setStatusIndexFunc') || 0
 			if(this.tempActive == this.active && this.active != 4){
@@ -90,9 +79,6 @@ export default{
 			})
 			this.tempActive = this.active
 		},
-		/**
-		 * @name 首页数据初始化 
-		 * */
 		_initData(){
 			this._mainFuncInit();
 		},
