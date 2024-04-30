@@ -25,14 +25,14 @@ public class Music implements Serializable {
 
     private String url;
 
-    private String album_cover;
+    private String albumCover;
 
     private String author;
 
     private String title;
 
-    private String hot_comment;
+    private String hotComment;
 
-    private String comment_author;
+    private String commentAuthor;
 
 }
