@@ -1,0 +1,38 @@
+package com.music.entity;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.io.Serializable;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("music_details")
+public class Music implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "details_id", type = IdType.AUTO)
+    private Integer detailsId;
+
+    private Integer recommendId;
+
+    private String url;
+
+    private String album_cover;
+
+    private String author;
+
+    private String title;
+
+    private String hot_comment;
+
+    private String comment_author;
+
+}
