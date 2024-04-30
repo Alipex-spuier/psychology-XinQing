@@ -1,9 +1,7 @@
 package com.music.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.music.entity.Blog;
 import com.music.entity.Music;
-import com.music.mapper.BlogMapper;
 import com.music.mapper.MusicMapper;
 import com.music.service.MusicService;
 import com.music.vo.MusicRecommendVO;

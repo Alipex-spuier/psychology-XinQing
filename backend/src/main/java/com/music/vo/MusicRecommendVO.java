@@ -3,6 +3,7 @@ package com.music.vo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.music.entity.Recommend;
+
 import java.io.Serializable;
 
 

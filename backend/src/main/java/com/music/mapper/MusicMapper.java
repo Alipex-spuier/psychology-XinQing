@@ -1,8 +1,7 @@
 package com.music.mapper;
 
-import com.music.entity.Music;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.music.entity.User;
+import com.music.entity.Music;
 import com.music.vo.MusicRecommendVO;
 
 import java.util.List;

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
+@RequestMapping("/account")
 public class AccountController {
     @Autowired
     UserService userService;
@@ -50,7 +51,7 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public Result register(@RequestBody User user) {
+    public Result register(@Validated @RequestBody User user) {
 
         String encryptedPassword = SecureUtil.md5(user.getPassword());
         user.setPassword(encryptedPassword);

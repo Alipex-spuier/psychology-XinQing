@@ -1,7 +1,7 @@
 package com.music.service;
 
-import com.music.entity.Blog;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.music.entity.Blog;
 
 public interface BlogService extends IService<Blog> {
 
