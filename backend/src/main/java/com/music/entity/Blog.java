@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("m_blog")
-public class Music implements Serializable {
+public class Blog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
