@@ -5,21 +5,21 @@ import com.music.entity.Favorite;
 import com.music.service.FavoriteService;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/favorite")
 public class FavoriteController {
     @Autowired
     FavoriteService favoriteService;
 
     @RequiresAuthentication
-    @GetMapping("/favorite/{id}")
+    @GetMapping("/{id}")
     public Result getFavorite(@PathVariable(name="id")Long id) {
         Map<String,Object> favoriteMap=new HashMap<>();
         List<Favorite> favorite=favoriteService.getFavoriteMusic(id);
@@ -27,4 +27,10 @@ public class FavoriteController {
         return Result.succ(favoriteMap);
     }
 
+    @RequiresAuthentication
+    @PostMapping("/add")
+    public Result addFavorite(@RequestBody Favorite favorite) {
+        favorite.setCreated(new Date());
+        return Result.succ(favoriteService.saveOrUpdate(favorite));
+    }
 }

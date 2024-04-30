@@ -21,8 +21,9 @@ public class Favorite implements Serializable {
     @TableId(value = "favorite_id", type = IdType.AUTO)
     private Long favoriteId;
 
+    @TableId(value = "user_id")
     private Long userId;
-
+    @TableId(value = "music_id")
     private Long musicId;
 
     private Date created;

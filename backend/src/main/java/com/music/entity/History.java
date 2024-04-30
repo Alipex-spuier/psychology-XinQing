@@ -20,9 +20,9 @@ public class History implements Serializable {
 
     @TableId(value = "history_id", type = IdType.AUTO)
     private Long historyId;
-
+    @TableId(value = "user_id")
     private Long userId;
-
+    @TableId(value = "music_id")
     private Long musicId;
 
     private Date created;
