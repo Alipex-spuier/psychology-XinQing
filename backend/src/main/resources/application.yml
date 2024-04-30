@@ -2,7 +2,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/vueblog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/music?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: lighthouse
     password: 1Team1Cn!
 mybatis-plus:
@@ -13,7 +13,7 @@ shiro-redis:
     host: 127.0.0.1:6379
 server:
   port: 8080
-markerhub:
+music:
   jwt:
     #加密密钥
     secret: f4e2e52034348f86b67cde581c0f9eb5

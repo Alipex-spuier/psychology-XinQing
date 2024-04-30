@@ -30,10 +30,7 @@ public class ShiroConfig {
     public SessionManager sessionManager(RedisSessionDAO redisSessionDAO) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
 
-        // inject redisSessionDAO
         sessionManager.setSessionDAO(redisSessionDAO);
-
-        // other stuff...
 
         return sessionManager;
     }
@@ -42,13 +39,9 @@ public class ShiroConfig {
     public SessionsSecurityManager securityManager(AccountRealm accountRealm, SessionManager sessionManager, RedisCacheManager redisCacheManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager(accountRealm);
 
-        //inject sessionManager
         securityManager.setSessionManager(sessionManager);
 
-        // inject redisCacheManager
         securityManager.setCacheManager(redisCacheManager);
-
-        // other stuff...
 
         return securityManager;
     }
@@ -57,7 +50,7 @@ public class ShiroConfig {
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/**", "jwt"); // 主要通过注解方式校验权限
+        filterMap.put("/**", "jwt");
         chainDefinition.addPathDefinitions(filterMap);
         return chainDefinition;
     }

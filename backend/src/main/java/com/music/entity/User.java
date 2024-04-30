@@ -15,14 +15,6 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author 关注官网：同学邦
- * @since 2023-07-21
- */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)

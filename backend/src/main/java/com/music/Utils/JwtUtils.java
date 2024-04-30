@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-/**
- * jwt工具类
- */
 @Slf4j
 @Data
 @Component
@@ -23,12 +20,8 @@ public class JwtUtils {
     private long expire;
     private String header;
 
-    /**
-     * 生成jwt token
-     */
     public String generateToken(long userId) {
         Date nowDate = new Date();
-        //过期时间
         Date expireDate = new Date(nowDate.getTime() + expire * 1000);
 
         return Jwts.builder()
@@ -52,10 +45,6 @@ public class JwtUtils {
         }
     }
 
-    /**
-     * token是否过期
-     * @return  true：过期
-     */
     public boolean isTokenExpired(Date expiration) {
         return expiration.before(new Date());
     }

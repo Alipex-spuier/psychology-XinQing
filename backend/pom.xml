@@ -6,13 +6,13 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.13</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
-    <groupId>com.tongxuebang</groupId>
-    <artifactId>vueblog_backend</artifactId>
+    <groupId>com.music</groupId>
+    <artifactId>music</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>vueblog_backend</name>
-    <description>vueblog_backend</description>
+    <name>music</name>
+    <description>music</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -46,7 +46,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--mp-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -56,7 +55,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
-        <!--mp代码生成器-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
@@ -67,13 +65,11 @@
             <artifactId>shiro-redis-spring-boot-starter</artifactId>
             <version>3.2.1</version>
         </dependency>
-        <!-- hutool工具类-->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.3.3</version>
         </dependency>
-        <!-- jwt -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>

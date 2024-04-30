@@ -1,6 +1,5 @@
 package com.music.controller;
 
-
 import com.music.common.lang.Result;
 import com.music.entity.User;
 import com.music.service.UserService;
@@ -9,14 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * <p>
- * 前端控制器
- * </p>
- *
- * @author 关注官网：同学邦
- * @since 2023-07-21
- */
 @RestController
 @RequestMapping("/user")
 public class UserController {

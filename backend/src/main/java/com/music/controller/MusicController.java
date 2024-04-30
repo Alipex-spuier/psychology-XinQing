@@ -18,14 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author 关注官网：同学邦
- * @since 2023-07-21
- */
 @RestController
 public class MusicController {
     @Autowired
@@ -48,7 +40,6 @@ public class MusicController {
         Music temp = null;
         if (music.getId() != null) {
             temp = musicService.getById(music.getId());
-            //只能编辑自己的文章
             Assert.isTrue(temp.getUserId().longValue()== ShiroUtil.getProfile().getId().longValue(),"你没有权限编辑");
         } else {
             temp = new Music();
@@ -60,14 +51,11 @@ public class MusicController {
         musicService.saveOrUpdate(temp);
         return Result.succ(null);
     }
-    //@PathVariable动态路由
-    @RequiresAuthentication  //需要认证之后才能操作
+    @RequiresAuthentication
     @PostMapping("/delBlog/{id}")
     public Result del(@PathVariable Long id){
         boolean temp = musicService.removeById(id);
-        //判断是否为空 为空则断言异常
         if(temp==true){
-
             return Result.succ("文章删除成功");
         }else{
             return Result.fail("文章删除失败");
