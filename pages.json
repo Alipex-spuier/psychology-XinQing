@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index",
 			"style": {
-				"navigationBarTitleText": "音乐"
+				"navigationBarTitleText": "清听音乐"
 			}
 		},
 		{
@@ -22,11 +22,19 @@
                 "backgroundColor":"#000000"
             }
             
+        },
+        {
+        	"path" : "pages/result/result",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "",
+        		"enablePullDownRefresh" : false
+        	}
         }
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "音乐",
+		"navigationBarTitleText": "清听音乐",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}

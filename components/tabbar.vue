@@ -97,16 +97,16 @@
 <template>
 	
 	<view class="tabbarMain" :class="[flagTypeInfo? 'tabbarMainIphone':'']">
-		<image src="/static/nav_btn.png" :fade-show='false' class="btnfixMin"  :class="[flagTypeInfo? 'btnfixMinIphone':'']" mode=""></image>
+		<image src="/static/tabbar/nav_btn.png" :fade-show='false' class="btnfixMin"  :class="[flagTypeInfo? 'btnfixMinIphone':'']" mode=""></image>
 		<view class="tabBtnMina"  :class="[flagTypeInfo? 'tabBtnMinaIphone':'']" mode="">
 			<view class="itmMain" @click.stop="switchTabFunc(0, '/pages/home')">
-				<image class="imgse" :fade-show='false' v-if="active!=0" src="/static/home.png"></image>
-				<image class="imgse" :fade-show='false' v-if="active===0" src="/static/home_active.png"></image>
+				<image class="imgse" :fade-show='false' v-if="active!=0" src="/static/tabbar/home.png"></image>
+				<image class="imgse" :fade-show='false' v-if="active===0" src="/static/tabbar/home_active.png"></image>
 				<text class="txtBtn" :class="{'txtBtnSel' :active==0}">首页</text>
 			</view>
-			<view class="itmMain" @click.stop="switchTabFunc(1, '/pages/home')">
-				<image class="imgse" :fade-show='false' v-if="active!=1" src="/static/type.png"></image>
-				<image class="imgse" :fade-show='false' v-if="active===1" src="/static/type_active.png"></image>
+			<view class="itmMain" @click.stop="switchTabFunc(1, '/pages/list')">
+				<image class="imgse" :fade-show='false' v-if="active!=1" src="/static/tabbar/type.png"></image>
+				<image class="imgse" :fade-show='false' v-if="active===1" src="/static/tabbar/type_active.png"></image>
 				<text class="txtBtn" :class="{'txtBtnSel' :active==1}">音乐列表</text>
 			</view>
 			<view class="itmMain">
@@ -116,14 +116,14 @@
 				</view>
 				</navigator>
 			</view>
-			<view class="itmMain" @click.stop="switchTabFunc(3, '/pages/help')">
-				<image class="imgse" :fade-show='false' v-if="active!=3" src="/static/shop.png"></image>
-				<image class="imgse" :fade-show='false' v-if="active===3" src="/static/shop_active.png"></image>
+			<view class="itmMain" @click.stop="switchTabFunc(3, '/pages/guide')">
+				<image class="imgse" :fade-show='false' v-if="active!=3" src="/static/tabbar/guide.png"></image>
+				<image class="imgse" :fade-show='false' v-if="active===3" src="/static/tabbar/guide_active.png"></image>
 				<text class="txtBtn" :class="{'txtBtnSel' :active==3}">心情指南</text>
 			</view>
 			<view class="itmMain" @click.stop="switchTabFunc(4, '/pages/userCent')">
-				<image class="imgse" :fade-show='false' v-if="active!=4" src="/static/my.png"></image>
-				<image class="imgse" :fade-show='false' v-if="active===4" src="/static/my_active.png"></image>
+				<image class="imgse" :fade-show='false' v-if="active!=4" src="/static/tabbar/my.png"></image>
+				<image class="imgse" :fade-show='false' v-if="active===4" src="/static/tabbar/my_active.png"></image>
 				<text class="txtBtn" :class="{'txtBtnSel' :active==4}">个人中心</text>
 			</view>
 		</view>

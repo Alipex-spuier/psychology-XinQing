@@ -28,22 +28,22 @@
 
 			<!--辅助线-->
 			<cover-view class="outline-box" :style="{ width: windowWidth, height: windowHeight - 255 }">
-				<cover-image class="outline-img" src="/static/outline/idphotoskin.png" style=""></cover-image>
+				<cover-image class="outline-img" src="/static/scan/photoskin.png" style=""></cover-image>
 			</cover-view>
 		</view>
 
 		<view class="menu">
 			<!--底部菜单区域背景-->
-			<cover-image class="menu-mask" src="/static/bar.png"></cover-image>
+			<cover-image class="menu-mask" src="/static/scan/bar.png"></cover-image>
 
 			<!--返回键-->
-			<cover-image class="menu-back" @tap="back" src="/static/back.png"></cover-image>
+			<cover-image class="menu-back" @tap="back" src="/static/scan/back.png"></cover-image>
 
 			<!--快门键-->
-			<cover-image class="menu-snapshot" @tap="snapshot" src="/static/shutter.png"></cover-image>
+			<cover-image class="menu-snapshot" @tap="snapshot" src="/static/scan/shutter.png"></cover-image>
 
 			<!--反转键-->
-			<cover-image class="menu-flip" @tap="flip" src="/static/flip.png"></cover-image>
+			<cover-image class="menu-flip" @tap="flip" src="/static/scan/flip.png"></cover-image>
 		</view>
 	</view>
 </template>

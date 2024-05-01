@@ -6,7 +6,7 @@
 	  <view class="content">
 	    <view class="cover_box">
 	      <view class="player">
-	        <image :src="isPlayer ? '../../static/pause.png' : '../../static/Player_Play.png'"
+	        <image :src="isPlayer ? '/static/player/pause.png' : '/static/player/Player_Play.png'"
 	               :style="isPlayer ? 'width: 60rpx; height: 60rpx;' : 'width: 100rpx; height: 100rpx;'"
 	               @click="togglePlay"></image>
 	      </view>
@@ -16,7 +16,7 @@
 	    <view class="author">——{{ user }}</view>
 	    <view class="author">《{{ songs }}》{{ sings }}</view>
 	    <view class="change" @click="change">
-	      <image src='../../static/change.png' style='width: 50rpx;height: 50rpx;display:inline-block;' />
+	      <image src='/static/player/change.png' style='width: 50rpx;height: 50rpx;display:inline-block;' />
 	    </view>
 	  </view>
 	</view>
@@ -35,14 +35,14 @@ export default {
       user: "",
       songs: "",
       sings: "",
-	  sortedMusic:[],
+	  result:[],
 	  singNum:0,
 	  load: 0,
 	  interval: null
     };
   },
   onLoad(options){
-	  this.sortedMusic=JSON.parse(decodeURIComponent(options.sortedMusic));
+	  this.result=JSON.parse(decodeURIComponent(options.result));
   },
   onUnload() {
   	this.innerAudioContext.stop();
@@ -67,14 +67,14 @@ export default {
       this.isPlayer ? this.innerAudioContext.play() : this.innerAudioContext.stop();
     },
     change() {
-		if (this.singNum < this.sortedMusic.length) {
+		if (this.singNum < this.result.length) {
 		uni.showLoading({ title: '加载中' });
-		this.cover = this.sortedMusic[this.singNum].albumCover;
-		this.comment = this.sortedMusic[this.singNum].hotComment;
-		this.user = this.sortedMusic[this.singNum].commentAuthor;
-		this.songs = this.sortedMusic[this.singNum].title;
-		this.sings = this.sortedMusic[this.singNum].author;
-		this.innerAudioContext.src = this.sortedMusic[this.singNum].url;
+		this.cover = this.result[this.singNum].albumCover;
+		this.comment = this.result[this.singNum].hotComment;
+		this.user = this.result[this.singNum].commentAuthor;
+		this.songs = this.result[this.singNum].title;
+		this.sings = this.result[this.singNum].author;
+		this.innerAudioContext.src = this.result[this.singNum].url;
 		this.innerAudioContext.autoplay = true;
 		this.isPlayer = true;
 		uni.hideLoading();

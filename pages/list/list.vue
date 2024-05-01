@@ -88,7 +88,7 @@
 			itemClick(e) {
 				let clickedMusic = [e];
 				uni.navigateTo({
-					url: './player/player?sortedMusic='+ encodeURIComponent(JSON.stringify(clickedMusic))
+					url: './player/player?result='+ encodeURIComponent(JSON.stringify(clickedMusic))
 				})
 			}
 
