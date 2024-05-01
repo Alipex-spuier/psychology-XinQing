@@ -119,7 +119,7 @@
 			<view class="itmMain" @click.stop="switchTabFunc(3, '/pages/help')">
 				<image class="imgse" :fade-show='false' v-if="active!=3" src="/static/shop.png"></image>
 				<image class="imgse" :fade-show='false' v-if="active===3" src="/static/shop_active.png"></image>
-				<text class="txtBtn" :class="{'txtBtnSel' :active==3}">我的收藏</text>
+				<text class="txtBtn" :class="{'txtBtnSel' :active==3}">心情指南</text>
 			</view>
 			<view class="itmMain" @click.stop="switchTabFunc(4, '/pages/userCent')">
 				<image class="imgse" :fade-show='false' v-if="active!=4" src="/static/my.png"></image>
@@ -136,10 +136,10 @@ var _this;
 export default{
 	data(){
 		return{
-			active: Number, // 当亲选择那个按钮
-			platforms: '', // 终端调整兼容
-			leftWidth: 0, // 安卓 端使用
-			flagTypeInfo: false, // 检测当前是否是IPHONE 异形屏幕
+			active: Number, 
+			platforms: '', 
+			leftWidth: 0,
+			flagTypeInfo: false,
 			windowWidth: '',
 			windowHeight: '',
 			imagesrc: null,

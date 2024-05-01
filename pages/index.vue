@@ -213,7 +213,7 @@ export default{
 		},
 		getAllMusic() {
 		  uni.request({
-		    url: 'http://170.106.183.24:8080/music/getAllMusicWithRecommendByPage/1/140',
+		    url: 'http://170.106.183.24:8080/music/getAllMusic',
 		    method: 'GET',
 		    success: (response) => {
 				const res =response.data;

@@ -39,14 +39,13 @@
 				</view>
 			</view>
 			<view class="nav-image-wrapper">
-				<view class="nav-image-item-view" v-for="(item,index) in ruk" :key="index">
-					<image :src="item.image" class="nav-image-item" mode="widthFix"></image>
+				<view class="nav-image-item-view" v-for="(item,index) in ruk" :key="index" @click="itemClick(item)">
+					<image :src="item.albumCover" class="nav-image-item" mode="widthFix"></image>
 					<view class="nav-image-content-wrapper">
 						<view class="nav-image-content">
-							<text class="nav-image-text">{{item.textTitle}}</text>
+							<text class="nav-image-text">{{item.title}}</text>
 							<text class="nav-image-text-sm">随便听听</text>
 						</view>
-						
 					</view>
 				</view>
 			</view>
@@ -56,7 +55,6 @@
 			<view class="line-bar-wrapper">
 				<view class="bar-title">
 					<view class="bar-title-left">歌单遨游指南</view>
-					<text class="bar-title-right">全部 ></text>
 				</view>
 				<view class="line-bar-item-wrapper">
 					<view class="line-bar-item" v-for="(item,index) in line" :key="index">
@@ -74,13 +72,12 @@
 			<view class="qu-bar-wrapper">
 				<view class="bar-title">
 					<view class="bar-title-left">为你推荐</view>
-					<text class="bar-title-right">全部 ></text>
 				</view>
-				<view class="qu-bar-item" v-for="(item,index) in qu" :key="index">
-					<image :src="item.image" class="qu-bar-item-image" mode="aspectFill"></image>
+				<view class="qu-bar-item" v-for="(item,index) in qu" :key="index" @click="itemClick(item)">
+					<image :src="item.albumCover" class="qu-bar-item-image" mode="aspectFill"></image>
 					<view>
-						<text class="text-title">{{item.textTitle}}</text>
-						<text class="text-sub-title">{{item.textSubTitle}}</text>
+						<text class="text-title">{{item.title}}</text>
+						<text class="text-sub-title">{{item.hotComment}}</text>
 					</view>
 				</view>
 			</view>
@@ -126,12 +123,12 @@
 					},
 					{
 						icon:"\u{e601}",
-						text:'推荐歌单',
+						text:'查看歌单',
 						class:"nav2-color"
 					},
 					{
 						icon:"\u{e600}",
-						text:'心情指南',
+						text:'我的收藏',
 						class:"nav3-color"
 					},
 					{
@@ -142,12 +139,12 @@
 				],
 				ruk:[
 					{
-						image:"http://170.106.183.24:8081/photo/134.jpg",
-						textTitle:"Skyline Mirage"
+						albumCover:"http://170.106.183.24:8081/photo/134.jpg",
+						title:"Skyline Mirage"
 					},
 					{
-						image:"http://170.106.183.24:8081/photo/78.jpg",
-						textTitle:"Told Me"
+						albumCover:"http://170.106.183.24:8081/photo/78.jpg",
+						title:"Told Me"
 					}
 				],
 				line:[
@@ -169,19 +166,19 @@
 				],
 				qu:[
 					{
-						image:"image1",
-						textTitle:'textTitle1',
-						textSubTitle:'textSubTitle1',					
+						albumCover:"image1",
+						title:'textTitle1',
+						hotComment:'textSubTitle1',					
 					},
 					{
-						image:"image2",
-						textTitle:'textTitle2',
-						textSubTitle:'textSubTitle2',					
+						albumCover:"image2",
+						title:'textTitle2',
+						hotComment:'textSubTitle2',					
 					},
 					{
-						image:"image3",
-						textTitle:'textTitle3',
-						textSubTitle:'textSubTitle3',				
+						albumCover:"image3",
+						title:'textTitle3',
+						hotComment:'textSubTitle3',				
 					}
 				]
 			}
@@ -206,12 +203,15 @@
 			    let randomNum = [...randomSet];
 				let tmpMusic=[];
 			    for (let i = 0; i < randomNum.length; i++) {
-						tmpMusic[i] = {}; 
-			            tmpMusic[i].image = allMusic[randomNum[i]].albumCover;
-			            tmpMusic[i].textTitle = allMusic[randomNum[i]].title;
-			            tmpMusic[i].textSubTitle = allMusic[randomNum[i]].hotComment;
+			            tmpMusic[i]= allMusic[randomNum[i]]
 			            arr.push(tmpMusic[i]);
 			    }
+			},
+			itemClick(e) {
+				let clickedMusic = [e];
+				uni.navigateTo({
+					url: './player/player?sortedMusic='+ encodeURIComponent(JSON.stringify(clickedMusic))
+				})
 			}
 		}
 	}	

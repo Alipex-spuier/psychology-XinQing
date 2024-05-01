@@ -1,38 +1,44 @@
 <template>
-  <view class="card">
-    <img class="bg_img" mode="widthFix" :src="cover" alt="">
-    <view class="filter_blur"></view>
-    <view class="content">
-      <view class="cover_box">
-        <view class="player">
-          <image :src="isPlayer ? '../../static/pause.png' : '../../static/Player_Play.png'"
-                 :style="isPlayer ? 'width: 60rpx; height: 60rpx;' : 'width: 100rpx; height: 100rpx;'"
-                 @click="togglePlay"></image>
-        </view>
-        <img class="cover" mode="widthFix" :src="cover" alt="">
-      </view>
-      <view class="comment">{{ comment }}</view>
-      <view class="author">——{{ user }}</view>
-      <view class="author">《{{ songs }}》{{ sings }}</view>
-      <view class="change" @click="change">
-        <image src='../../static/change.png' style='width: 50rpx;height: 50rpx;display:inline-block;' />
-      </view>
-    </view>
-  </view>
+<view class="container">
+	<view class="card" :style="{ filter: `blur(${blurValue}px)` }">
+	  <img class="bg_img" mode="widthFix" :src="cover" alt="">
+	  <view class="filter_blur"></view>
+	  <view class="content">
+	    <view class="cover_box">
+	      <view class="player">
+	        <image :src="isPlayer ? '../../static/pause.png' : '../../static/Player_Play.png'"
+	               :style="isPlayer ? 'width: 60rpx; height: 60rpx;' : 'width: 100rpx; height: 100rpx;'"
+	               @click="togglePlay"></image>
+	      </view>
+	      <img class="cover" mode="widthFix" :src="cover" alt="">
+	    </view>
+	    <view class="comment">{{ comment }}</view>
+	    <view class="author">——{{ user }}</view>
+	    <view class="author">《{{ songs }}》{{ sings }}</view>
+	    <view class="change" @click="change">
+	      <image src='../../static/change.png' style='width: 50rpx;height: 50rpx;display:inline-block;' />
+	    </view>
+	  </view>
+	</view>
+	<text class="loading-text" :style="{ opacity: opacityValue }">{{ load }}%</text>
+	<text class="logo-text">清 · 听 —— 听你想听</text>
+</view>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      isPlayer: true,  // Ensure this is true if autoplay is enabled
+      isPlayer: true,
       cover: "",
       comment: "",
       user: "",
       songs: "",
       sings: "",
 	  sortedMusic:[],
-	  singNum:0
+	  singNum:0,
+	  load: 0,
+	  interval: null
     };
   },
   onLoad(options){
@@ -46,6 +52,14 @@ export default {
   },
   onBackPress(){
 	  this.innerAudioContext.stop();
+  },
+  computed: {
+    blurValue() {
+      return this.scale(this.load, 0, 100, 30, 0);
+    },
+    opacityValue() {
+      return this.scale(this.load, 0, 100, 1, 0);
+    }
   },
   methods: {
     togglePlay() {
@@ -62,7 +76,7 @@ export default {
 		this.sings = this.sortedMusic[this.singNum].author;
 		this.innerAudioContext.src = this.sortedMusic[this.singNum].url;
 		this.innerAudioContext.autoplay = true;
-		this.isPlayer = true;  // Ensure playback state is synced
+		this.isPlayer = true;
 		uni.hideLoading();
 		this.singNum++
 		}else{
@@ -71,16 +85,33 @@ export default {
 				icon:"fail"
 			})
 		}
-    }
+    },
+	scale(num, in_min, in_max, out_min, out_max) {
+	  return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
+	},
+	blurring() {
+	  this.load++;
+	
+	  if (this.load > 99) {
+	    clearInterval(this.interval);
+	  }
+	}
+  },
+  mounted() {
+    this.interval = setInterval(this.blurring, 35);
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   },
   created() {
     this.innerAudioContext = uni.createInnerAudioContext();
-    this.change(); // Initialize data
+    this.change();
   }
 }
 </script>
 
 <style>
+
 	.card {
 		width: 600rpx;
 		min-height: 900rpx;
@@ -167,5 +198,19 @@ export default {
 	.change img {
 		width: 100%;
 		height: 100%;
+	}	
+	.loading-text{
+		font-size:251rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #F7BA0B
+	}
+	.logo-text{
+		font-size:50rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #999
 	}
 </style>

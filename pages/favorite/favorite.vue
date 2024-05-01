@@ -1,17 +1,16 @@
 <template>
-	<div>
-		喜欢
-	</div>
+  <div>
+    <tantan></tantan>
+  </div>
 </template>
-
 <script>
-	export default {
-		methods:{
-			getData(){
-				console.log('喜欢')
-			}
-		}
-	}
+import tantan from "@/components/slider.vue";
+
+export default {
+  components: {
+    tantan
+  }
+}
 </script>
 
 <style>
