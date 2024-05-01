@@ -13,6 +13,12 @@
     </select>
     <select id="selectMusicList" resultType="com.music.entity.Music">
         SELECT * FROM music_details
-        WHERE author LIKE '%' || #{pattern} || '%' OR title LIKE '%' || #{pattern} || '%'
+        WHERE author LIKE CONCAT('%', #{pattern}, '%') OR title LIKE CONCAT('%',#{pattern}, '%')
+        ORDER BY
+            CASE
+                WHEN title LIKE CONCAT('%', #{pattern}, '%') THEN 1
+                ELSE 2
+                END,
+            title;
     </select>
 </mapper>
