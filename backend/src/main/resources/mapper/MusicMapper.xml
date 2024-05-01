@@ -11,4 +11,8 @@
         WHERE
             music_details.details_id = music_recommend.recommend_id;
     </select>
+    <select id="selectMusicList" resultType="com.music.entity.Music">
+        SELECT * FROM music_details
+        WHERE author LIKE '%' || #{pattern} || '%' OR title LIKE '%' || #{pattern} || '%'
+    </select>
 </mapper>

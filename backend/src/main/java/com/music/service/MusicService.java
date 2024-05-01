@@ -9,4 +9,5 @@ import java.util.List;
 public interface MusicService extends IService<Music> {
 
     List<MusicRecommendVO> getMusicRecommendVOList();
+    List<Music> getMusicList(String pattern);
 }

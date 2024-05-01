@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface MusicMapper extends BaseMapper<Music> {
     List<MusicRecommendVO> selectMusicRecommendVOList();
+    List<Music> selectMusicList(String pattern);
 }

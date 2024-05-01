@@ -19,4 +19,9 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>  implement
         List<MusicRecommendVO> musicRecommendVOs=musicMapper.selectMusicRecommendVOList();
         return musicRecommendVOs;
     }
+    @Override
+    public List<Music> getMusicList(String pattern){
+        List<Music> musics=musicMapper.selectMusicList(pattern);
+        return musics;
+    }
 }
