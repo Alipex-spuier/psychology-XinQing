@@ -33,4 +33,9 @@ public class FavoriteController {
         favorite.setCreated(new Date());
         return Result.succ(favoriteService.saveOrUpdate(favorite));
     }
+    @RequiresAuthentication
+    @DeleteMapping("/delete/{id}")
+    public Result deleteFavorite(@PathVariable Integer id){
+        return Result.succ(favoriteService.removeById(id));
+    }
 }

@@ -33,5 +33,9 @@ public class HistoryController {
         history.setCreated(new Date());
         return Result.succ(historyService.saveOrUpdate(history));
     }
-
+    @RequiresAuthentication
+    @DeleteMapping("/delete/{id}")
+    public Result deleteHistory(@PathVariable Integer id){
+        return Result.succ(historyService.removeById(id));
+    }
 }
