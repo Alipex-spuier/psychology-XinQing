@@ -24,6 +24,7 @@
 				windowWidth: '',
 				windowHeight: '',
 				imagesrc: null,
+				backButtonPress:0,
 				canvasSiz: {
 					width: 188,
 					height: 273
@@ -48,6 +49,18 @@
 				this.$refs.commentTabbat.getSetting(temp)
 				this._initData();
 			})
+		},
+		onBackPress(options) {  
+		　　this.backButtonPress++;
+		　　if (this.backButtonPress > 1) { 
+		　　　　plus.runtime.quit();
+		　　} else {
+		　　　　plus.nativeUI.toast('再按一次退出应用');
+		　　} 
+		　　setTimeout(function() {
+		　　　　this.backButtonPress = 0;
+		　　}, 1000);
+		　　return true;
 		},
 		provide() {
 			return {

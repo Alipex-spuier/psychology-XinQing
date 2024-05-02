@@ -3,8 +3,8 @@
 		<view class="user">
 			<image class="avatar" src="/static/userCent/avatar.png"></image>
 			<view class="name">
-				<text>师傅</text>
-				<text>工作党</text>
+				<text>{{username}}</text>
+				<text>{{email}}</text>
 			</view>
 			<image class="right" src="/static/userCent/right.png"></image>
 		</view>
@@ -65,8 +65,15 @@
 					{id: 4, name: 'BUG反馈', icon: '/static/userCent/bug.png', arrow: true},
 					{id: 5, name: '联系客服', icon: '/static/userCent/whatsapp.png', arrow: true},
 					{id: 6, name: '系统设置', icon: '/static/userCent/setting.png', arrow: true},
-				]
+				],
+				username:"username",
+				email:"email"
 			}
+		},
+		created() {
+			const res=uni.getStorageSync("res")
+			this.username=res.data.data.username;
+			this.email=res.data.data.email
 		}
 	}
 </script>

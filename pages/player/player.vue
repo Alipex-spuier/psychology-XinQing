@@ -38,7 +38,9 @@ export default {
 	  result:[],
 	  singNum:0,
 	  load: 0,
-	  interval: null
+	  interval: null,
+	  Authorization:null,
+	  userId:null
     };
   },
   onLoad(options){
@@ -78,6 +80,7 @@ export default {
 		this.innerAudioContext.autoplay = true;
 		this.isPlayer = true;
 		uni.hideLoading();
+		this.addHistory(this.result[this.singNum].recommendId);
 		this.singNum++
 		}else{
 			uni.showToast({
@@ -86,6 +89,19 @@ export default {
 			})
 		}
     },
+	addHistory(hisMusicId){
+		uni.request({
+			url:"http://170.106.183.24:8080/history/add",
+					method: 'POST',
+					data: {
+						musicId: hisMusicId,
+						userId: this.userId
+					},
+					header:{
+						Authorization:this.Authorization
+					}
+		})
+	},
 	scale(num, in_min, in_max, out_min, out_max) {
 	  return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
 	},
@@ -104,6 +120,9 @@ export default {
     clearInterval(this.interval);
   },
   created() {
+	const res = uni.getStorageSync("res");
+	this.Authorization=res.header.Authorization;
+	this.userId=res.data.data.id;
     this.innerAudioContext = uni.createInnerAudioContext();
     this.change();
   }

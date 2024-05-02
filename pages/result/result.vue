@@ -21,7 +21,6 @@
 		methods: {
 			handleResultClick(item) {
 				let clickedMusic = [item];
-				console.log(clickedMusic)
 				uni.navigateTo({
 					url: '../player/player?result=' + encodeURIComponent(JSON.stringify(clickedMusic))
 				})

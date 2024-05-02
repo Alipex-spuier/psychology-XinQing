@@ -92,6 +92,9 @@
 <script>
 	export default {
 		created() {
+			const res = uni.getStorageSync("res");
+			this.userId = res.data.data.id;
+			this.Authorization = res.header.Authorization;
 			this.getMusic(this.ruk);
 			this.getMusic(this.qu);
 		},
@@ -103,12 +106,14 @@
 				interval: 2000,
 				duration: 500,
 				Focus: false,
+				userId: null,
 				searchQuery: '',
 				searchResults: [],
 				indicatorColor: '#e9e9e9',
 				indicatorActiveColor: 'red',
 				leftRightMargin: '0rpx',
 				current: 0,
+				Authorization: null,
 				navLevel: 'nav1',
 				activeColor: ['#ffe3cb', '#ffe3cb', '#ffe3cb', '#ffe3cb', '#1d1b1b'],
 				banner: [
@@ -214,7 +219,35 @@
 			redirectToInput(item) {
 				if (item.class == "nav1-color") {
 					this.Focus = true;
-				} else if (item.class == "nav2-color") {}
+				} else if (item.class == "nav2-color") {
+
+				} else if (item.class == "nav3-color") {
+
+				} else if (item.class == "nav4-color") {
+					uni.request({
+						url: `http://170.106.183.24:8080/history/${this.userId}`,
+						method: "GET",
+						header: {
+							Authorization: this.Authorization
+						},
+						success: res => {
+							const response = res.data.data.records;
+							const allMusicTmp=uni.getStorageSync("allMusic").data.records;
+							let history=[]
+							for(let j=0;j<response.length;j++){
+								for(let i =0;i<allMusicTmp.length;i++){
+									if(allMusicTmp[i].recommendId===response[j].musicId){
+										history[j]=allMusicTmp[i];
+										break
+									}
+								}
+							}
+							uni.navigateTo({
+								url: './result/result?result=' + encodeURIComponent(JSON.stringify(history))
+							})
+						}
+					})
+				}
 			},
 			onInput(event) {
 				this.searchQuery = event.target.value;
@@ -227,7 +260,6 @@
 					method: 'GET',
 					success: (response) => {
 						const res = response.data;
-						console.log(res)
 						uni.navigateTo({
 							url: './result/result?result=' + encodeURIComponent(JSON.stringify(res.data
 								.records))
