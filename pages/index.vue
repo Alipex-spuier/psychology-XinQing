@@ -1,7 +1,7 @@
 <template>
 	<view class="mainVieW">
 		<!-- 主站 -->
-		<HOMES ref='Home' v-if='active==0'></HOMES>
+		<HOMES ref='Home' v-if='active==0' @custom-event2="redirectToInput"></HOMES>
 		<LIST ref='list' v-if='active==1'></LIST>
 		<GUIDE ref='fav' v-if='active==3'></GUIDE>
 		<USERCENTER ref='userCent' v-if='active==4'></USERCENTER>
@@ -238,6 +238,25 @@
 			saveMusic(data) {
 				let allMusic = data;
 				uni.setStorageSync("allMusic", allMusic);
+			},
+			redirectToInput(data){
+				if(data.class=="nav2-color"){
+					let tmp=uni.setStorageSync('setStatusIndexFunc', 1)
+					this.active = tmp
+					this.tempActive=tmp
+					this.$nextTick(() => {
+						this.$refs.commentTabbat.getSetting(tmp)
+						this._initData();
+					})
+				}else if(data.class=="nav5-color"){
+					let tmp=uni.setStorageSync('setStatusIndexFunc', 3)
+					this.active = tmp
+					this.tempActive=tmp
+					this.$nextTick(() => {
+						this.$refs.commentTabbat.getSetting(tmp)
+						this._initData();
+					})
+				}
 			}
 		}
 	}

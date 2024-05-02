@@ -14,7 +14,7 @@
 				<input class="input account" v-model="account" type="text" placeholder="输入登录账号" placeholder-style="color:#c9c9c9;"/>
 			</view>
 			<view class="form-item">
-				<input class="input password" v-model="password" type="safe-password" placeholder="输入登录密码" placeholder-style="color:#c9c9c9;"/>
+				<input class="input password" v-model="password" password type="text" placeholder="输入登录密码" placeholder-style="color:#c9c9c9;"/>
 			</view>
 			<text class="forget-pass" @click="jumpToReg">暂无账号？去注册</text>
 			<view class="login-btns">
@@ -45,7 +45,7 @@
 						password: this.password
 					},
 					success: res => {
-						if (res.statusCode === 200) {
+						if (res.data.code === 200) {
 							// 登录成功处理
 							uni.showToast({
 								title: '登录成功',
@@ -194,7 +194,7 @@
 		padding-left: 60rpx;
 		box-sizing: border-box;
 		font-size: 36rpx;
-		color: $leftColor;
+		color: #999;
 	}
 	.input_p{ 
 		font-size: 32rpx;

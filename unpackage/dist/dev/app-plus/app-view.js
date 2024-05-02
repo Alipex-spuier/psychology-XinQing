@@ -1202,7 +1202,8 @@ var render = function () {
               _c("v-uni-input", {
                 staticClass: _vm._$g(11, "sc"),
                 attrs: {
-                  type: "safe-password",
+                  password: true,
+                  type: "text",
                   placeholder: "输入登录密码",
                   "placeholder-style": "color:#c9c9c9;",
                   _i: 11,
@@ -1412,7 +1413,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.bg[data-v-5b26a3ac] {\r\n  background-image: linear-gradient(to bottom, #fdd447, #fa886a);\r\n  height: 500rpx;\r\n  width: 1400rpx;\r\n  position: absolute;\r\n  top: 0;\r\n  left: 50%;\r\n  margin-left: -700rpx;\r\n  border-bottom-left-radius: 100%;\r\n  border-bottom-right-radius: 100%;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.login-bg-img[data-v-5b26a3ac] {\r\n  width: 100vw;\r\n  margin-top: 22rpx;\n}\n.logo[data-v-5b26a3ac] {\r\n  position: absolute;\r\n  z-index: 9;\r\n  width: 100%;\r\n  height: 450rpx;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: flex-end;\n}\n.logo-border[data-v-5b26a3ac] {\r\n  align-items: center;\n}\n.logo-img[data-v-5b26a3ac] {\r\n  width: 160rpx;\r\n  border-radius: 30rpx;\r\n  margin-top: 130rpx;\n}\n.logo-name[data-v-5b26a3ac] {\r\n  margin: 30rpx 0 0rpx;\r\n  font-size: 38rpx;\r\n  color: #fff;\r\n  font-weight: bold;\n}\n.logo-slogan[data-v-5b26a3ac] {\r\n  font-size: 34rpx;\r\n  color: #fff;\r\n  letter-spacing: 9rpx;\n}\n.login-form[data-v-5b26a3ac] {\r\n  margin-top: 500rpx;\r\n  padding: 120rpx 0 50rpx;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.form-item[data-v-5b26a3ac] {\r\n  margin: 45rpx 0 25rpx;\n}\n.input[data-v-5b26a3ac] {\r\n  height: 65rpx;\r\n  line-height: 65rpx;\r\n  width: 550rpx;\r\n  border-bottom: solid 2px #f2f2f2;\r\n  position: relative;\r\n  padding-left: 60rpx;\r\n  box-sizing: border-box;\r\n  font-size: 36rpx;\r\n  color: #fdd447;\n}\n.input_p[data-v-5b26a3ac] {\r\n  font-size: 32rpx;\r\n  color: #c9c9c9;\n}\n.account[data-v-5b26a3ac]::before {\r\n  content: '\\e61d';\r\n  font-family: texticons;\r\n  position: absolute;\r\n  z-index: 9;\r\n  left: 0rpx;\r\n  bottom: 5rpx;\r\n  font-size: 60rpx;\r\n  color: #f9d57c;\n}\n.password[data-v-5b26a3ac]::before {\r\n  content: '\\e623';\r\n  font-family: texticons;\r\n  position: absolute;\r\n  z-index: 9;\r\n  left: 0rpx;\r\n  bottom: 1rpx;\r\n  font-size: 60rpx;\r\n  color: #f9d57c;\n}\n.forget-pass[data-v-5b26a3ac] {\r\n  color: #c9c9c9;\r\n  font-size: 30rpx;\r\n  display: block;\r\n  width: 550rpx;\r\n  text-align: right;\n}\n.login-btns[data-v-5b26a3ac] {\r\n  height: 100rpx;\r\n  width: 100%;\r\n  box-sizing: border-box;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.btn-view[data-v-5b26a3ac] {\r\n  width: 500rpx;\r\n  margin: 200rpx auto 0;\r\n  border-radius: 40rpx;\r\n  height: 90rpx;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.login[data-v-5b26a3ac] {\r\n  background-image: linear-gradient(to right, #fdd447, #fa886a);\n}\n.btn-text[data-v-5b26a3ac] {\r\n  color: #fff;\r\n  font-size: 36rpx;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.bg[data-v-5b26a3ac] {\r\n  background-image: linear-gradient(to bottom, #fdd447, #fa886a);\r\n  height: 500rpx;\r\n  width: 1400rpx;\r\n  position: absolute;\r\n  top: 0;\r\n  left: 50%;\r\n  margin-left: -700rpx;\r\n  border-bottom-left-radius: 100%;\r\n  border-bottom-right-radius: 100%;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.login-bg-img[data-v-5b26a3ac] {\r\n  width: 100vw;\r\n  margin-top: 22rpx;\n}\n.logo[data-v-5b26a3ac] {\r\n  position: absolute;\r\n  z-index: 9;\r\n  width: 100%;\r\n  height: 450rpx;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: flex-end;\n}\n.logo-border[data-v-5b26a3ac] {\r\n  align-items: center;\n}\n.logo-img[data-v-5b26a3ac] {\r\n  width: 160rpx;\r\n  border-radius: 30rpx;\r\n  margin-top: 130rpx;\n}\n.logo-name[data-v-5b26a3ac] {\r\n  margin: 30rpx 0 0rpx;\r\n  font-size: 38rpx;\r\n  color: #fff;\r\n  font-weight: bold;\n}\n.logo-slogan[data-v-5b26a3ac] {\r\n  font-size: 34rpx;\r\n  color: #fff;\r\n  letter-spacing: 9rpx;\n}\n.login-form[data-v-5b26a3ac] {\r\n  margin-top: 500rpx;\r\n  padding: 120rpx 0 50rpx;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.form-item[data-v-5b26a3ac] {\r\n  margin: 45rpx 0 25rpx;\n}\n.input[data-v-5b26a3ac] {\r\n  height: 65rpx;\r\n  line-height: 65rpx;\r\n  width: 550rpx;\r\n  border-bottom: solid 2px #f2f2f2;\r\n  position: relative;\r\n  padding-left: 60rpx;\r\n  box-sizing: border-box;\r\n  font-size: 36rpx;\r\n  color: #999;\n}\n.input_p[data-v-5b26a3ac] {\r\n  font-size: 32rpx;\r\n  color: #c9c9c9;\n}\n.account[data-v-5b26a3ac]::before {\r\n  content: '\\e61d';\r\n  font-family: texticons;\r\n  position: absolute;\r\n  z-index: 9;\r\n  left: 0rpx;\r\n  bottom: 5rpx;\r\n  font-size: 60rpx;\r\n  color: #f9d57c;\n}\n.password[data-v-5b26a3ac]::before {\r\n  content: '\\e623';\r\n  font-family: texticons;\r\n  position: absolute;\r\n  z-index: 9;\r\n  left: 0rpx;\r\n  bottom: 1rpx;\r\n  font-size: 60rpx;\r\n  color: #f9d57c;\n}\n.forget-pass[data-v-5b26a3ac] {\r\n  color: #c9c9c9;\r\n  font-size: 30rpx;\r\n  display: block;\r\n  width: 550rpx;\r\n  text-align: right;\n}\n.login-btns[data-v-5b26a3ac] {\r\n  height: 100rpx;\r\n  width: 100%;\r\n  box-sizing: border-box;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.btn-view[data-v-5b26a3ac] {\r\n  width: 500rpx;\r\n  margin: 200rpx auto 0;\r\n  border-radius: 40rpx;\r\n  height: 90rpx;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.login[data-v-5b26a3ac] {\r\n  background-image: linear-gradient(to right, #fdd447, #fa886a);\n}\n.btn-text[data-v-5b26a3ac] {\r\n  color: #fff;\r\n  font-size: 36rpx;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1598,7 +1599,8 @@ var render = function () {
               _c("v-uni-input", {
                 staticClass: _vm._$g(13, "sc"),
                 attrs: {
-                  type: "safe-password",
+                  password: true,
+                  type: "text",
                   placeholder: "输入注册密码",
                   "placeholder-style": "color:#c9c9c9;",
                   _i: 13,
@@ -1621,7 +1623,8 @@ var render = function () {
               _c("v-uni-input", {
                 staticClass: _vm._$g(15, "sc"),
                 attrs: {
-                  type: "safe-password",
+                  password: true,
+                  type: "text",
                   placeholder: "再次输入注册密码",
                   "placeholder-style": "color:#c9c9c9;",
                   _i: 15,
@@ -1818,7 +1821,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.bg[data-v-ac0095dc] {\r\n  background-image: linear-gradient(to bottom, #fdd447, #fa886a);\r\n  height: 500rpx;\r\n  width: 1400rpx;\r\n  position: absolute;\r\n  top: 0;\r\n  left: 50%;\r\n  margin-left: -700rpx;\r\n  border-bottom-left-radius: 100%;\r\n  border-bottom-right-radius: 100%;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.login-bg-img[data-v-ac0095dc] {\r\n  width: 100vw;\r\n  margin-top: 22rpx;\n}\n.logo[data-v-ac0095dc] {\r\n  position: absolute;\r\n  z-index: 9;\r\n  width: 100%;\r\n  height: 450rpx;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: flex-end;\n}\n.logo-border[data-v-ac0095dc] {\r\n  align-items: center;\n}\n.logo-img[data-v-ac0095dc] {\r\n  width: 160rpx;\r\n  border-radius: 30rpx;\r\n  margin-top: 130rpx;\n}\n.logo-name[data-v-ac0095dc] {\r\n  margin: 30rpx 0 0rpx;\r\n  font-size: 38rpx;\r\n  color: #fff;\r\n  font-weight: bold;\n}\n.logo-slogan[data-v-ac0095dc] {\r\n  font-size: 34rpx;\r\n  color: #fff;\r\n  letter-spacing: 9rpx;\n}\n.login-form[data-v-ac0095dc] {\r\n  margin-top: 500rpx;\r\n  padding: 120rpx 0 50rpx;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.form-item[data-v-ac0095dc] {\r\n  margin: 45rpx 0 25rpx;\n}\n.input[data-v-ac0095dc] {\r\n  height: 65rpx;\r\n  line-height: 65rpx;\r\n  width: 550rpx;\r\n  border-bottom: solid 2px #f2f2f2;\r\n  position: relative;\r\n  padding-left: 60rpx;\r\n  box-sizing: border-box;\r\n  font-size: 36rpx;\r\n  color: #fdd447;\n}\n.input_p[data-v-ac0095dc] {\r\n  font-size: 32rpx;\r\n  color: #c9c9c9;\n}\n.account[data-v-ac0095dc]::before {\r\n  content: '\\e61d';\r\n  font-family: texticons;\r\n  position: absolute;\r\n  z-index: 9;\r\n  left: 0rpx;\r\n  bottom: 5rpx;\r\n  font-size: 60rpx;\r\n  color: #f9d57c;\n}\n.password[data-v-ac0095dc]::before {\r\n  content: '\\e623';\r\n  font-family: texticons;\r\n  position: absolute;\r\n  z-index: 9;\r\n  left: 0rpx;\r\n  bottom: 1rpx;\r\n  font-size: 60rpx;\r\n  color: #f9d57c;\n}\n.forget-pass[data-v-ac0095dc] {\r\n  color: #c9c9c9;\r\n  font-size: 30rpx;\r\n  display: block;\r\n  width: 550rpx;\r\n  text-align: right;\n}\n.login-btns[data-v-ac0095dc] {\r\n  height: 100rpx;\r\n  width: 100%;\r\n  box-sizing: border-box;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.btn-view[data-v-ac0095dc] {\r\n  width: 500rpx;\r\n  margin: 200rpx auto 0;\r\n  border-radius: 40rpx;\r\n  height: 90rpx;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.login[data-v-ac0095dc] {\r\n  background-image: linear-gradient(to right, #fdd447, #fa886a);\n}\n.btn-text[data-v-ac0095dc] {\r\n  color: #fff;\r\n  font-size: 36rpx;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.bg[data-v-ac0095dc] {\r\n  background-image: linear-gradient(to bottom, #fdd447, #fa886a);\r\n  height: 500rpx;\r\n  width: 1400rpx;\r\n  position: absolute;\r\n  top: 0;\r\n  left: 50%;\r\n  margin-left: -700rpx;\r\n  border-bottom-left-radius: 100%;\r\n  border-bottom-right-radius: 100%;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.login-bg-img[data-v-ac0095dc] {\r\n  width: 100vw;\r\n  margin-top: 22rpx;\n}\n.logo[data-v-ac0095dc] {\r\n  position: absolute;\r\n  z-index: 9;\r\n  width: 100%;\r\n  height: 450rpx;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: flex-end;\n}\n.logo-border[data-v-ac0095dc] {\r\n  align-items: center;\n}\n.logo-img[data-v-ac0095dc] {\r\n  width: 160rpx;\r\n  border-radius: 30rpx;\r\n  margin-top: 130rpx;\n}\n.logo-name[data-v-ac0095dc] {\r\n  margin: 30rpx 0 0rpx;\r\n  font-size: 38rpx;\r\n  color: #fff;\r\n  font-weight: bold;\n}\n.logo-slogan[data-v-ac0095dc] {\r\n  font-size: 34rpx;\r\n  color: #fff;\r\n  letter-spacing: 9rpx;\n}\n.login-form[data-v-ac0095dc] {\r\n  margin-top: 500rpx;\r\n  padding: 120rpx 0 50rpx;\r\n  flex-direction: column;\r\n  align-items: center;\n}\n.form-item[data-v-ac0095dc] {\r\n  margin: 45rpx 0 25rpx;\n}\n.input[data-v-ac0095dc] {\r\n  height: 65rpx;\r\n  line-height: 65rpx;\r\n  width: 550rpx;\r\n  border-bottom: solid 2px #f2f2f2;\r\n  position: relative;\r\n  padding-left: 60rpx;\r\n  box-sizing: border-box;\r\n  font-size: 36rpx;\r\n  color: #999;\n}\n.input_p[data-v-ac0095dc] {\r\n  font-size: 32rpx;\r\n  color: #c9c9c9;\n}\n.account[data-v-ac0095dc]::before {\r\n  content: '\\e61d';\r\n  font-family: texticons;\r\n  position: absolute;\r\n  z-index: 9;\r\n  left: 0rpx;\r\n  bottom: 5rpx;\r\n  font-size: 60rpx;\r\n  color: #f9d57c;\n}\n.password[data-v-ac0095dc]::before {\r\n  content: '\\e623';\r\n  font-family: texticons;\r\n  position: absolute;\r\n  z-index: 9;\r\n  left: 0rpx;\r\n  bottom: 1rpx;\r\n  font-size: 60rpx;\r\n  color: #f9d57c;\n}\n.forget-pass[data-v-ac0095dc] {\r\n  color: #c9c9c9;\r\n  font-size: 30rpx;\r\n  display: block;\r\n  width: 550rpx;\r\n  text-align: right;\n}\n.login-btns[data-v-ac0095dc] {\r\n  height: 100rpx;\r\n  width: 100%;\r\n  box-sizing: border-box;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.btn-view[data-v-ac0095dc] {\r\n  width: 500rpx;\r\n  margin: 200rpx auto 0;\r\n  border-radius: 40rpx;\r\n  height: 90rpx;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.login[data-v-ac0095dc] {\r\n  background-image: linear-gradient(to right, #fdd447, #fa886a);\n}\n.btn-text[data-v-ac0095dc] {\r\n  color: #fff;\r\n  font-size: 36rpx;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1908,7 +1911,15 @@ var render = function () {
     { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
     [
       _vm._$g(1, "i")
-        ? _c("HOMES", { ref: "Home", attrs: { _i: 1 } })
+        ? _c("HOMES", {
+            ref: "Home",
+            attrs: { _i: 1 },
+            on: {
+              "custom-event2": function ($event) {
+                return _vm.$handleViewEvent($event)
+              },
+            },
+          })
         : _vm._e(),
       _vm._$g(2, "i")
         ? _c("LIST", { ref: "list", attrs: { _i: 2 } })
@@ -2362,41 +2373,46 @@ var render = function () {
                     { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
                     [_vm._v("歌单遨游指南")]
                   ),
+                  _c(
+                    "uni-view",
+                    {
+                      staticClass: _vm._$g(33, "sc"),
+                      attrs: { _i: 33 },
+                      on: {
+                        click: function ($event) {
+                          return _vm.$handleViewEvent($event)
+                        },
+                      },
+                    },
+                    [_vm._v("查看更多")]
+                  ),
                 ],
                 1
               ),
               _c(
                 "uni-view",
-                { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
-                _vm._l(_vm._$g(34, "f"), function (item, index, $23, $33) {
+                { staticClass: _vm._$g(34, "sc"), attrs: { _i: 34 } },
+                _vm._l(_vm._$g(35, "f"), function (item, index, $23, $33) {
                   return _c(
                     "uni-view",
                     {
                       key: item,
-                      staticClass: _vm._$g("34-" + $33, "sc"),
-                      attrs: { _i: "34-" + $33 },
+                      staticClass: _vm._$g("35-" + $33, "sc"),
+                      attrs: { _i: "35-" + $33 },
                     },
                     [
                       _c("v-uni-image", {
-                        staticClass: _vm._$g("35-" + $33, "sc"),
+                        staticClass: _vm._$g("36-" + $33, "sc"),
                         attrs: {
-                          src: _vm._$g("35-" + $33, "a-src"),
+                          src: _vm._$g("36-" + $33, "a-src"),
                           mode: "aspectFill",
-                          _i: "35-" + $33,
+                          _i: "36-" + $33,
                         },
                       }),
                       _c(
                         "uni-view",
-                        { attrs: { _i: "36-" + $33 } },
+                        { attrs: { _i: "37-" + $33 } },
                         [
-                          _c(
-                            "v-uni-text",
-                            {
-                              staticClass: _vm._$g("37-" + $33, "sc"),
-                              attrs: { _i: "37-" + $33 },
-                            },
-                            [_vm._v(_vm._$g("37-" + $33, "t0-0"))]
-                          ),
                           _c(
                             "v-uni-text",
                             {
@@ -2404,6 +2420,14 @@ var render = function () {
                               attrs: { _i: "38-" + $33 },
                             },
                             [_vm._v(_vm._$g("38-" + $33, "t0-0"))]
+                          ),
+                          _c(
+                            "v-uni-text",
+                            {
+                              staticClass: _vm._$g("39-" + $33, "sc"),
+                              attrs: { _i: "39-" + $33 },
+                            },
+                            [_vm._v(_vm._$g("39-" + $33, "t0-0"))]
                           ),
                         ],
                         1
@@ -2422,31 +2446,31 @@ var render = function () {
       ),
       _c(
         "uni-view",
-        { staticClass: _vm._$g(39, "sc"), attrs: { _i: 39 } },
+        { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
         [
           _c(
             "uni-view",
-            { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
+            { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
             [
               _c(
                 "uni-view",
-                { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
+                { staticClass: _vm._$g(42, "sc"), attrs: { _i: 42 } },
                 [
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(42, "sc"), attrs: { _i: 42 } },
+                    { staticClass: _vm._$g(43, "sc"), attrs: { _i: 43 } },
                     [_vm._v("为你推荐")]
                   ),
                 ],
                 1
               ),
-              _vm._l(_vm._$g(43, "f"), function (item, index, $24, $34) {
+              _vm._l(_vm._$g(44, "f"), function (item, index, $24, $34) {
                 return _c(
                   "uni-view",
                   {
                     key: item,
-                    staticClass: _vm._$g("43-" + $34, "sc"),
-                    attrs: { _i: "43-" + $34 },
+                    staticClass: _vm._$g("44-" + $34, "sc"),
+                    attrs: { _i: "44-" + $34 },
                     on: {
                       click: function ($event) {
                         return _vm.$handleViewEvent($event)
@@ -2455,25 +2479,17 @@ var render = function () {
                   },
                   [
                     _c("v-uni-image", {
-                      staticClass: _vm._$g("44-" + $34, "sc"),
+                      staticClass: _vm._$g("45-" + $34, "sc"),
                       attrs: {
-                        src: _vm._$g("44-" + $34, "a-src"),
+                        src: _vm._$g("45-" + $34, "a-src"),
                         mode: "aspectFill",
-                        _i: "44-" + $34,
+                        _i: "45-" + $34,
                       },
                     }),
                     _c(
                       "uni-view",
-                      { attrs: { _i: "45-" + $34 } },
+                      { attrs: { _i: "46-" + $34 } },
                       [
-                        _c(
-                          "v-uni-text",
-                          {
-                            staticClass: _vm._$g("46-" + $34, "sc"),
-                            attrs: { _i: "46-" + $34 },
-                          },
-                          [_vm._v(_vm._$g("46-" + $34, "t0-0"))]
-                        ),
                         _c(
                           "v-uni-text",
                           {
@@ -2481,6 +2497,14 @@ var render = function () {
                             attrs: { _i: "47-" + $34 },
                           },
                           [_vm._v(_vm._$g("47-" + $34, "t0-0"))]
+                        ),
+                        _c(
+                          "v-uni-text",
+                          {
+                            staticClass: _vm._$g("48-" + $34, "sc"),
+                            attrs: { _i: "48-" + $34 },
+                          },
+                          [_vm._v(_vm._$g("48-" + $34, "t0-0"))]
                         ),
                       ],
                       1
@@ -2492,7 +2516,7 @@ var render = function () {
             ],
             2
           ),
-          _c("uni-view", { staticClass: _vm._$g(48, "sc"), attrs: { _i: 48 } }),
+          _c("uni-view", { staticClass: _vm._$g(49, "sc"), attrs: { _i: 49 } }),
         ],
         1
       ),
@@ -2537,6 +2561,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
+  name: "HOMES",
   data: function data() {
     return {
       wxsProps: {}

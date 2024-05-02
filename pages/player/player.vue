@@ -85,7 +85,7 @@ export default {
 		}else{
 			uni.showToast({
 				title:"没有更多歌曲了",
-				icon:"fail"
+				icon:"error"
 			})
 		}
     },

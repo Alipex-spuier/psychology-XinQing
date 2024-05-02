@@ -56,6 +56,9 @@
 			<view class="line-bar-wrapper">
 				<view class="bar-title">
 					<view class="bar-title-left">歌单遨游指南</view>
+					<view class="bar-title-right" @tap="redirectToInput({class:'nav5-color'})">
+						查看更多
+					</view>
 				</view>
 				<view class="line-bar-item-wrapper">
 					<view class="line-bar-item" v-for="(item,index) in line" :key="index">
@@ -91,6 +94,7 @@
 
 <script>
 	export default {
+		name:'HOMES',
 		created() {
 			const res = uni.getStorageSync("res");
 			this.userId = res.data.data.id;
@@ -220,7 +224,7 @@
 				if (item.class == "nav1-color") {
 					this.Focus = true;
 				} else if (item.class == "nav2-color") {
-
+					this.$emit('custom-event2',item);
 				} else if (item.class == "nav3-color") {
 
 				} else if (item.class == "nav4-color") {
@@ -247,6 +251,8 @@
 							})
 						}
 					})
+				}else if(item.class == "nav5-color"){
+					this.$emit('custom-event2',item);
 				}
 			},
 			onInput(event) {

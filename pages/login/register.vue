@@ -19,11 +19,11 @@
 					placeholder-style="color:#c9c9c9;" />
 			</view>
 			<view class="form-item">
-				<input class="input password" v-model="password" type="safe-password" placeholder="输入注册密码"
+				<input class="input password" v-model="password" password type="text" placeholder="输入注册密码"
 					placeholder-style="color:#c9c9c9;" />
 			</view>
 			<view class="form-item">
-				<input class="input password" v-model="confirmPassword" type="safe-password" placeholder="再次输入注册密码"
+				<input class="input password" v-model="confirmPassword" password type="text" placeholder="再次输入注册密码"
 					placeholder-style="color:#c9c9c9;" />
 			</view>
 			<view class="login-btns">
@@ -66,7 +66,7 @@
 						status:1
 					},
 					success: res => {
-						if (res.statusCode === 200) {
+						if (res.data.code === 200) {
 							// 注册成功处理
 							uni.showToast({
 								title: '注册成功',
@@ -223,7 +223,7 @@
 		padding-left: 60rpx;
 		box-sizing: border-box;
 		font-size: 36rpx;
-		color: $leftColor;
+		color: #999;
 	}
 
 	.input_p {

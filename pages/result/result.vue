@@ -14,6 +14,10 @@
 		},
 		onLoad(options) {
 			this.resultsArr = JSON.parse(decodeURIComponent(options.result));
+			console.log(options.result)
+			uni.setNavigationBarTitle({
+				title:options.result.pageTitle
+			})
 		},
 		components: {
 			results,
