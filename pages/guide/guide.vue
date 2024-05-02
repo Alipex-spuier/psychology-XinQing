@@ -57,8 +57,7 @@ export default {
       for (let index = 0; index < pageSize; index++) {
         this.goods.unshift({
           id: String(index) + String(this.pageNum),
-          cover: `http://170.106.183.24:8081/photo/${Math.floor(Math.random() * 7) + 1}.jpg`,
-		  //todo 需要把图片资源download到本地处理
+          cover: `/static/images/${Math.floor(Math.random() * 7) + 1}.jpg`,
           x: 0,
           y: 0,
 

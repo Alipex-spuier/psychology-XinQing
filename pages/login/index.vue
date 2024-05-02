@@ -20,8 +20,21 @@
 		data() {
 			return {
 				title:"清 · 听",
-				slogan:"让心情遇见音乐的美好"
+				slogan:"让心情遇见音乐的美好",
+				backButtonPress:0,
 			}
+		},
+		onBackPress(options) {
+		　　this.backButtonPress++;
+		　　if (this.backButtonPress > 1) { 
+		　　　　plus.runtime.quit();
+		　　} else {
+		　　　　plus.nativeUI.toast('再按一次退出应用');
+		　　} 
+		　　setTimeout(function() {
+		　　　　this.backButtonPress = 0;
+		　　}, 1000);
+		　　return true;
 		},
 		methods: {
 			login(){

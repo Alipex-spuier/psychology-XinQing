@@ -102,6 +102,13 @@
 			this.getMusic(this.ruk);
 			this.getMusic(this.qu);
 		},
+		mounted() {
+			const res = uni.getStorageSync("res");
+			this.userId = res.data.data.id;
+			this.Authorization = res.header.Authorization;
+			this.getMusic(this.ruk);
+			this.getMusic(this.qu);
+		},
 		data() {
 			return {
 				circular: false,

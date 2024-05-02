@@ -38,10 +38,12 @@
 			USERCENTER,
 			tabBar
 		},
+		created() {
+			this.getAllMusic();
+		},
 		onLoad() {
 			_this = this;
 			this.init();
-			this.getAllMusic();
 			let temp = uni.getStorageSync('setStatusIndexFunc') || 0
 			uni.setStorageSync('setStatusIndexFunc', temp)
 			this.active = temp
@@ -231,13 +233,9 @@
 					method: 'GET',
 					success: (response) => {
 						const res = response.data;
-						this.saveMusic(res)
+						uni.setStorageSync("allMusic", res);
 					}
 				});
-			},
-			saveMusic(data) {
-				let allMusic = data;
-				uni.setStorageSync("allMusic", allMusic);
 			},
 			redirectToInput(data){
 				if(data.class=="nav2-color"){

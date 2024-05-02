@@ -25,6 +25,14 @@
 			}
 		},
 		{
+			"path" : "pages/userCent/logout",
+			"style" : 
+			{
+				"navigationBarTitleText" : "账号设置",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
 			"path": "pages/index",
 			"style": {
 				"navigationBarTitleText": "清听音乐"
