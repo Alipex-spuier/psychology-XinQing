@@ -11,21 +11,22 @@
 		</view>
 		<view class="login-form">
 			<view class="form-item">
-				<input class="input account" v-model="account" type="text" placeholder="输入注册账号"
+				<input class="input account" v-model="account" type="text" placeholder="请输入注册账号"
 					placeholder-style="color:#c9c9c9;" />
 			</view>
 			<view class="form-item">
-				<input class="input account" v-model="email" type="text" placeholder="输入注册邮箱"
+				<input class="input account" v-model="email" type="text" placeholder="请输入注册邮箱"
 					placeholder-style="color:#c9c9c9;" />
 			</view>
 			<view class="form-item">
-				<input class="input password" v-model="password" password type="text" placeholder="输入注册密码"
+				<input class="input password" v-model="password" password type="text" placeholder="请输入注册密码"
 					placeholder-style="color:#c9c9c9;" />
 			</view>
 			<view class="form-item">
-				<input class="input password" v-model="confirmPassword" password type="text" placeholder="再次输入注册密码"
+				<input class="input password" v-model="confirmPassword" password type="text" placeholder="请再次输入注册密码"
 					placeholder-style="color:#c9c9c9;" />
 			</view>
+			<text class="forget-pass" @click="jumpToLogin">已有账号？去登录</text>
 			<view class="login-btns">
 				<view class="btn-view login" @click="register"><text class="btn-text">注册</text></view>
 			</view>
@@ -47,7 +48,51 @@
 			}
 		},
 		methods: {
+			checkEmail(email) {
+				const emailReg=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+				if (emailReg.test(email)) {
+					return true;
+				} else {
+					return false;
+				}
+			},
 			register() {
+				if(this.account==""){
+					uni.showToast({
+						title: '注册账号不能为空',
+						icon: 'none'
+					});
+					return;					
+				}
+				if (this.email == "") {
+					uni.showToast({
+						title: '请输入邮箱地址',
+						icon: 'none'
+					});
+					return;
+				}
+				if (!this.checkEmail(this.email)) {
+					uni.showToast({
+						title: '邮箱格式不正确',
+						icon: 'none'
+					});
+					return;
+				}
+				if(this.password==""){
+					uni.showToast({
+						title: '请输入密码',
+						icon: 'none'
+					});
+					return;					
+				}
+				if(this.confirmPassword==""){
+					uni.showToast({
+						title: '请再次输入密码',
+						icon: 'none'
+					});
+					return;					
+				}
+
 				if (this.password !== this.confirmPassword) {
 					uni.showToast({
 						title: '两次密码输入不一致',
@@ -55,19 +100,17 @@
 					});
 					return;
 				}
-				// 发送 POST 请求到服务端注册账户
 				uni.request({
-					url: 'http://170.106.183.24:8080/account/register',
+					url: this.$baseURL + '/account/register',
 					method: 'POST',
 					data: {
 						username: this.account,
 						password: this.password,
 						email: this.email,
-						status:1
+						status: 1
 					},
 					success: res => {
 						if (res.data.code === 200) {
-							// 注册成功处理
 							uni.showToast({
 								title: '注册成功',
 								success: function() {
@@ -80,7 +123,6 @@
 							});
 
 						} else {
-							// 注册失败处理
 							uni.showToast({
 								title: '注册失败：' + res.data.msg,
 								icon: 'none'
@@ -94,6 +136,11 @@
 						});
 					}
 				});
+			},
+			jumpToLogin(){
+				uni.navigateTo({
+					url:"/pages/login/login"
+				})
 			}
 		}
 	}
@@ -137,7 +184,7 @@
 	}
 </style>
 <style lang="scss" scoped>
-	$head-color: #cd3b33;
+	$head-color: #027AFF;
 	$white-color: #fff;
 	$radius: 20rpx;
 	$border-color: #efefef;
@@ -147,7 +194,7 @@
 	$color-4: #dd524d;
 	$list-item-height: 100rpx;
 	$list-margin: 20rpx;
-	$leftColor: #fdd447;
+	$leftColor: #027AFF;
 	$rightColor: #fa886a;
 
 	.bg {
@@ -239,7 +286,7 @@
 		left: 0rpx;
 		bottom: 5rpx;
 		font-size: 60rpx;
-		color: #f9d57c;
+		color: #0169d8;
 	}
 
 	.password::before {
@@ -250,7 +297,7 @@
 		left: 0rpx;
 		bottom: 1rpx;
 		font-size: 60rpx;
-		color: #f9d57c;
+		color: #0169d8;
 	}
 
 	.forget-pass {

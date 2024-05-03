@@ -34,22 +34,21 @@
 						arrow: true
 					}
 				],
-				Authorization: null
+				authorization: null
 			}
 		},
 		created() {
 			const res = uni.getStorageSync("res")
-			this.Authorization = res.header.Authorization;
+			this.authorization = res.header.authorization;
 		},
 		methods: {
 			chooseConfig(item) {
 				if (item.id == 3) {
-					console.log(this.Authoration)
 					uni.request({
-						url: 'http://170.106.183.24:8080/account/logout',
+						url: this.$baseURL+'/account/logout',
 						method: 'GET',
 						header: {
-							Authorization: this.Authorization
+							Authorization: this.authorization
 						},
 						success: res => {
 							if (res.data.code === 200) {

@@ -91,11 +91,11 @@
 	$border-color:#efefef;
 	$color-1: #007aff;
 	$color-2: #4cd964;
-	$color-3: #f0ad4e;
+	$color-3: #027AFF;
 	$color-4: #dd524d;
 	$list-item-height:100rpx;
 	$list-margin:20rpx;
-	$leftColor:#fdd447;
+	$leftColor:#027AFF;
 	$rightColor:#fa886a;
 	.bg{
 		background-image: linear-gradient(to bottom,$leftColor,$rightColor);

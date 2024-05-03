@@ -11,15 +11,15 @@
 
 		<view class="card">
 			<view class="important">
-				<view class="item">
+				<view class="item" @click="showUnfinish">
 					<image :src="'/static/userCent/wallet.png'"></image>
 					<text>积分商城</text>
 				</view>
-				<view class="item">
+				<view class="item" @click="toFav">
 					<image :src="'/static/userCent/collect.png'"></image>
 					<text>我的收藏</text>
 				</view>
-				<view class="item">
+				<view class="item" @click="toHis">
 					<image :src="'/static/userCent/order.png'"></image>
 					<text>历史记录</text>
 				</view>
@@ -28,7 +28,7 @@
 
 		<view class="card">
 			<view class="menu">
-				<view class="item" v-for="v in menus1" :key="v.id">
+				<view class="item" v-for="v in menus1" :key="v.id" @click="config(v)">
 					<image :src="v.icon"></image>
 					<text>{{v.name}}</text>
 					<image class="arrow" v-if="v.arrow" src="/static/center1/right.png"></image>
@@ -95,13 +95,17 @@
 					},
 				],
 				username: "username",
-				email: "email"
+				email: "email",
+				userId:null,
+				authorization:null
 			}
 		},
 		created() {
 			const res = uni.getStorageSync("res")
 			this.username = res.data.data.username;
-			this.email = res.data.data.email
+			this.email = res.data.data.email;
+			this.userId=res.data.data.userId;
+			this.authorization=res.header.authorization;
 		},
 		methods: {
 			config(item) {
@@ -109,7 +113,67 @@
 					uni.navigateTo({
 						url: '/pages/userCent/logout'
 					})
+				} else if (item.id == 2 || item.id == 3 || item.id == 4 || item.id == 5) {
+					this.showUnfinish();
 				}
+			},
+			showUnfinish() {
+				uni.showToast({
+					title: '正在开发中~',
+					icon: 'error'
+				});
+			},
+			toFav(){
+				uni.request({
+					url: this.$baseURL + '/favorite/' + this.userId,
+					method: 'GET',
+					header: {
+						Authorization: this.authorization
+					},
+					success: res => {
+						if (res.data.code == 200) {
+							let fav = res.data.data.records;
+							const allMusicTmp=uni.getStorageSync("allMusic").data.records;
+							let favorite=[]
+							for(let j=0;j<fav.length;j++){
+								for(let i =0;i<allMusicTmp.length;i++){
+									if(allMusicTmp[i].recommendId===fav[j].musicId){
+										favorite[j]=allMusicTmp[i];
+										break
+									}
+								}
+							}
+							uni.navigateTo({
+								url: './result/result?result=' + encodeURIComponent(JSON.stringify(favorite))
+							})
+						}
+					}
+				})
+			},
+			toHis(){
+				uni.request({
+					url: this.$baseURL+'/history/'+this.userId,
+					method: "GET",
+					header: {
+						Authorization: this.authorization
+					},
+					success: res => {
+						const response = res.data.data.records;
+						const allMusicTmp=uni.getStorageSync("allMusic").data.records;
+						let history=[]
+						for(let j=0;j<response.length;j++){
+							for(let i =0;i<allMusicTmp.length;i++){
+								if(allMusicTmp[i].recommendId===response[j].musicId){
+									history[j]=allMusicTmp[i];
+									break
+								}
+							}
+						}
+						uni.navigateTo({
+							url: './result/result?result=' + encodeURIComponent(JSON.stringify(history))
+						})
+					}
+				})
 			}
 		}
 	}
@@ -117,22 +181,23 @@
 
 <style lang="scss">
 	.page {
-		background: linear-gradient(180deg, #fdd447, #fff);
+		background: linear-gradient(180deg, #027AFF, #fff);
 		min-height: 100vh;
 
 		.user {
 			display: flex;
 			align-items: center;
-			padding: 25rpx;
+			padding: 35rpx;
 
 			&:active {
-				background: #3c8a3e;
+				opacity: 0.7;
 			}
 
 			.avatar {
-				width: 90rpx;
-				height: 90rpx;
+				width: 100rpx;
+				height: 100rpx;
 				border-radius: 50%;
+				left: 10rpx;
 			}
 
 			.right {
@@ -145,7 +210,7 @@
 				flex-grow: 1;
 				display: flex;
 				flex-direction: column;
-				padding-left: 20rpx;
+				padding-left: 50rpx;
 				color: #fff;
 				justify-content: space-between;
 
@@ -236,7 +301,7 @@
 		}
 
 		.hide {
-			height: 0vh;
+			height: 15vh;
 		}
 	}
 </style>

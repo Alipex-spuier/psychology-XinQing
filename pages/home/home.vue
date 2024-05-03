@@ -97,15 +97,15 @@
 		name:'HOMES',
 		created() {
 			const res = uni.getStorageSync("res");
-			this.userId = res.data.data.id;
-			this.Authorization = res.header.Authorization;
+			this.userId = res.data.data.userId;
+			this.authorization = res.header.authorization;
 			this.getMusic(this.ruk);
 			this.getMusic(this.qu);
 		},
 		mounted() {
 			const res = uni.getStorageSync("res");
-			this.userId = res.data.data.id;
-			this.Authorization = res.header.Authorization;
+			this.userId = res.data.data.userId;
+			this.authorization = res.header.authorization;
 			this.getMusic(this.ruk);
 			this.getMusic(this.qu);
 		},
@@ -124,7 +124,7 @@
 				indicatorActiveColor: 'red',
 				leftRightMargin: '0rpx',
 				current: 0,
-				Authorization: null,
+				authorization: null,
 				navLevel: 'nav1',
 				activeColor: ['#ffe3cb', '#ffe3cb', '#ffe3cb', '#ffe3cb', '#1d1b1b'],
 				banner: [
@@ -155,11 +155,11 @@
 					},
 				],
 				ruk: [{
-						albumCover: "http://170.106.183.24:8081/photo/134.jpg",
+						albumCover: this.$basePhotoURL+"/photo/134.jpg",
 						title: "Skyline Mirage"
 					},
 					{
-						albumCover: "http://170.106.183.24:8081/photo/78.jpg",
+						albumCover: this.$basePhotoURL+"/photo/78.jpg",
 						title: "Told Me"
 					}
 				],
@@ -233,13 +233,37 @@
 				} else if (item.class == "nav2-color") {
 					this.$emit('custom-event2',item);
 				} else if (item.class == "nav3-color") {
-
+				uni.request({
+					url: this.$baseURL + '/favorite/' + this.userId,
+					method: 'GET',
+					header: {
+						Authorization: this.authorization
+					},
+					success: res => {
+						if (res.data.code == 200) {
+							let fav = res.data.data.records;
+							const allMusicTmp=uni.getStorageSync("allMusic").data.records;
+							let favorite=[]
+							for(let j=0;j<fav.length;j++){
+								for(let i =0;i<allMusicTmp.length;i++){
+									if(allMusicTmp[i].recommendId===fav[j].musicId){
+										favorite[j]=allMusicTmp[i];
+										break
+									}
+								}
+							}
+							uni.navigateTo({
+								url: './result/result?result=' + encodeURIComponent(JSON.stringify(favorite))
+							})
+						}
+					}
+				})
 				} else if (item.class == "nav4-color") {
 					uni.request({
-						url: `http://170.106.183.24:8080/history/${this.userId}`,
+						url: this.$baseURL+'/history/'+this.userId,
 						method: "GET",
 						header: {
-							Authorization: this.Authorization
+							Authorization: this.authorization
 						},
 						success: res => {
 							const response = res.data.data.records;
@@ -267,7 +291,7 @@
 			},
 			getSearchMusic() {
 				const encodedQuery = encodeURIComponent(this.searchQuery);
-				const url = `http://170.106.183.24:8080/music/search?pattern=${encodedQuery}`
+				const url = this.$baseURL+'/music/search?pattern='+encodedQuery;
 				uni.request({
 					url: url,
 					method: 'GET',

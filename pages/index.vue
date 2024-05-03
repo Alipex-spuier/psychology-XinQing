@@ -141,7 +141,7 @@
 			// 上传图片到服务器
 			uploadImage(filePath) {
 				const uploadTask = uni.uploadFile({
-					url: 'http://170.106.183.24:8084/classifyImage',
+					url: this.$baseFaceURL+'/classifyImage',
 					filePath: filePath,
 					name: 'image',
 					formData: {
@@ -229,7 +229,7 @@
 			},
 			getAllMusic() {
 				uni.request({
-					url: 'http://170.106.183.24:8080/music/getAllMusic',
+					url: this.$baseURL+'/music/getAllMusic',
 					method: 'GET',
 					success: (response) => {
 						const res = response.data;

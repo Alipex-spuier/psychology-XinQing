@@ -195,7 +195,6 @@ export default{
 		},
 		// 设置图片
 		setImage(e) {
-		    console.log(e);
 		    _this.zjzClipper(e.path);
 		},
 		
@@ -204,7 +203,6 @@ export default{
 		    uni.getImageInfo({
 		        src: path,
 		        success: function(image) {
-		            console.log(image);
 		            _this.canvasSiz.width = 188;
 		            _this.canvasSiz.height = 273;
 		
@@ -240,7 +238,7 @@ export default{
 		// 上传图片到服务器
 		uploadImage(filePath) {
 		    const uploadTask = uni.uploadFile({
-		        url: 'http://170.106.183.24:8084/classifyImage',
+		        url: this.$baseFaceURL+'/classifyImage',
 		        filePath: filePath,
 		        name: 'image',  
 		        formData: {

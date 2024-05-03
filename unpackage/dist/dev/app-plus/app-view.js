@@ -4699,7 +4699,30 @@ var render = function () {
                       height: "50rpx",
                       display: "inline-block",
                     },
-                    attrs: { src: "/static/player/change.png", _i: 13 },
+                    attrs: { src: _vm._$g(13, "a-src"), _i: 13 },
+                  }),
+                ],
+                1
+              ),
+              _c(
+                "uni-view",
+                {
+                  staticClass: _vm._$g(14, "sc"),
+                  attrs: { _i: 14 },
+                  on: {
+                    click: function ($event) {
+                      return _vm.$handleViewEvent($event)
+                    },
+                  },
+                },
+                [
+                  _c("v-uni-image", {
+                    staticStyle: {
+                      width: "50rpx",
+                      height: "50rpx",
+                      display: "inline-block",
+                    },
+                    attrs: { src: "/static/player/change.png", _i: 15 },
                   }),
                 ],
                 1
@@ -4713,13 +4736,13 @@ var render = function () {
       _c(
         "v-uni-text",
         {
-          staticClass: _vm._$g(14, "sc"),
-          style: _vm._$g(14, "s"),
-          attrs: { _i: 14 },
+          staticClass: _vm._$g(16, "sc"),
+          style: _vm._$g(16, "s"),
+          attrs: { _i: 16 },
         },
-        [_vm._v(_vm._$g(14, "t0-0") + "%")]
+        [_vm._v(_vm._$g(16, "t0-0") + "%")]
       ),
-      _c("v-uni-text", { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } }, [
+      _c("v-uni-text", { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } }, [
         _vm._v("清 · 听 —— 听你想听"),
       ]),
     ],
@@ -4820,7 +4843,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.card {\n\twidth: 600rpx;\n\tmin-height: 900rpx;\n\tmargin: 30rpx auto;\n\tborder-radius: 30rpx;\n\toverflow: hidden;\n\tposition: relative;\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: flex-end;\n}\n.filter_blur {\n\twidth: 100%;\n\theight: 100%;\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tbackground: rgba(180, 181, 183, 0.2);\n\t-webkit-backdrop-filter: blur(60rpx);\n\t        backdrop-filter: blur(60rpx);\n\toverflow: hidden;\n\tborder-radius: 30rpx;\n}\n.bg_img {\n\twidth: 100%;\n\tflex-shrink: 0;\n\tposition: absolute;\n\tbottom: 0;\n}\n.content {\n\tz-index: 99;\n\toverflow: hidden;\n\tborder-radius: 30rpx;\n\tposition: relative;\n}\n.cover_box {\n\tposition: relative;\n}\n.player {\n\tposition: absolute;\n\ttop: 50%;\n\tleft: 50%;\n\twidth: 150rpx;\n\theight: 150rpx;\n\tmargin-left: -75rpx;\n\tmargin-top: -75rpx;\n\tbackground: rgba(176, 176, 176, 0.2);\n\t-webkit-backdrop-filter: blur(10rpx);\n\t        backdrop-filter: blur(10rpx);\n\tborder-radius: 50%;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}\n.cover {\n\twidth: 100%;\n}\n.comment {\n\tpadding: 30rpx;\n\tfont-size: 35rpx;\n\tcolor: #FFF\n}\n.author {\n\ttext-align: right;\n\tpadding: 0 30rpx 30rpx;\n\tfont-size: 30rpx;\n\tcolor: #FFF\n}\n.change {\n\twidth: 50rpx;\n\theight: 50rpx;\n\tposition: absolute;\n\tleft: 20rpx;\n\tbottom: 20rpx;\n}\n.change img {\n\twidth: 100%;\n\theight: 100%;\n}\n.loading-text{\n\tfont-size:251rpx;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n\tcolor: #F7BA0B\n}\n.logo-text{\n\tfont-size:50rpx;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n\tcolor: #999\n}\n", ""]);
+exports.push([module.i, "\n.card {\n\twidth: 600rpx;\n\tmin-height: 900rpx;\n\tmargin: 30rpx auto;\n\tborder-radius: 30rpx;\n\toverflow: hidden;\n\tposition: relative;\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: flex-end;\n}\n.filter_blur {\n\twidth: 100%;\n\theight: 100%;\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tbackground: rgba(180, 181, 183, 0.2);\n\t-webkit-backdrop-filter: blur(60rpx);\n\t        backdrop-filter: blur(60rpx);\n\toverflow: hidden;\n\tborder-radius: 30rpx;\n}\n.bg_img {\n\twidth: 100%;\n\tflex-shrink: 0;\n\tposition: absolute;\n\tbottom: 0;\n}\n.content {\n\tz-index: 99;\n\toverflow: hidden;\n\tborder-radius: 30rpx;\n\tposition: relative;\n}\n.cover_box {\n\tposition: relative;\n}\n.player {\n\tposition: absolute;\n\ttop: 50%;\n\tleft: 50%;\n\twidth: 150rpx;\n\theight: 150rpx;\n\tmargin-left: -75rpx;\n\tmargin-top: -75rpx;\n\tbackground: rgba(176, 176, 176, 0.2);\n\t-webkit-backdrop-filter: blur(10rpx);\n\t        backdrop-filter: blur(10rpx);\n\tborder-radius: 50%;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}\n.fav {\n\twidth: 50rpx;\n\theight: 50rpx;\n\tposition: absolute;\n\tleft: 20rpx;\n\tbottom: 80rpx;\n}\n.fav img {\n\twidth: 100%;\n\theight: 100%;\n}\n.cover {\n\twidth: 100%;\n}\n.comment {\n\tpadding: 30rpx;\n\tfont-size: 35rpx;\n\tcolor: #FFF\n}\n.author {\n\ttext-align: right;\n\tpadding: 0 30rpx 30rpx;\n\tfont-size: 30rpx;\n\tcolor: #FFF\n}\n.change {\n\twidth: 50rpx;\n\theight: 50rpx;\n\tposition: absolute;\n\tleft: 20rpx;\n\tbottom: 20rpx;\n}\n.change img {\n\twidth: 100%;\n\theight: 100%;\n}\n.loading-text {\n\tfont-size: 251rpx;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n\tcolor: #F7BA0B\n}\n.logo-text {\n\tfont-size: 50rpx;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n\tcolor: #999\n}\n", ""]);
 // Exports
 module.exports = exports;
 

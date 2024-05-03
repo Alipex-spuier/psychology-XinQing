@@ -38,7 +38,7 @@
 			login() {
 				// 发送 POST 请求到服务器登录账户
 				uni.request({
-					url: 'http://170.106.183.24:8080/account/login',
+					url: this.$baseURL+'/account/login',
 					method: 'POST',
 					data: {
 						username: this.account,
@@ -117,17 +117,17 @@
 	}
 </style>
 <style lang="scss" scoped>
-	$head-color:#cd3b33;
+	$head-color:#027AFF;
 	$white-color:#fff;
 	$radius:20rpx;
 	$border-color:#efefef;
 	$color-1: #007aff;
 	$color-2: #4cd964;
 	$color-3: #f0ad4e;
-	$color-4: #dd524d;
+	$color-4: #027AFF;
 	$list-item-height:100rpx;
 	$list-margin:20rpx;
-	$leftColor:#fdd447;
+	$leftColor:#027AFF;
 	$rightColor:#fa886a;
 	.bg{
 		background-image: linear-gradient(to bottom,$leftColor,$rightColor);
@@ -208,7 +208,7 @@
 		left: 0rpx;
 		bottom: 5rpx;
 		font-size: 60rpx;
-		color:#f9d57c;
+		color:#0169d8;
 	}
 	.password::before{
 		content:'\e623';
@@ -218,7 +218,7 @@
 		left: 0rpx;
 		bottom: 1rpx;
 		font-size: 60rpx;
-		color:#f9d57c;
+		color:#0169d8;
 	}
 	.forget-pass{
 		color: #c9c9c9;

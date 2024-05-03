@@ -53,7 +53,6 @@ export default {
      */
 
     getGoodList(pageSize = 1) {
-      console.log("获取新数据");
       for (let index = 0; index < pageSize; index++) {
         this.goods.unshift({
           id: String(index) + String(this.pageNum),
