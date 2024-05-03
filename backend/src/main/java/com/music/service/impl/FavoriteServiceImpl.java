@@ -14,7 +14,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     @Autowired
     private FavoriteMapper favoriteMapper;
     @Override
-    public List<Favorite> getFavoriteMusic(Long id) {
-        return favoriteMapper.selectFavorite(id);
+    public List<Favorite> getFavoriteMusic(Long userId) {
+        return favoriteMapper.selectFavorite(userId);
     }
 }

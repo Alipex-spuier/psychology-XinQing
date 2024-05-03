@@ -12,15 +12,15 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("music_details")
+@TableName("t_music")
 public class Music implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "details_id", type = IdType.AUTO)
-    private Integer detailsId;
+    private Long detailsId;
 
-    private Integer recommendId;
+    private Long recommendId;
 
     private String url;
 

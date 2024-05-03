@@ -3,7 +3,7 @@
 <mapper namespace="com.music.mapper.HistoryMapper">
     <select id="selectHistory" resultType="com.music.entity.History">
         select *
-        from history
-        where user_id = #{id}
+        from t_history
+        where user_id = #{userId}
     </select>
 </mapper>

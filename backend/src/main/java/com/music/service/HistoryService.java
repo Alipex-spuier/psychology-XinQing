@@ -6,5 +6,5 @@ import com.music.entity.History;
 import java.util.List;
 
 public interface HistoryService extends IService<History> {
-    List<History> getHistoryMusic(Long id);
+    List<History> getHistoryMusic(Long userId);
 }

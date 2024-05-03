@@ -12,13 +12,13 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("music_recommend")
+@TableName("t_recommend")
 public class Recommend implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "recommend_id", type = IdType.AUTO)
-    private Integer recommendId;
+    private Long recommendId;
 
     private Double emotionRecommendScore;
 

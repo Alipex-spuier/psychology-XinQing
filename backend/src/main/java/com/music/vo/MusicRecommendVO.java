@@ -10,17 +10,17 @@ import java.io.Serializable;
 public class MusicRecommendVO extends Recommend implements Serializable {
 
     @TableId(value = "details_id", type = IdType.AUTO)
-    private Integer detailsId;
+    private Long detailsId;
 
     private String url;
 
     private String albumCover;
 
-    public Integer getDetailsId() {
+    public Long getDetailsId() {
         return detailsId;
     }
 
-    public void setDetailsId(Integer detailsId) {
+    public void setDetailsId(Long detailsId) {
         this.detailsId = detailsId;
     }
 

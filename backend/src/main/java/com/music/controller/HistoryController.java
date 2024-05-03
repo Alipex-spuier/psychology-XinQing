@@ -19,10 +19,10 @@ public class HistoryController {
     HistoryService historyService;
 
     @RequiresAuthentication
-    @GetMapping("/{id}")
-    public Result getHistory(@PathVariable(name = "id") Long id) {
+    @GetMapping("/{userId}")
+    public Result getHistory(@PathVariable(name = "userId") Long userId) {
         Map<String, Object> historyMap = new HashMap<>();
-        List<History> histories = historyService.getHistoryMusic(id);
+        List<History> histories = historyService.getHistoryMusic(userId);
         historyMap.put("records", histories);
         return Result.succ(historyMap);
     }
@@ -34,8 +34,11 @@ public class HistoryController {
         return Result.succ(historyService.saveOrUpdate(history));
     }
     @RequiresAuthentication
-    @DeleteMapping("/delete/{id}")
-    public Result deleteHistory(@PathVariable Integer id){
-        return Result.succ(historyService.removeById(id));
+    @DeleteMapping("/delete")
+    public Result deleteHistory(@RequestBody History history) {
+        Map<String, Object> hisMap = new HashMap<>();
+        hisMap.put("user_id", history.getUserId());
+        hisMap.put("music_id", history.getMusicId());
+        return Result.succ(historyService.removeByMap(hisMap));
     }
 }

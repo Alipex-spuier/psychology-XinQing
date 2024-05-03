@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("favorite")
+@TableName("t_favorite")
 public class Favorite implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,9 +21,8 @@ public class Favorite implements Serializable {
     @TableId(value = "favorite_id", type = IdType.AUTO)
     private Long favoriteId;
 
-    @TableId(value = "user_id")
     private Long userId;
-    @TableId(value = "music_id")
+
     private Long musicId;
 
     private Date created;

@@ -13,16 +13,16 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("history")
+@TableName("t_history")
 public class History implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "history_id", type = IdType.AUTO)
     private Long historyId;
-    @TableId(value = "user_id")
+
     private Long userId;
-    @TableId(value = "music_id")
+
     private Long musicId;
 
     private Date created;

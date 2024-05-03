@@ -3,7 +3,7 @@
 <mapper namespace="com.music.mapper.FavoriteMapper">
     <select id="selectFavorite" resultType="com.music.entity.Favorite">
         select *
-        from favorite
-        where user_id = #{id}
+        from t_favorite
+        where user_id = #{userId}
     </select>
 </mapper>

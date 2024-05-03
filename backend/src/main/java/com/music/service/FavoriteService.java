@@ -6,5 +6,5 @@ import com.music.entity.Favorite;
 import java.util.List;
 
 public interface FavoriteService extends IService<Favorite> {
-    List<Favorite> getFavoriteMusic(Long id);
+    List<Favorite> getFavoriteMusic(Long userId);
 }

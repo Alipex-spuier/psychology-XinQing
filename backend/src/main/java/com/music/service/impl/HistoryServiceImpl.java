@@ -14,7 +14,7 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History> impl
     @Autowired
     private HistoryMapper historyMapper;
     @Override
-    public List<History> getHistoryMusic(Long id) {
-        return historyMapper.selectHistory(id);
+    public List<History> getHistoryMusic(Long userId) {
+        return historyMapper.selectHistory(userId);
     }
 }

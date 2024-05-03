@@ -33,8 +33,8 @@ public class UserController {
         return Result.succ(userService.updateById(user));
     }
     @RequiresAuthentication
-    @DeleteMapping("/delete/{id}")
-    public Result delete(@PathVariable Integer id){
-        return Result.succ(userService.removeById(id));
+    @DeleteMapping("/delete/{userId}")
+    public Result delete(@PathVariable Integer userId) {
+        return Result.succ(userService.removeById(userId));
     }
 }

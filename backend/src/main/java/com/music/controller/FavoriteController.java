@@ -19,10 +19,10 @@ public class FavoriteController {
     FavoriteService favoriteService;
 
     @RequiresAuthentication
-    @GetMapping("/{id}")
-    public Result getFavorite(@PathVariable(name="id")Long id) {
+    @GetMapping("/{userId}")
+    public Result getFavorite(@PathVariable(name = "userId") Long userId) {
         Map<String,Object> favoriteMap=new HashMap<>();
-        List<Favorite> favorite=favoriteService.getFavoriteMusic(id);
+        List<Favorite> favorite = favoriteService.getFavoriteMusic(userId);
         favoriteMap.put("records",favorite);
         return Result.succ(favoriteMap);
     }
@@ -34,8 +34,11 @@ public class FavoriteController {
         return Result.succ(favoriteService.saveOrUpdate(favorite));
     }
     @RequiresAuthentication
-    @DeleteMapping("/delete/{id}")
-    public Result deleteFavorite(@PathVariable Integer id){
-        return Result.succ(favoriteService.removeById(id));
+    @DeleteMapping("/delete")
+    public Result deleteFavorite(@RequestBody Favorite favorite) {
+        Map<String, Object> favMap = new HashMap<>();
+        favMap.put("user_id", favorite.getUserId());
+        favMap.put("music_id", favorite.getMusicId());
+        return Result.succ(favoriteService.removeByMap(favMap));
     }
 }
