@@ -50,6 +50,10 @@
 							uni.showToast({
 								title: '登录成功',
 								success: function() {
+									if(res.header.authorization===undefined&&res.header.Authorization !== undefined){
+										res.header.authorization=res.header.Authorization;
+									}
+									
 									uni.setStorageSync("res",res)
 									setTimeout(function() {
 										uni.navigateTo({
