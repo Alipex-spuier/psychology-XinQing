@@ -248,27 +248,12 @@ export default{
 		            console.log('Server response:', uploadRes.data);  
 		            try {
 		                const response = JSON.parse(uploadRes.data);
-		                uni.showModal({
-		                    title: 'Upload Success',
-		                    content: `Emotion: ${response.emotion}, Gender: ${response.gender}`,
-		                    showCancel: false
-		                });
 		            } catch (e) {
 		                console.error('Error parsing JSON:', e);
-		                uni.showModal({
-		                    title: 'Parsing Error',
-		                    content: 'Failed to parse server response as JSON. Response was: ' + uploadRes.data,
-		                    showCancel: false
-		                });
 		            }
 		        },
 		        fail: (err) => {
 		            console.error('Upload failed:', err);
-		            uni.showModal({
-		                title: 'Upload Failed',
-		                content: `Error: ${err.errMsg}`,
-		                showCancel: false
-		            });
 		        }
 		    });
 		},

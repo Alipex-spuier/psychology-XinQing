@@ -24,7 +24,7 @@
 				windowWidth: '',
 				windowHeight: '',
 				imagesrc: null,
-				backButtonPress:0,
+				backButtonPress: 0,
 				canvasSiz: {
 					width: 188,
 					height: 273
@@ -52,17 +52,17 @@
 				this._initData();
 			})
 		},
-		onBackPress(options) {  
-		　　this.backButtonPress++;
-		　　if (this.backButtonPress > 1) { 
-		　　　　plus.runtime.quit();
-		　　} else {
-		　　　　plus.nativeUI.toast('再按一次退出应用');
-		　　} 
-		　　setTimeout(function() {
-		　　　　this.backButtonPress = 0;
-		　　}, 1000);
-		　　return true;
+		onBackPress(options) {
+			this.backButtonPress++;
+			if (this.backButtonPress > 1) {
+				plus.runtime.quit();
+			} else {
+				plus.nativeUI.toast('再按一次退出应用');
+			}
+			setTimeout(function() {
+				this.backButtonPress = 0;
+			}, 1000);
+			return true;
 		},
 		provide() {
 			return {
@@ -141,122 +141,130 @@
 			// 上传图片到服务器
 			uploadImage(filePath) {
 				const uploadTask = uni.uploadFile({
-					url: this.$baseFaceURL+'/classifyImage',
-					filePath: filePath,
-					name: 'image',
-					formData: {
-						'user': 'test'
-					},
-					success: (uploadRes) => {
-						try {
-							const response = JSON.parse(uploadRes.data);
-							let gender = "male";
-							if (response.gender == "man") {
-								gender = "male"
-							} else if (response.gender == "woman") {
-								gender = "female"
+						url: this.$baseFaceURL + '/classifyImage',
+						filePath: filePath,
+						name: 'image',
+						formData: {
+							'user': 'test'
+						},
+						success: (uploadRes) => {
+							try {
+								const response = JSON.parse(uploadRes.data);
+								let gender = "male";
+								if (response.gender == "man") {
+									gender = "male"
+								} else if (response.gender == "woman") {
+									gender = "female"
+								}
+								setTimeout(function() {
+									uni.showToast({
+										title: '识别成功，推荐中',
+										icon: "success"
+									});
+								}, 2000);
+								this.sortMusic(response.emotion, gender);
+							} catch (e) {
+								console.error('Error parsing JSON:', e);
+								setTimeout(function() {
+									uni.showToast({
+										title: '识别失败，请重试',
+										icon: "error"
+									});
+								}, 2000);
+
 							}
-							this.sortMusic(response.emotion, gender);
-						} catch (e) {
-							console.error('Error parsing JSON:', e);
-							uni.showModal({
-								title: 'Parsing Error',
-								content: 'Failed to parse server response as JSON. Response was: ' +
-									uploadRes.data,
-								showCancel: false
+						},
+						fail: (err) => {
+							console.error('Upload failed:', err);
+							uni.showToast({
+								title: '识别失败，请重试',
+								icon: "error"
 							});
-						}
-					},
-					fail: (err) => {
-						console.error('Upload failed:', err);
-						uni.showModal({
-							title: 'Upload Failed',
-							content: `Error: ${err.errMsg}`,
-							showCancel: false
-						});
-					}
-				});
-			},
+						},
+						2000);
+				}
+			});
+	},
 
-			// 初始化
-			init() {
-				uni.getSystemInfo({
-					success: function(res) {
-						_this.windowWidth = res.windowWidth;
-						_this.windowHeight = res.windowHeight;
-					}
-				});
-			},
-			sortMusic(emotion, gender) {
-				let allMusicTmp = uni.getStorageSync("allMusic");
-				let allMusic = allMusicTmp.data.records;
-				let sortedMusic = [];
-				let emotionPart = 0.3;
-				let genderPart = 0.7;
-				let time = this.getTime();
-				if (time === "bad" && emotion !== "surprise" && emotion !== "happy") {
-					emotionPart = 0.7;
-					genderPart = 0.3;
+	// 初始化
+	init() {
+			uni.getSystemInfo({
+				success: function(res) {
+					_this.windowWidth = res.windowWidth;
+					_this.windowHeight = res.windowHeight;
 				}
-				let caculatedScore = null;
-				//排序
-				for (var i = 0; i < allMusic.length; i++) {
-					if (allMusic[i].emotion == emotion && allMusic[i].gender == gender) {
-						allMusic[i].caculatedScore = (allMusic[i].emotionRecommendScore * emotionPart + allMusic[i]
-							.genderRecommendScore * genderPart) / (genderPart + emotionPart);
-						sortedMusic.push(allMusic[i]);
-					}
-				}
-				sortedMusic.sort(function(a, b) {
-					if (a.caculatedScore === b.caculatedScore) { //降序
-						return b.recommendId - a.recommendId
-					} else {
-						return b.caculatedScore - a.caculatedScore
-					}
-				})
-				const sortedMusicSent = JSON.stringify(sortedMusic)
-				uni.navigateTo({
-					url: './player/player?result=' + encodeURIComponent(sortedMusicSent)
-				})
-			},
-			getTime() {
-				const now = new Date();
-				const hours = now.getHours();
-
-				if (hours >= 0 && hours < 7) {
-					return "bad"
-				}
-			},
-			getAllMusic() {
-				uni.request({
-					url: this.$baseURL+'/music/getAllMusic',
-					method: 'GET',
-					success: (response) => {
-						const res = response.data;
-						uni.setStorageSync("allMusic", res);
-					}
-				});
-			},
-			redirectToInput(data){
-				if(data.class=="nav2-color"){
-					let tmp=uni.setStorageSync('setStatusIndexFunc', 1)
-					this.active = tmp
-					this.tempActive=tmp
-					this.$nextTick(() => {
-						this.$refs.commentTabbat.getSetting(tmp)
-						this._initData();
-					})
-				}else if(data.class=="nav5-color"){
-					let tmp=uni.setStorageSync('setStatusIndexFunc', 3)
-					this.active = tmp
-					this.tempActive=tmp
-					this.$nextTick(() => {
-						this.$refs.commentTabbat.getSetting(tmp)
-						this._initData();
-					})
+			});
+		},
+		sortMusic(emotion, gender) {
+			let allMusicTmp = uni.getStorageSync("allMusic");
+			let allMusic = allMusicTmp.data.records;
+			let sortedMusic = [];
+			let emotionPart = 0.3;
+			let genderPart = 0.7;
+			let time = this.getTime();
+			if (time === "bad" && emotion !== "surprise" && emotion !== "happy") {
+				emotionPart = 0.7;
+				genderPart = 0.3;
+			}
+			let caculatedScore = null;
+			//排序
+			for (var i = 0; i < allMusic.length; i++) {
+				if (allMusic[i].emotion == emotion && allMusic[i].gender == gender) {
+					allMusic[i].caculatedScore = (allMusic[i].emotionRecommendScore * emotionPart + allMusic[i]
+						.genderRecommendScore * genderPart) / (genderPart + emotionPart);
+					sortedMusic.push(allMusic[i]);
 				}
 			}
+			sortedMusic.sort(function(a, b) {
+				if (a.caculatedScore === b.caculatedScore) { //降序
+					return b.recommendId - a.recommendId
+				} else {
+					return b.caculatedScore - a.caculatedScore
+				}
+			})
+			const sortedMusicSent = JSON.stringify(sortedMusic)
+			uni.navigateTo({
+				url: './player/player?result=' + encodeURIComponent(sortedMusicSent)
+			})
+		},
+		getTime() {
+			const now = new Date();
+			const hours = now.getHours();
+
+			if (hours >= 0 && hours < 7) {
+				return "bad"
+			}
+		},
+		getAllMusic() {
+			uni.request({
+				url: this.$baseURL + '/music/getAllMusic',
+				method: 'GET',
+				success: (response) => {
+					const res = response.data;
+					uni.setStorageSync("allMusic", res);
+				}
+			});
+		},
+		redirectToInput(data) {
+			if (data.class == "nav2-color") {
+				let tmp = uni.setStorageSync('setStatusIndexFunc', 1)
+				this.active = tmp
+				this.tempActive = tmp
+				this.$nextTick(() => {
+					this.$refs.commentTabbat.getSetting(tmp)
+					this._initData();
+				})
+			} else if (data.class == "nav5-color") {
+				let tmp = uni.setStorageSync('setStatusIndexFunc', 3)
+				this.active = tmp
+				this.tempActive = tmp
+				this.$nextTick(() => {
+					this.$refs.commentTabbat.getSetting(tmp)
+					this._initData();
+				})
+			}
 		}
+	}
 	}
 </script>
 <style scoped>
