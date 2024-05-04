@@ -34,18 +34,20 @@
 						arrow: true
 					}
 				],
-				authorization: null
+				authorization: null,
+				userId:null
 			}
 		},
 		created() {
 			const res = uni.getStorageSync("res")
 			this.authorization = res.header.authorization;
+			this.userId=res.data.data.userId;
 		},
 		methods: {
 			chooseConfig(item) {
 				if (item.id == 3) {
 					uni.request({
-						url: this.$baseURL+'/account/logout',
+						url: this.$baseURL + '/account/logout',
 						method: 'POST',
 						header: {
 							Authorization: this.authorization
@@ -77,6 +79,50 @@
 							});
 						}
 					});
+				} else if (item.id == 2) {
+					const _this=this
+					uni.showModal({
+						title: '账户注销',
+						content: '您确定要删除您的账户么？',
+						success: function(res) {
+							if (res.confirm) {
+								uni.request({
+									url: _this.$baseURL + '/user/delete/'+_this.userId,
+									method: 'DELETE',
+									header: {
+										Authorization: _this.authorization
+									},
+									success: res => {
+										if (res.data.code === 200) {
+											uni.showToast({
+												title: '删除成功',
+												success: function() {
+													uni.clearStorage();
+													setTimeout(function() {
+														uni.navigateTo({
+															url: '/pages/login/index'
+														})
+													}, 2000)
+												}
+											});
+										} else {
+											uni.showToast({
+												title: '删除失败：' + res.data.msg,
+												icon: 'none'
+											});
+										}
+									},
+									fail: () => {
+										uni.showToast({
+											title: '网络请求失败',
+											icon: 'none'
+										});
+									}
+								});
+							}
+						}
+					});
+
 				}
 			}
 		}

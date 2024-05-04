@@ -46,6 +46,7 @@
 					},
 					success: res => {
 						if (res.data.code === 200) {
+							this.getAllMusic()
 							// 登录成功处理
 							uni.showToast({
 								title: '登录成功',
@@ -53,7 +54,6 @@
 									if(res.header.authorization===undefined&&res.header.Authorization !== undefined){
 										res.header.authorization=res.header.Authorization;
 									}
-									
 									uni.setStorageSync("res",res)
 									setTimeout(function() {
 										uni.navigateTo({
@@ -82,7 +82,17 @@
 				uni.navigateTo({
 					url:"/pages/login/register"
 				})
-			}
+			},
+			getAllMusic() {
+				uni.request({
+					url: this.$baseURL + '/music/getAllMusic',
+					method: 'GET',
+					success: (response) => {
+						const res = response.data;
+						uni.setStorageSync("allMusic", res);
+					}
+				});
+			},
 		}
 	}
 </script>

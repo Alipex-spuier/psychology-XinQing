@@ -38,9 +38,6 @@
 			USERCENTER,
 			tabBar
 		},
-		created() {
-			this.getAllMusic();
-		},
 		onLoad() {
 			_this = this;
 			this.init();
@@ -233,16 +230,6 @@
 				if (hours >= 0 && hours < 7) {
 					return "bad"
 				}
-			},
-			getAllMusic() {
-				uni.request({
-					url: this.$baseURL + '/music/getAllMusic',
-					method: 'GET',
-					success: (response) => {
-						const res = response.data;
-						uni.setStorageSync("allMusic", res);
-					}
-				});
 			},
 			redirectToInput(data) {
 				if (data.class == "nav2-color") {
