@@ -38,7 +38,20 @@
 			USERCENTER,
 			tabBar
 		},
+		created() {
+			this.getAllMusic();
+			_this = this;
+			this.init();
+			let temp = uni.getStorageSync('setStatusIndexFunc') || 0
+			uni.setStorageSync('setStatusIndexFunc', temp)
+			this.active = temp
+			this.$nextTick(() => {
+				this.$refs.commentTabbat.getSetting(temp)
+				this._initData();
+			})
+		},
 		onLoad() {
+			this.getAllMusic();
 			_this = this;
 			this.init();
 			let temp = uni.getStorageSync('setStatusIndexFunc') || 0
@@ -97,7 +110,16 @@
 			setImage(e) {
 				_this.zjzClipper(e.path);
 			},
-
+			getAllMusic() {
+				uni.request({
+					url: this.$baseURL + '/music/getAllMusic',
+					method: 'GET',
+					success: (response) => {
+						const res = response.data;
+						uni.setStorageSync("allMusic", res);
+					}
+				});
+			},
 			// 证件照裁切
 			zjzClipper(path) {
 				uni.getImageInfo({

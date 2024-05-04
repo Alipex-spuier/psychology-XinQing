@@ -70,6 +70,14 @@
         		"navigationBarTitleText" : "个人资料",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/userCent/avatar",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "头像选择",
+        		"enablePullDownRefresh" : false
+        	}
         }
 	],
 	"globalStyle": {

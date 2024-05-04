@@ -1,7 +1,7 @@
 <template>
 	<view class="page">
-		<view class="user">
-			<image class="avatar" src="/static/userCent/avatar.png"></image>
+		<view class="user" @click="jumpToProfile">
+			<image class="avatar" :src="avatar"></image>
 			<view class="name">
 				<text>{{username}}</text>
 				<text>{{email}}</text>
@@ -96,16 +96,18 @@
 				],
 				username: "username",
 				email: "email",
-				userId:null,
-				authorization:null
+				userId: null,
+				authorization: null,
+				avatar:"/static/userCent/avatar.png"
 			}
 		},
 		created() {
 			const res = uni.getStorageSync("res")
 			this.username = res.data.data.username;
 			this.email = res.data.data.email;
-			this.userId=res.data.data.userId;
-			this.authorization=res.header.authorization;
+			this.userId = res.data.data.userId;
+			this.authorization = res.header.authorization;
+			this.avatar=res.data.data.avatar;
 		},
 		methods: {
 			config(item) {
@@ -115,7 +117,14 @@
 					})
 				} else if (item.id == 2 || item.id == 3 || item.id == 4 || item.id == 5) {
 					this.showUnfinish();
+				} else if (item.id == 1) {
+					this.jumpToProfile()
 				}
+			},
+			jumpToProfile() {
+				uni.navigateTo({
+					url: "/pages/userCent/userProfile"
+				})
 			},
 			showUnfinish() {
 				uni.showToast({
@@ -123,7 +132,7 @@
 					icon: 'error'
 				});
 			},
-			toFav(){
+			toFav() {
 				uni.request({
 					url: this.$baseURL + '/favorite/' + this.userId,
 					method: 'GET',
@@ -133,44 +142,46 @@
 					success: res => {
 						if (res.data.code == 200) {
 							let fav = res.data.data.records;
-							const allMusicTmp=uni.getStorageSync("allMusic").data.records;
-							let favorite=[]
-							for(let j=0;j<fav.length;j++){
-								for(let i =0;i<allMusicTmp.length;i++){
-									if(allMusicTmp[i].recommendId===fav[j].musicId){
-										favorite[j]=allMusicTmp[i];
+							const allMusicTmp = uni.getStorageSync("allMusic").data.records;
+							let favorite = []
+							for (let j = 0; j < fav.length; j++) {
+								for (let i = 0; i < allMusicTmp.length; i++) {
+									if (allMusicTmp[i].recommendId === fav[j].musicId) {
+										favorite[j] = allMusicTmp[i];
 										break
 									}
 								}
 							}
 							uni.navigateTo({
-								url: './result/result?result=' + encodeURIComponent(JSON.stringify(favorite))
+								url: './result/result?result=' + encodeURIComponent(JSON.stringify(
+									favorite))
 							})
 						}
 					}
 				})
 			},
-			toHis(){
+			toHis() {
 				uni.request({
-					url: this.$baseURL+'/history/'+this.userId,
+					url: this.$baseURL + '/history/' + this.userId,
 					method: "GET",
 					header: {
 						Authorization: this.authorization
 					},
 					success: res => {
 						const response = res.data.data.records;
-						const allMusicTmp=uni.getStorageSync("allMusic").data.records;
-						let history=[]
-						for(let j=0;j<response.length;j++){
-							for(let i =0;i<allMusicTmp.length;i++){
-								if(allMusicTmp[i].recommendId===response[j].musicId){
-									history[j]=allMusicTmp[i];
+						const allMusicTmp = uni.getStorageSync("allMusic").data.records;
+						let history = []
+						for (let j = 0; j < response.length; j++) {
+							for (let i = 0; i < allMusicTmp.length; i++) {
+								if (allMusicTmp[i].recommendId === response[j].musicId) {
+									history[j] = allMusicTmp[i];
 									break
 								}
 							}
 						}
 						uni.navigateTo({
-							url: './result/result?result=' + encodeURIComponent(JSON.stringify(history))
+							url: './result/result?result=' + encodeURIComponent(JSON.stringify(
+								history))
 						})
 					}
 				})

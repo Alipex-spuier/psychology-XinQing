@@ -96,6 +96,7 @@
 	export default {
 		name:'HOMES',
 		created() {
+			this.getAllMusic();
 			const res = uni.getStorageSync("res");
 			this.userId = res.data.data.userId;
 			this.authorization = res.header.authorization;
@@ -103,6 +104,7 @@
 			this.getMusic(this.qu);
 		},
 		mounted() {
+			this.getAllMusic();
 			const res = uni.getStorageSync("res");
 			this.userId = res.data.data.userId;
 			this.authorization = res.header.authorization;
@@ -199,6 +201,16 @@
 		},
 
 		methods: {
+			getAllMusic() {
+				uni.request({
+					url: this.$baseURL + '/music/getAllMusic',
+					method: 'GET',
+					success: (response) => {
+						const res = response.data;
+						uni.setStorageSync("allMusic", res);
+					}
+				});
+			},
 			changeItem(e) {
 				this.current = e.detail.current
 				this.navLevel = "nav" + (e.detail.current + 1)

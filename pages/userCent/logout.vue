@@ -122,7 +122,10 @@
 							}
 						}
 					});
-
+				}else if(item.id==1){
+					uni.navigateTo({
+						url: "/pages/userCent/userProfile"
+					})
 				}
 			}
 		}
