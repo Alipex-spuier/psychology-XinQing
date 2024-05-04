@@ -24,4 +24,8 @@ public class AccountProfile implements Serializable {
     private Date created;
 
     private Date lastLogin;
+
+    public Long getId() {
+        return userId;
+    }
 }

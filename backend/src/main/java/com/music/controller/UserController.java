@@ -21,15 +21,15 @@ public class UserController {
     }
 
     @RequiresAuthentication
-    @GetMapping("/index")
-    public Result index() {
-        User user = userService.getById(1L);
+    @PostMapping("/index/{userId}")
+    public Result index(@PathVariable Integer userId) {
+        User user = userService.getById(userId);
         return Result.succ(user);
     }
 
     @RequiresAuthentication
     @PutMapping("/update")
-    public Result update(@Valid @RequestBody User user){
+    public Result update(@RequestBody User user){
         return Result.succ(userService.updateById(user));
     }
     @RequiresAuthentication
