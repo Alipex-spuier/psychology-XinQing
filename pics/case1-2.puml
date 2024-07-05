@@ -1,0 +1,19 @@
+@startuml
+left to right direction
+actor 用户
+
+usecase (心理测试) as UC
+usecase (开始心理测试) as UC1
+usecase (回答预设题库问题) as UC2
+usecase (完成全部问题) as UC3
+usecase (分析用户心理状态和倾向) as UC4
+usecase (给出建议并推荐专家) as UC5
+
+用户 --> UC
+
+UC .> UC1 : <<include>>
+UC1 .> UC2 : <<include>>
+UC2 .> UC3 : <<include>>
+UC3 .> UC4 : <<include>>
+UC4 .> UC5 : <<include>>
+@enduml

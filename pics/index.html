@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .er.relationshipLabelBox {
+            fill: lightblue; /* 背景颜色 */
+            stroke: darkblue; /* 边框颜色 */
+            stroke-width: 2px; /* 边框宽度 */
+            /* 使用 points 属性定义菱形的形状 */
+            points: 50,25 75,50 50,75 25,50;
+            transform: rotate(45deg); /* 旋转45度，使其变成菱形 */
+            transform-origin: center; /* 设置旋转中心为中心 */
+        }
+    </style>
+</head>
+<body>
+    <div class="mermaid">
+        erDiagram
+        CUSTOMER ||--o{ ORDER : places
+        ORDER ||--|{ LINE-ITEM : contains
+        CUSTOMER {
+            string name
+            string custNumber
+            string sector
+        }
+        ORDER {
+            int orderNumber
+            string deliveryAddress
+            string orderDate
+        }
+        LINE-ITEM {
+            string productCode
+            int quantity
+            float pricePerUnit
+        }
+    </div>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+
+        // 等待Mermaid渲染完成后执行代码
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.er.relationshipLabelBox').forEach(function (label) {
+                // 设置为菱形
+                label.setAttribute('points', '50,25 75,50 50,75 25,50');
+                label.style.transform = 'rotate(45deg)';
+                label.style.transformOrigin = 'center';
+            });
+        });
+    </script>
+</body>
+</html>

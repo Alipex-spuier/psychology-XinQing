@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+actor 专家
+
+usecase (查看和管理用户预约) as UC
+usecase (查看预约列表) as UC1
+usecase (根据时间安排确认预约) as UC2
+usecase (进行咨询并解决用户问题) as UC3
+
+专家 --> UC
+
+UC .> UC1 : <<include>>
+UC .> UC2 : <<include>>
+UC .> UC3 : <<include>>
+@enduml

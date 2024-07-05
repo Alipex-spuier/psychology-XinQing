@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+actor 管理员
+actor 用户
+actor 系统
+
+usecase (执行危机干预流程) as UC
+usecase (检测心理健康指数异常) as UC1
+usecase (推送心理健康提醒) as UC2
+usecase (建立并执行危机干预流程和响应机制) as UC3
+usecase (记录干预情况) as UC4
+
+系统 --> UC
+管理员 --> UC
+用户 --> UC
+
+UC .> UC1 : <<include>>
+UC .> UC2 : <<include>>
+UC .> UC3 : <<include>>
+UC .> UC4 : <<include>>
+@enduml

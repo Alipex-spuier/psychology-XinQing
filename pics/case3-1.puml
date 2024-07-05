@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+actor 管理员
+actor 系统
+
+usecase (管理平台内容) as UC
+usecase (发布和管理心理咨询、测试和解压工具等内容) as UC1
+usecase (系统展示更新内容给用户) as UC2
+
+管理员 --> UC
+系统 --> UC
+
+UC .> UC1 : <<include>>
+UC .> UC2 : <<include>>
+@enduml

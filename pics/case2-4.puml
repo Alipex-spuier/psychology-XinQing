@@ -1,0 +1,19 @@
+@startuml
+left to right direction
+actor 专家
+actor 用户
+actor 系统
+
+usecase (发布心理咨询小知识) as UC
+usecase (每日推荐心理咨询小知识) as UC1
+usecase (查看并阅读资讯) as UC2
+usecase (记录发布和阅读情况) as UC3
+
+专家 --> UC
+用户 --> UC
+系统 --> UC
+
+UC .> UC1 : <<include>>
+UC .> UC2 : <<include>>
+UC .> UC3 : <<include>>
+@enduml

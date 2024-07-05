@@ -1,0 +1,102 @@
+@startuml
+entity Users {
+    INT user_id PK
+}
+Users : VARCHAR user_name
+Users : VARCHAR user_password
+Users : VARCHAR user_email
+Users : VARCHAR user_intro
+Users : DATETIME created_time
+
+entity Experts {
+    INT ex_id PK
+}
+Experts : VARCHAR ex_name
+Experts : TEXT ex_bio
+Experts : VARCHAR ex_dire
+Experts : VARCHAR ex_qualification
+
+entity Appointments {
+    INT apt_id PK
+}
+Appointments : INT user_id FK
+Appointments : INT expert_id FK
+Appointments : DATETIME apt_time
+Appointments : VARCHAR apt_status
+
+entity ConsultationLogs {
+    INT log_id PK
+}
+ConsultationLogs : INT apt_id FK
+ConsultationLogs : TEXT log_content
+ConsultationLogs : DATETIME log_time
+
+entity PsychologicalTests {
+    INT test_id PK
+}
+PsychologicalTests : VARCHAR test_name
+PsychologicalTests : TEXT test_content
+PsychologicalTests : INT test_score
+PsychologicalTests : TEXT test_answer
+
+entity UserTestResults {
+    INT res_id PK
+}
+UserTestResults : INT user_id FK
+UserTestResults : TEXT res_result
+UserTestResults : DATETIME res_time
+
+entity StressReliefTools {
+    INT id PK
+}
+StressReliefTools : VARCHAR tool_name
+StressReliefTools : TEXT tool_description
+StressReliefTools : VARCHAR tool_link
+
+entity Articles {
+    INT art_id PK
+}
+Articles : INT art_author FK
+Articles : VARCHAR art_title
+Articles : TEXT art_content
+Articles : DATETIME art_time
+
+entity ArticlesComments {
+    INT comments_id PK
+}
+ArticlesComments : INT art_id FK
+ArticlesComments : INT user_id FK
+ArticlesComments : TEXT comments_content
+ArticlesComments : DATETIME comments_time
+
+entity Admins {
+    INT admin_id PK
+}
+Admins : VARCHAR admin_name
+Admins : VARCHAR admin_password
+Admins : VARCHAR admin_email
+Admins : DATETIME created_time
+
+entity UserMessages {
+    INT mes_id PK
+}
+UserMessages : INT user_id FK
+UserMessages : INT admin_id FK
+UserMessages : TEXT mes_content
+UserMessages : DATETIME mes_time
+
+
+
+'Admins }|--|{ Experts : "manages"
+'Users }|--|{ Appointments : has
+'Users ||--o{ Appointments : has
+Users ||--o{ Appointments : has
+Experts ||--o{ Appointments : has
+Appointments ||--o{ ConsultationLogs : contains
+Users ||--o{ UserTestResults : takes
+Articles ||--o{ ArticlesComments : contains
+Users ||--o{ ArticlesComments : posts
+Users ||--o{ UserMessages : receives
+Admins ||--o{ UserMessages : sends
+Experts ||--o{ Articles : writes
+@enduml

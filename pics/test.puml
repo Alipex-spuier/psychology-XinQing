@@ -1,0 +1,124 @@
+@startuml
+entity Users {
+    '+user_id
+}
+entity Experts {
+  '  +ex_id
+}
+entity Appointments {
+   ' +apt_id
+}
+entity ConsultationLogs {
+   ' +log_id
+}
+entity PsychologicalTests {
+   ' +test_id
+}
+entity UserTestResults {
+   ' +res_id
+}
+entity StressReliefTools {
+  '  +id
+}
+entity Articles {
+   ' +art_id
+}
+entity Admins {
+   ' +admin_id
+}
+
+class User_ID
+class User_Name
+class User_Password
+class User_Email
+class Created_Time
+class Ex_ID
+class Ex_Name
+class Ex_Bio
+class Ex_Qualification
+class Apt_ID
+class User_ID_Appointment
+class Expert_ID
+class Apt_Time
+class Apt_Status
+class Log_ID
+class Apt_ID_ConsultationLog
+class Log_Content
+class Log_Time
+class Test_ID
+class Test_Name
+class Test_Content
+class Test_Score
+class Test_Answer
+class Res_ID
+class User_ID_UserTestResult
+class Res_Result
+class Res_Time
+class Tool_ID
+class Tool_Name
+class Tool_Description
+class Tool_Link
+class Art_ID
+class Art_Title
+class Art_Content
+class Art_Time
+class Admin_ID
+class Admin_Name
+class Admin_Password
+class Admin_Email
+class Admin_Created_Time
+
+Users -- User_ID
+Users -- User_Name
+Users -- User_Password
+Users -- User_Email
+Users -- Created_Time
+Experts -- Ex_ID
+Experts -- Ex_Name
+Experts -- Ex_Bio
+Experts -- Ex_Qualification
+Appointments -- Apt_ID
+Appointments -- User_ID_Appointment
+Appointments -- Expert_ID
+Appointments . Apt_Time
+Appointments . Apt_Status
+ConsultationLogs -- Log_ID
+ConsultationLogs -- Apt_ID_ConsultationLog
+ConsultationLogs -- Log_Content
+ConsultationLogs -- Log_Time
+PsychologicalTests -- Test_ID
+PsychologicalTests -- Test_Name
+PsychologicalTests -- Test_Content
+PsychologicalTests -- Test_Score
+PsychologicalTests -- Test_Answer
+UserTestResults -- Res_ID
+UserTestResults -- User_ID_UserTestResult
+UserTestResults -- Res_Result
+UserTestResults -- Res_Time
+StressReliefTools -- Tool_ID
+StressReliefTools -- Tool_Name
+StressReliefTools -- Tool_Description
+StressReliefTools -- Tool_Link
+Articles -- Art_ID
+Articles -- Art_Title
+Articles -- Art_Content
+Articles -- Art_Time
+Admins -- Admin_ID
+Admins -- Admin_Name
+Admins -- Admin_Password
+Admins -- Admin_Email
+Admins -- Admin_Created_Time
+
+Users ||--o{ Appointments : has
+Users ||--o{ StressReliefTools : use
+Users ||--o{ UserTestResults : takes
+Experts ||--o{ Appointments : has
+Appointments ||--o{ ConsultationLogs : contains
+UserTestResults ||--o{ PsychologicalTests : from
+Articles ||--o{ ArticlesComments : contains
+Users ||--o{ ArticlesComments : posts
+Users ||--o{ UserMessages : receives
+Admins ||--o{ UserMessages : sends
+Experts ||--o{ Articles : writes
+Admins }|--|{ Experts : "manages"
+@enduml

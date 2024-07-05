@@ -1,0 +1,67 @@
+@startuml
+allowmixing
+
+!define RECTANGLE class
+!define NODE node
+!define COMPONENT component
+
+NODE "用户设备" as UserDevice {
+  RECTANGLE 浏览器
+  RECTANGLE 移动应用
+}
+
+COMPONENT "CDN" as CDN
+
+COMPONENT "阿里云负载均衡 (SLB)" as SLB
+
+NODE "后端服务器1" as BackendServer1 {
+  RECTANGLE 应用程序
+}
+
+' NODE "后端服务器2" as BackendServer2 {
+'   RECTANGLE 应用程序
+' }
+
+NODE "数据库服务器" as DatabaseServer {
+  RECTANGLE MySQL
+}
+
+NODE "日志服务器" as LogServer {
+  RECTANGLE 日志处理系统
+}
+
+NODE "缓存服务器" as CacheServer {
+  RECTANGLE Redis
+}
+
+COMPONENT "阿里云防火墙" as Firewall
+
+COMPONENT "VPC" as VPC {
+  RECTANGLE 子网
+  RECTANGLE 路由表
+  RECTANGLE 安全组
+}
+
+UserDevice --> CDN : 访问
+CDN --> SLB : 请求分发
+SLB --> BackendServer1 : 负载均衡
+'SLB --> BackendServer2 : 负载均衡
+
+BackendServer1 --> DatabaseServer : 数据查询
+'BackendServer2 --> DatabaseServer : 数据查询
+
+BackendServer1 --> CacheServer : 缓存访问
+'BackendServer2 --> CacheServer : 缓存访问
+
+BackendServer1 --> LogServer : 日志记录
+'BackendServer2 --> LogServer : 日志记录
+
+DatabaseServer --> Firewall : 数据保护
+BackendServer1 --> Firewall : 数据保护
+'BackendServer2 --> Firewall : 数据保护
+CacheServer --> Firewall : 数据保护
+LogServer --> Firewall : 数据保护
+
+Firewall --> VPC : 网络安全
+
+@enduml

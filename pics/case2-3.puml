@@ -1,0 +1,19 @@
+@startuml
+left to right direction
+actor 专家
+actor 系统
+
+usecase (专家参与专业交流) as UC
+usecase (访问专业交流平台) as UC1
+usecase (与其他专家交流案例和经验) as UC2
+usecase (获取新知识和经验) as UC3
+usecase (记录交流内容) as UC4
+
+专家 --> UC
+系统 --> UC
+
+UC .> UC1 : <<include>>
+UC .> UC2 : <<include>>
+UC .> UC3 : <<include>>
+UC .> UC4 : <<include>>
+@enduml

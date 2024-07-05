@@ -1,0 +1,19 @@
+@startuml
+left to right direction
+actor 管理员
+actor 用户
+actor 系统
+
+usecase (定制化系统功能和服务) as UC
+usecase (根据反馈调整和定制系统功能) as UC1
+usecase (优化系统功能和服务) as UC2
+usecase (提升用户体验) as UC3
+
+管理员 --> UC
+用户 --> UC
+系统 --> UC
+
+UC .> UC1 : <<include>>
+UC .> UC2 : <<include>>
+UC .> UC3 : <<include>>
+@enduml

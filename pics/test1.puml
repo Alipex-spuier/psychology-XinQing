@@ -1,0 +1,179 @@
+@startuml
+entity Users {
+    +user_id
+    +user_name
+    +user_password
+    +user_email
+    +created_time
+}
+
+entity Experts {
+    +ex_id
+    +ex_name
+    +ex_bio
+    +ex_qualification
+}
+
+entity Appointments {
+    +apt_id
+    +user_id
+    +expert_id
+    +apt_time
+    +apt_status
+}
+
+entity ConsultationLogs {
+    +log_id
+    +apt_id
+    +log_content
+    +log_time
+}
+
+entity PsychologicalTests {
+    +test_id
+    +test_name
+    +test_content
+    +test_score
+    +test_answer
+}
+
+entity UserTestResults {
+    +res_id
+    +user_id
+    +res_result
+    +res_time
+}
+
+entity StressReliefTools {
+    +tool_id
+    +tool_name
+    +tool_description
+    +tool_link
+}
+
+entity Articles {
+    +art_id
+    +art_title
+    +art_content
+    +art_time
+}
+
+entity Admins {
+    +admin_id
+    +admin_name
+    +admin_password
+    +admin_email
+    +admin_created_time
+}
+
+// 表示属性的椭圆形
+ellipse UserAttributes {
+    +user_id
+    +user_name
+    +user_password
+    +user_email
+    +created_time
+}
+
+ellipse ExpertAttributes {
+    +ex_id
+    +ex_name
+    +ex_bio
+    +ex_qualification
+}
+
+ellipse AppointmentAttributes {
+    +apt_id
+    +user_id
+    +expert_id
+    +apt_time
+    +apt_status
+}
+
+ellipse ConsultationLogAttributes {
+    +log_id
+    +apt_id
+    +log_content
+    +log_time
+}
+
+ellipse PsychologicalTestAttributes {
+    +test_id
+    +test_name
+    +test_content
+    +test_score
+    +test_answer
+}
+
+ellipse UserTestResultAttributes {
+    +res_id
+    +user_id
+    +res_result
+    +res_time
+}
+
+ellipse StressReliefToolAttributes {
+    +tool_id
+    +tool_name
+    +tool_description
+    +tool_link
+}
+
+ellipse ArticleAttributes {
+    +art_id
+    +art_title
+    +art_content
+    +art_time
+}
+
+ellipse AdminAttributes {
+    +admin_id
+    +admin_name
+    +admin_password
+    +admin_email
+    +admin_created_time
+}SZFXDXSXRXDD
+
+
+
+FFF^%ssr%^esszf
+
+// 表示关系的菱形
+diamond UserAppointments
+diamond UserStressReliefTools
+diamond UserTestResults
+diamond ExpertAppointments
+diamond AppointmentConsultationLogs
+diamond UserTestResultPsychologicalTests
+diamond ArticleComments
+diamond UserArticleComments
+diamond UserMessages
+diamond AdminUserMessages
+diamond ExpertArticles
+diamond AdminExperts
+
+// 实体与属性的连接
+Users -- UserAttributes
+Experts -- ExpertAttributes
+Appointments -- AppointmentAttributes
+ConsultationLogs -- ConsultationLogAttributes
+PsychologicalTests -- PsychologicalTestAttributes
+UserTestResults -- UserTestResultAttributes
+StressReliefTools -- StressReliefToolAttributes
+Articles -- ArticleAttributes
+Admins -- AdminAttributes
+
+// 实体与关系的连接
+Users ||--o{ UserAppointments : has
+Users ||--o{ UserStressReliefTools : use
+Users ||--o{ UserTestResults : takes
+Experts ||--o{ ExpertAppointments : has
+Appointments ||--o{ AppointmentConsultationLogs : contains
+UserTestResults ||--o{ UserTestResultPsychologicalTests : from
+Articles ||--o{ ArticleComments : contains
+Users ||--o{ UserArticleComments : posts
+Users ||--o{ UserMessages : receives
+Admins ||--o{ AdminUserMessages : sends
+Experts ||--o{ ExpertArticles : writes
+Admins }|--|{ AdminExperts : "manages"
+@enduml

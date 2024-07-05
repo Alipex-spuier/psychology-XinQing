@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+actor 用户
+actor 心理专家
+
+usecase (浏览可选的心理专家列表) as UC1
+usecase (查看专家预设的常见问题与答案) as UC2
+usecase (付费咨询) as UC3
+usecase (选择专家的空闲时间段并预约) as UC4
+usecase (与专家进行实时对话咨询) as UC5
+usecase (查看预约) as UC6
+usecase (与用户实时对话咨询) as UC7
+usecase (记录咨询日志) as UC8
+
+用户 --> UC1
+用户 --> UC2
+用户 --> UC3
+用户 --> UC4
+用户 --> UC5
+
+心理专家 --> UC6
+心理专家 --> UC7
+心理专家 --> UC8
+@enduml

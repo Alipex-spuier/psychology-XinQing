@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+actor 用户
+
+usecase (使用解压工具) as UC
+usecase (选择解压工具) as UC1
+usecase (浏览可用解压途径) as UC2
+usecase (选择并开始使用解压途径) as UC3
+
+用户 --> UC
+
+UC .> UC1 : <<include>>
+UC1 .> UC2 : <<include>>
+UC2 .> UC3 : <<include>>
+@enduml

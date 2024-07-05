@@ -1,0 +1,13 @@
+@startuml
+left to right direction
+actor 用户
+
+usecase (查看心理健康状况变化指数) as UC
+usecase (访问心理指数评测页面) as UC1
+usecase (展示心理健康状况变化指数) as UC2
+
+用户 --> UC
+
+UC .> UC1 : <<include>>
+UC1 .> UC2 : <<include>>
+@enduml
