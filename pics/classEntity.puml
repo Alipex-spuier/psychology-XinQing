@@ -1,0 +1,91 @@
+@startuml
+
+class User {
+    - int userId
+    - String userName
+    - String userPassword
+    - String userEmail
+    - String userIntro
+    - LocalDateTime createdTime
+}
+
+class Expert {
+    - int exId
+    - String exName
+    - String exPassword
+    - String exEmail
+    - String exBio
+    - String exDire
+    - String exQualification
+}
+
+class Appointment {
+    - int aptId
+    - User user
+    - Expert expert
+    - LocalDateTime aptTime
+    - String aptStatus
+}
+
+class ConsultationLog {
+    - int logId
+    - Appointment appointment
+    - String logContent
+    - LocalDateTime logTime
+}
+
+class PsychologicalTest {
+    - int testId
+    - String testName
+    - String testContent
+    - int testScore
+    - String testAnswer
+}
+
+class UserTestResult {
+    - int resId
+    - User user
+    - String resResult
+    - LocalDateTime resTime
+}
+
+class StressReliefTool {
+    - int id
+    - String toolName
+    - String toolDescription
+    - String toolLink
+}
+
+class Article {
+    - int artId
+    - Expert artAuthor
+    - String artTitle
+    - String artContent
+    - LocalDateTime artTime
+}
+
+class ArticlesComment {
+    - int commentsId
+    - Article article
+    - User user
+    - String commentsContent
+    - LocalDateTime commentsTime
+}
+
+class Admin {
+    - int adminId
+    - String adminName
+    - String adminPassword
+    - String adminEmail
+    - LocalDateTime createdTime
+}
+
+class UserMessage {
+    - int mesId
+    - User user
+    - Admin admin
+    - String mesContent
+    - LocalDateTime mesTime
+}
+
+@enduml

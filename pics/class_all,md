@@ -1,0 +1,336 @@
+```mermaid
+classDiagram
+    Entity Layer
+    class User {
+        - int userId
+        - String userName
+        - String userPassword
+        - String userEmail
+        - String userIntro
+        - LocalDateTime createdTime
+    }
+
+    class Expert {
+        - int exId
+        - String exName
+        - String exPassword
+        - String exEmail
+        - String exBio
+        - String exDire
+        - String exQualification
+    }
+
+    class Appointment {
+        - int aptId
+        - User user
+        - Expert expert
+        - LocalDateTime aptTime
+        - String aptStatus
+    }
+
+    class ConsultationLog {
+        - int logId
+        - Appointment appointment
+        - String logContent
+        - LocalDateTime logTime
+    }
+
+    class PsychologicalTest {
+        - int testId
+        - String testName
+        - String testContent
+        - int testScore
+        - String testAnswer
+    }
+
+    class UserTestResult {
+        - int resId
+        - User user
+        - String resResult
+        - LocalDateTime resTime
+    }
+
+    class StressReliefTool {
+        - int id
+        - String toolName
+        - String toolDescription
+        - String toolLink
+    }
+
+    class Article {
+        - int artId
+        - Expert artAuthor
+        - String artTitle
+        - String artContent
+        - LocalDateTime artTime
+    }
+
+    class ArticlesComment {
+        - int commentsId
+        - Article article
+        - User user
+        - String commentsContent
+        - LocalDateTime commentsTime
+    }
+
+    class Admin {
+        - int adminId
+        - String adminName
+        - String adminPassword
+        - String adminEmail
+        - LocalDateTime createdTime
+    }
+
+    class UserMessage {
+        - int mesId
+        - User user
+        - Admin admin
+        - String mesContent
+        - LocalDateTime mesTime
+    }
+
+
+```
+```mermaid
+classDiagram
+    %% Service Layer
+    class UserService {
+        + createUser(User user)
+        + updateUser(int userId, User user)
+        + deleteUser(int userId)
+        + getUserById(int userId)
+    }
+
+    class ExpertService {
+        + createExpert(Expert expert)
+        + updateExpert(int exId, Expert expert)
+        + deleteExpert(int exId)
+        + getExpertById(int exId)
+    }
+
+    class AppointmentService {
+        + createAppointment(Appointment appointment)
+        + getAppointmentsByUser(int userId)
+        + getAppointmentsByExpert(int exId)
+    }
+
+    class ConsultationLogService {
+        + createConsultationLog(ConsultationLog log)
+        + getLogsByAppointment(int aptId)
+    }
+
+    class PsychologicalTestService {
+        + createPsychologicalTest(PsychologicalTest test)
+        + getAllPsychologicalTests()
+        + getTestById(int testId)
+    }
+
+    class UserTestResultService {
+        + createUserTestResult(UserTestResult result)
+        + getResultsByUser(int userId)
+    }
+
+    class StressReliefToolService {
+        + createStressReliefTool(StressReliefTool tool)
+        + getAllStressReliefTools()
+    }
+
+    class ArticleService {
+        + createArticle(Article article)
+        + getAllArticles()
+        + getArticleById(int artId)
+    }
+
+    class ArticlesCommentService {
+        + createArticleComment(ArticlesComment comment)
+        + getCommentsByArticle(int artId)
+    }
+
+    class AdminService {
+        + createAdmin(Admin admin)
+        + updateAdmin(int adminId, Admin admin)
+        + deleteAdmin(int adminId)
+        + getAdminById(int adminId)
+    }
+
+    class UserMessageService {
+        + createUserMessage(UserMessage message)
+        + getMessagesByUser(int userId)
+    }
+
+    %% Mapper Layer
+    class UserRepository {
+        + save(User user)
+        + findById(int userId)
+        + delete(User user)
+    }
+
+    class ExpertRepository {
+        + save(Expert expert)
+        + findById(int exId)
+        + delete(Expert expert)
+    }
+
+    class AppointmentRepository {
+        + save(Appointment appointment)
+        + findByUserId(int userId)
+        + findByExpertId(int exId)
+    }
+
+    class ConsultationLogRepository {
+        + save(ConsultationLog log)
+        + findByAppointmentId(int aptId)
+    }
+
+    class PsychologicalTestRepository {
+        + save(PsychologicalTest test)
+        + findById(int testId)
+        + findAll()
+    }
+
+    class UserTestResultRepository {
+        + save(UserTestResult result)
+        + findByUserId(int userId)
+    }
+
+    class StressReliefToolRepository {
+        + save(StressReliefTool tool)
+        + findAll()
+    }
+
+    class ArticleRepository {
+        + save(Article article)
+        + findById(int artId)
+        + findAll()
+    }
+
+    class ArticlesCommentRepository {
+        + save(ArticlesComment comment)
+        + findByArticleId(int artId)
+    }
+
+    class AdminRepository {
+        + save(Admin admin)
+        + findById(int adminId)
+        + delete(Admin admin)
+    }
+
+    class UserMessageRepository {
+        + save(UserMessage message)
+        + findByUserId(int userId)
+    }
+
+    %% Controller Layer
+    class UserController {
+        + createUser(User user)
+        + updateUser(int userId, User user)
+        + deleteUser(int userId)
+        + getUserById(int userId)
+    }
+
+    class ExpertController {
+        + createExpert(Expert expert)
+        + updateExpert(int exId, Expert expert)
+        + deleteExpert(int exId)
+        + getExpertById(int exId)
+    }
+
+    class AppointmentController {
+        + createAppointment(Appointment appointment)
+        + getAppointmentsByUser(int userId)
+        + getAppointmentsByExpert(int exId)
+    }
+
+    class ConsultationLogController {
+        + createConsultationLog(ConsultationLog log)
+        + getLogsByAppointment(int aptId)
+    }
+
+    class PsychologicalTestController {
+        + createPsychologicalTest(PsychologicalTest test)
+        + getAllPsychologicalTests()
+        + getTestById(int testId)
+    }
+
+    class UserTestResultController {
+        + createUserTestResult(UserTestResult result)
+        + getResultsByUser(int userId)
+    }
+
+    class StressReliefToolController {
+        + createStressReliefTool(StressReliefTool tool)
+        + getAllStressReliefTools()
+    }
+
+    class ArticleController {
+        + createArticle(Article article)
+        + getAllArticles()
+        + getArticleById(int artId)
+    }
+
+    class ArticlesCommentController {
+        + createArticleComment(ArticlesComment comment)
+        + getCommentsByArticle(int artId)
+    }
+
+    class AdminController {
+        + createAdmin(Admin admin)
+        + updateAdmin(int adminId, Admin admin)
+        + deleteAdmin(int adminId)
+        + getAdminById(int adminId)
+    }
+
+    class UserMessageController {
+        + createUserMessage(UserMessage message)
+        + getMessagesByUser(int userId)
+    }
+
+    %% Relationships
+    UserRepository --|> JpaRepository
+    ExpertRepository --|> JpaRepository
+    AppointmentRepository --|> JpaRepository
+    ConsultationLogRepository --|> JpaRepository
+    PsychologicalTestRepository --|> JpaRepository
+    UserTestResultRepository --|> JpaRepository
+    StressReliefToolRepository --|> JpaRepository
+    ArticleRepository --|> JpaRepository
+    ArticlesCommentRepository --|> JpaRepository
+    AdminRepository --|> JpaRepository
+    UserMessageRepository --|> JpaRepository
+
+    UserService <|.. UserServiceImpl
+    ExpertService <|.. ExpertServiceImpl
+    AppointmentService <|.. AppointmentServiceImpl
+    ConsultationLogService <|.. ConsultationLogServiceImpl
+    PsychologicalTestService <|.. PsychologicalTestServiceImpl
+    UserTestResultService <|.. UserTestResultServiceImpl
+    StressReliefToolService <|.. StressReliefToolServiceImpl
+    ArticleService <|.. ArticleServiceImpl
+    ArticlesCommentService <|.. ArticlesCommentServiceImpl
+    AdminService <|.. AdminServiceImpl
+    UserMessageService <|.. UserMessageServiceImpl
+
+    UserController --> UserService
+    ExpertController --> ExpertService
+    AppointmentController --> AppointmentService
+    ConsultationLogController --> ConsultationLogService
+    PsychologicalTestController --> PsychologicalTestService
+    UserTestResultController --> UserTestResultService
+    StressReliefToolController --> StressReliefToolService
+    ArticleController --> ArticleService
+    ArticlesCommentController --> ArticlesCommentService
+    AdminController --> AdminService
+    UserMessageController --> UserMessageService
+
+    UserServiceImpl --> UserRepository
+    ExpertServiceImpl --> ExpertRepository
+    AppointmentServiceImpl --> AppointmentRepository
+    ConsultationLogServiceImpl --> ConsultationLogRepository
+    PsychologicalTestServiceImpl --> PsychologicalTestRepository
+    UserTestResultServiceImpl --> UserTestResultRepository
+    StressReliefToolServiceImpl --> StressReliefToolRepository
+    ArticleServiceImpl --> ArticleRepository
+    ArticlesCommentServiceImpl --> ArticlesCommentRepository
+    AdminServiceImpl --> AdminRepository
+    UserMessageServiceImpl --> UserMessageRepository
+```

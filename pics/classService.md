@@ -1,0 +1,68 @@
+```mermaid
+classDiagram
+    class UserService {
+        + createUser(User user)
+        + updateUser(int userId, User user)
+        + deleteUser(int userId)
+        + getUserById(int userId)
+    }
+
+    class ExpertService {
+        + createExpert(Expert expert)
+        + updateExpert(int exId, Expert expert)
+        + deleteExpert(int exId)
+        + getExpertById(int exId)
+    }
+
+    class AppointmentService {
+        + createAppointment(Appointment appointment)
+        + getAppointmentsByUser(int userId)
+        + getAppointmentsByExpert(int exId)
+    }
+
+    class ConsultationLogService {
+        + createConsultationLog(ConsultationLog log)
+        + getLogsByAppointment(int aptId)
+    }
+
+    class PsychologicalTestService {
+        + createPsychologicalTest(PsychologicalTest test)
+        + getAllPsychologicalTests()
+        + getTestById(int testId)
+    }
+
+    class UserTestResultService {
+        + createUserTestResult(UserTestResult result)
+        + getResultsByUser(int userId)
+    }
+
+    class StressReliefToolService {
+        + createStressReliefTool(StressReliefTool tool)
+        + getAllStressReliefTools()
+    }
+
+    class ArticleService {
+        + createArticle(Article article)
+        + getAllArticles()
+        + getArticleById(int artId)
+    }
+
+    class ArticlesCommentService {
+        + createArticleComment(ArticlesComment comment)
+        + getCommentsByArticle(int artId)
+    }
+
+    class AdminService {
+        + createAdmin(Admin admin)
+        + updateAdmin(int adminId, Admin admin)
+        + deleteAdmin(int adminId)
+        + getAdminById(int adminId)
+    }
+
+    class UserMessageService {
+        + createUserMessage(UserMessage message)
+        + getMessagesByUser(int userId)
+    }
+
+
+```
