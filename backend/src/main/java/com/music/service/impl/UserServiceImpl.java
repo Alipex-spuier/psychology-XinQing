@@ -1,5 +1,7 @@
 package com.music.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.music.entity.User;
 import com.music.mapper.UserMapper;
@@ -14,11 +16,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public String registerService(User user) {
-        User userSearch = userMapper.searchByUsername(user.getUsername());
+        User userSearch = userMapper.searchByUsername(user.getUserName());
         if (userSearch == null) {
-            if ("".equals(user.getPassword())) {
+            if ("".equals(user.getUserPassword())) {
                 return "请输入密码";
-            } else if ("".equals(user.getUsername())) {
+            } else if ("".equals(user.getUserName())) {
                 return "请输入用户昵称";
             } else {
                 userMapper.insert(user);
@@ -26,5 +28,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             }
         }
         return "用户已存在";
+    }
+
+    @Override
+    public IPage pageCC(IPage<User> page, Wrapper wrapper) {
+        return userMapper.pageCC(page,wrapper);
     }
 }

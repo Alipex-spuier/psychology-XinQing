@@ -19,24 +19,22 @@ import java.util.Date;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("users")
-public class User implements Serializable {
-
+@TableName("admins")
+public class Admin implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Long userId;
+    @TableId(value = "admin_id", type = IdType.AUTO)
+    private Long adminId;
 
     @NotBlank(message = "昵称不能为空")
-    private String userName;
+    private String adminName;
 
     @NotBlank(message = "密码不能为空")
-    private String userPassword;
-    
-    @Email(message = "邮箱格式不正确")
-    private String userEmail;
+    private String adminPassword;
 
-    private String userIntro;
+    @Email(message = "邮箱格式不正确")
+    private String adminEmail;
 
     private Date createdTime;
 }
+

@@ -6,9 +6,9 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Data
-public class LoginDto implements Serializable {
+public class ExpertLoginDto implements Serializable {
     @NotBlank(message = "昵称不能为空")
-    private String userName;
+    private String exName;
     @NotBlank(message = "密码不能为空")
-    private String userPassword;
+    private String exPassword;
 }
