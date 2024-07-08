@@ -1,7 +1,10 @@
 package com.music.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.music.entity.Expert;
+import com.music.entity.User;
 import com.music.mapper.ExpertMapper;
 import com.music.service.ExpertService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +29,10 @@ public class ExpertServiceImpl extends ServiceImpl<ExpertMapper, Expert> impleme
             }
         }
         return "专家已存在";
+    }
+
+    @Override
+    public IPage pageCC(IPage<Expert> page, Wrapper wrapper) {
+        return expertMapper.pageCC(page,wrapper);
     }
 }

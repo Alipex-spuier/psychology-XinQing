@@ -6,4 +6,7 @@
         from experts
         where ex_name = #{exName}
     </select>
+    <select id = "pageCC" resultType = "com.music.entity.Expert">
+        select * from experts ${ew.customSqlSegment}
+    </select>
 </mapper>

@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `admins`;
 CREATE TABLE `admins`  (
-  `admin_id` int NOT NULL,
+  `admin_id` int NOT NULL AUTO_INCREMENT,
   `admin_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `admin_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `admin_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `admins`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `appointments`;
 CREATE TABLE `appointments`  (
-  `apt_id` int NOT NULL,
+  `apt_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NULL DEFAULT NULL,
   `expert_id` int NULL DEFAULT NULL,
   `apt_time` datetime NULL DEFAULT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `appointments`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `articles`;
 CREATE TABLE `articles`  (
-  `art_id` int NOT NULL,
+  `art_id` int NOT NULL AUTO_INCREMENT,
   `art_author` int NULL DEFAULT NULL,
   `art_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `art_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
@@ -79,7 +79,7 @@ CREATE TABLE `articles`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `articlescomments`;
 CREATE TABLE `articlescomments`  (
-  `comments_id` int NOT NULL,
+  `comments_id` int NOT NULL AUTO_INCREMENT,
   `art_id` int NULL DEFAULT NULL,
   `user_id` int NULL DEFAULT NULL,
   `comments_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
@@ -100,7 +100,7 @@ CREATE TABLE `articlescomments`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `consultationlogs`;
 CREATE TABLE `consultationlogs`  (
-  `log_id` int NOT NULL,
+  `log_id` int NOT NULL AUTO_INCREMENT,
   `apt_id` int NULL DEFAULT NULL,
   `log_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `log_time` datetime NULL DEFAULT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE `consultationlogs`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `experts`;
 CREATE TABLE `experts`  (
-  `ex_id` int NOT NULL,
+  `ex_id` int NOT NULL AUTO_INCREMENT,
   `ex_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `ex_bio` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `ex_dire` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE `experts`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `psychologicaltests`;
 CREATE TABLE `psychologicaltests`  (
-  `test_id` int NOT NULL,
+  `test_id` int NOT NULL AUTO_INCREMENT,
   `test_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `test_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `test_score` int NULL DEFAULT NULL,
@@ -152,7 +152,7 @@ CREATE TABLE `psychologicaltests`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `stressrelieftools`;
 CREATE TABLE `stressrelieftools`  (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `tool_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tool_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `tool_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -545,7 +545,7 @@ INSERT INTO `t_user` VALUES (1, 'admin', 'admin_work', 'admin_country', 1, 'admi
 -- ----------------------------
 DROP TABLE IF EXISTS `usermessages`;
 CREATE TABLE `usermessages`  (
-  `mes_id` int NOT NULL,
+  `mes_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NULL DEFAULT NULL,
   `admin_id` int NULL DEFAULT NULL,
   `mes_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
@@ -566,7 +566,7 @@ CREATE TABLE `usermessages`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `usertestresults`;
 CREATE TABLE `usertestresults`  (
-  `res_id` int NOT NULL,
+  `res_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NULL DEFAULT NULL,
   `res_result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `res_time` datetime NULL DEFAULT NULL,

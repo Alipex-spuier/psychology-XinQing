@@ -6,4 +6,7 @@
         from admins
         where admin_name = #{adminName}
     </select>
+    <select id = "pageCC" resultType = "com.music.entity.Admin">
+        select * from admins ${ew.customSqlSegment}
+    </select>
 </mapper>

@@ -1,5 +1,7 @@
 package com.music.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.music.entity.Admin;
 import com.music.entity.User;
@@ -27,5 +29,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
             }
         }
         return "用户已存在";
+    }
+
+    @Override
+    public IPage pageCC(IPage<Admin> page, Wrapper wrapper) {
+        return adminMapper.pageCC(page,wrapper);
     }
 }
