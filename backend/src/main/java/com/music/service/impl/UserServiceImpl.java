@@ -16,11 +16,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public String registerService(User user) {
-        User userSearch = userMapper.searchByUsername(user.getUserName());
+        User userSearch = userMapper.searchByUsername(user.getUsername());
         if (userSearch == null) {
-            if ("".equals(user.getUserPassword())) {
+            if ("".equals(user.getPassword())) {
                 return "请输入密码";
-            } else if ("".equals(user.getUserName())) {
+            } else if ("".equals(user.getUsername())) {
                 return "请输入用户昵称";
             } else {
                 userMapper.insert(user);

@@ -3,10 +3,10 @@
 <mapper namespace="com.music.mapper.UserMapper">
     <select id="searchByUsername" resultType="com.music.entity.User">
         select *
-        from users
-        where user_name = #{userName}
+        from t_user
+        where username = #{username}
     </select>
     <select id = "pageCC" resultType = "com.music.entity.User">
-        select * from users ${ew.customSqlSegment}
+        select * from t_user ${ew.customSqlSegment}
     </select>
 </mapper>

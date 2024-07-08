@@ -19,7 +19,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("users")
+@TableName("t_user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,15 +28,23 @@ public class User implements Serializable {
     private Long userId;
 
     @NotBlank(message = "昵称不能为空")
-    private String userName;
+    private String username;
+
+    private String avatar;
+
+    @Email(message = "邮箱格式不正确")
+    private String email;
 
     @NotBlank(message = "密码不能为空")
-    private String userPassword;
-    
-    @Email(message = "邮箱格式不正确")
-    private String userEmail;
+    private String password;
 
-    private String userIntro;
+    private String work;
 
-    private Date createdTime;
+    private String country;
+
+    private Integer age;
+
+    private Date created;
+
+    private Date lastLogin;
 }

@@ -53,7 +53,7 @@ public class AdminController {
 
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper();
         if(StringUtils.isNotEmpty(name) && !"null".equals(name)){
-            lambdaQueryWrapper.like(User::getUserName,name);
+            lambdaQueryWrapper.like(User::getUsername,name);
         }else{
             return Result.fail("name为空！");
         }
@@ -75,10 +75,15 @@ public class AdminController {
         User newUser = userService.getById(user.getUserId());
         return Result.succ(MapUtil.builder()
                 .put("userId", newUser.getUserId())
-                .put("userName", newUser.getUserName())
-                .put("userEmail", newUser.getUserEmail())
-                .put("userIntro", newUser.getUserIntro())
-                .put("createdTime", newUser.getCreatedTime())
+                .put("username", newUser.getUsername())
+                .put("avatar", newUser.getAvatar())
+                .put("userEmail", newUser.getEmail())
+                .put("password", newUser.getPassword())
+                .put("work", newUser.getWork())
+                .put("country", newUser.getCountry())
+                .put("age", newUser.getAge())
+                .put("createdTime", newUser.getCreated())
+                .put("lastLogin", newUser.getLastLogin())
                 .map());
     }
 
