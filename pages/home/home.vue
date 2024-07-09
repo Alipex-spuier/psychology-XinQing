@@ -8,7 +8,7 @@
 					<view class="header-sub-title">心晴心理咨询，让心灵与晴天同行</view>
 				</view>
 				<text class="search-input-icon">{{'\u{e619}'}}</text>
-				<input class="uni-input search-input" placeholder="搜索你想听的音乐 ~" @input="onInput"
+				<input class="uni-input search-input" placeholder="搜索你关心的心理方向 ~" @input="onInput"
 					@confirm="getSearchMusic()" :focus="Focus" />
 			</view>
 		</view>
@@ -45,7 +45,7 @@
 					<view class="nav-image-content-wrapper">
 						<view class="nav-image-content">
 							<text class="nav-image-text">{{item.title}}</text>
-							<text class="nav-image-text-sm">随便听听</text>
+							<text class="nav-image-text-sm">随便看看</text>
 						</view>
 					</view>
 				</view>
@@ -55,7 +55,7 @@
 		<view class="line-bar">
 			<view class="line-bar-wrapper">
 				<view class="bar-title">
-					<view class="bar-title-left">歌单遨游指南</view>
+					<view class="bar-title-left">咨讯广场</view>
 					<view class="bar-title-right" @tap="redirectToInput({class:'nav5-color'})">
 						查看更多
 					</view>
@@ -137,22 +137,22 @@
 				],
 				nav: [{
 						icon: "\u{e63b}",
-						text: '搜一搜',
+						text: '解压工具',
 						class: "nav1-color"
 					},
 					{
 						icon: "\u{e601}",
-						text: '查看歌单',
+						text: '咨询日志',
 						class: "nav2-color"
 					},
 					{
 						icon: "\u{e600}",
-						text: '我的收藏',
+						text: '心理测试',
 						class: "nav3-color"
 					},
 					{
 						icon: "\u{e763}",
-						text: '历史记录',
+						text: '指数分析',
 						class: "nav4-color"
 					},
 				],

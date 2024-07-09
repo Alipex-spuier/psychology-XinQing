@@ -107,7 +107,7 @@
 			<view class="itmMain" @click.stop="switchTabFunc(1, '/pages/list')">
 				<image class="imgse" :fade-show='false' v-if="active!=1" src="/static/tabbar/type.png"></image>
 				<image class="imgse" :fade-show='false' v-if="active===1" src="/static/tabbar/type_active.png"></image>
-				<text class="txtBtn" :class="{'txtBtnSel' :active==1}">音乐列表</text>
+				<text class="txtBtn" :class="{'txtBtnSel' :active==1}">资讯广场</text>
 			</view>
 			<view class="itmMain">
 				<navigator url="../pages/scan/camera">
@@ -119,7 +119,7 @@
 			<view class="itmMain" @click.stop="switchTabFunc(3, '/pages/guide')">
 				<image class="imgse" :fade-show='false' v-if="active!=3" src="/static/tabbar/guide.png"></image>
 				<image class="imgse" :fade-show='false' v-if="active===3" src="/static/tabbar/guide_active.png"></image>
-				<text class="txtBtn" :class="{'txtBtnSel' :active==3}">心情指南</text>
+				<text class="txtBtn" :class="{'txtBtnSel' :active==3}">实时咨询</text>
 			</view>
 			<view class="itmMain" @click.stop="switchTabFunc(4, '/pages/userCent')">
 				<image class="imgse" :fade-show='false' v-if="active!=4" src="/static/tabbar/my.png"></image>
