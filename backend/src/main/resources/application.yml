@@ -3,8 +3,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://8.217.178.86:3306/bangbangying
-    username: "lighthouse"
-    password: "123456"
+    username: lighthouse
+    password: 123456
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
