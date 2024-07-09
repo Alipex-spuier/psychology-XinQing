@@ -28,8 +28,8 @@
 	export default {
 		data() {
 			return {
-				title: "清 · 听",
-				slogan: "让心情遇见音乐的美好",
+				title: "心 · 晴",
+				slogan: "让心情遇见下一个晴天",
 				account: '',
 				password: ''
 			}
