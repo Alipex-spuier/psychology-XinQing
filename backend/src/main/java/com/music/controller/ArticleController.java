@@ -69,7 +69,7 @@ public class ArticleController {
         page.setSize(query.getPageSize());
 
         LambdaQueryWrapper<Article> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if(!"null".equals(name.toString())){
+        if(name!=null && !"null".equals(name.toString())){
             lambdaQueryWrapper.like(Article::getArtAuthor,name);
         }else{
             return Result.fail("作者为空！");
