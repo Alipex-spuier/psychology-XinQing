@@ -25,7 +25,7 @@
 			</view>
 		</view>
 		<text class="loading-text" :style="{ opacity: opacityValue }">{{ load }}%</text>
-		<text class="logo-text">清 · 听 —— 听你想听</text>
+		<text class="logo-text">心 · 晴 —— 想你所想</text>
 	</view>
 </template>
 

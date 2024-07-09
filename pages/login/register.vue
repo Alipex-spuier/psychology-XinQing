@@ -101,7 +101,7 @@
 					return;
 				}
 				uni.request({
-					url: this.$baseURL + '/account/register',
+					url: this.$baseURL + '/api/v1/account/register',
 					method: 'POST',
 					data: {
 						username: this.account,

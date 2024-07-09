@@ -38,7 +38,7 @@
 			login() {
 				// 发送 POST 请求到服务器登录账户
 				uni.request({
-					url: this.$baseURL+'/account/login',
+					url: this.$baseURL+'/api/v1/account/login',
 					method: 'POST',
 					data: {
 						username: this.account,
@@ -68,6 +68,7 @@
 								title: '登录失败：' + res.data.msg,
 								icon: 'none'
 							});
+							console.log(res);
 						}
 					},
 					fail: () => {
@@ -80,7 +81,7 @@
 			},
 			jumpToReg(){
 				uni.navigateTo({
-					url:"/pages/login/register"
+					url:"/api/v1/pages/login/register"
 				})
 			},
 			getAllMusic() {

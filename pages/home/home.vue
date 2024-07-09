@@ -4,8 +4,8 @@
 		<view class="banner-bar">
 			<view class="search-input-wrapper">
 				<view class="banner-header">
-					<view class="header-title">清 · 听</view>
-					<view class="header-sub-title">发现音乐新世界</view>
+					<view class="header-title">心 · 晴</view>
+					<view class="header-sub-title">心晴心理咨询，让心灵与晴天同行</view>
 				</view>
 				<text class="search-input-icon">{{'\u{e619}'}}</text>
 				<input class="uni-input search-input" placeholder="搜索你想听的音乐 ~" @input="onInput"

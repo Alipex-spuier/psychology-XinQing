@@ -1,10 +1,16 @@
 {
 	"pages": [
+		// {
+		// 	"path": "pages/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "心晴"
+		// 	}
+		// },
 		{
 			"path" : "pages/login/index",
 			"style" : 
 			{
-				"navigationBarTitleText" : "欢迎来到清听",
+				"navigationBarTitleText" : "欢迎来到心晴",
 				"enablePullDownRefresh" : false
 			}
 		},
@@ -12,7 +18,7 @@
 			"path" : "pages/login/login",
 			"style" : 
 			{
-				"navigationBarTitleText" : "清听登录",
+				"navigationBarTitleText" : "心晴登录",
 				"enablePullDownRefresh" : false
 			}
 		},
@@ -20,7 +26,7 @@
 			"path" : "pages/login/register",
 			"style" : 
 			{
-				"navigationBarTitleText" : "清听注册",
+				"navigationBarTitleText" : "心晴注册",
 				"enablePullDownRefresh" : false
 			}
 		},
@@ -35,7 +41,7 @@
 		{
 			"path": "pages/index",
 			"style": {
-				"navigationBarTitleText": "清听音乐"
+				"navigationBarTitleText": "心晴"
 			}
 		},
 		{
@@ -82,7 +88,7 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "清听音乐",
+		"navigationBarTitleText": "心晴",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}
