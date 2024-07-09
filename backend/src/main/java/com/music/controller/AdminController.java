@@ -1,6 +1,7 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -63,12 +64,14 @@ public class AdminController {
     @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody Admin admin){
+        String password = SecureUtil.md5(admin.getAdminPassword());
+        admin.setAdminPassword(password);
         adminService.updateById(admin);
         Admin newAdmin = adminService.getById(admin.getAdminId());
         return Result.succ(MapUtil.builder()
-                .put("exId", newAdmin.getAdminId())
-                .put("exName", newAdmin.getAdminName())
-                .put("exEmail", newAdmin.getAdminEmail())
+                .put("adminId", newAdmin.getAdminId())
+                .put("adminName", newAdmin.getAdminName())
+                .put("adminEmail", newAdmin.getAdminEmail())
                 .put("createdTime", newAdmin.getCreatedTime())
                 .map());
     }
@@ -76,6 +79,8 @@ public class AdminController {
     @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@RequestBody Admin admin){
+        String password = SecureUtil.md5(admin.getAdminPassword());
+        admin.setAdminPassword(password);
         return adminService.save(admin)?Result.succ(admin):Result.fail("保存失败！");
     }
 

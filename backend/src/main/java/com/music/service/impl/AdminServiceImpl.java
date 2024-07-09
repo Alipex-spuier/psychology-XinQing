@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.music.entity.Admin;
-import com.music.entity.User;
 import com.music.mapper.AdminMapper;
 import com.music.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;

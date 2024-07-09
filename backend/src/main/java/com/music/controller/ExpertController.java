@@ -1,6 +1,7 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -64,6 +65,8 @@ public class ExpertController {
     @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody Expert expert){
+        String password = SecureUtil.md5(expert.getExPassword());
+        expert.setExPassword(password);
         expertService.updateById(expert);
         Expert newExpert = expertService.getById(expert.getExId());
         return Result.succ(MapUtil.builder()
@@ -80,6 +83,8 @@ public class ExpertController {
     @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@RequestBody Expert expert){
+        String password = SecureUtil.md5(expert.getExPassword());
+        expert.setExPassword(password);
         return expertService.save(expert)?Result.succ(expert):Result.fail("保存失败！");
     }
 

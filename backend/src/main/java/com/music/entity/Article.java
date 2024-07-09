@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -31,9 +30,12 @@ public class Article implements Serializable {
     private String artAuthor;
 
     @NotBlank(message = "标题不能为空")
-    private String artTitel;
+    private String artTitle;
 
     private String artContent;
+
+    @NotBlank(message = "封面图片不能为空")
+    private String artPic;
 
     private Date artTime;
 
