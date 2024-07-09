@@ -1,6 +1,7 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -63,6 +64,8 @@ public class UserController {
     @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody User user){
+        String password = SecureUtil.md5(user.getPassword());
+        user.setPassword(password);
         userService.updateById(user);
         User newUser = userService.getById(user.getUserId());
         return Result.succ(MapUtil.builder()
@@ -82,6 +85,8 @@ public class UserController {
     @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@RequestBody User user){
+        String password = SecureUtil.md5(user.getPassword());
+        user.setPassword(password);
         return userService.save(user)?Result.succ(user):Result.fail("保存失败！");
     }
 

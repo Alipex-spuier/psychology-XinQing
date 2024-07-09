@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : bangbangying
  Source Server Type    : MySQL
- Source Server Version : 80035
+ Source Server Version : 80037
  Source Host           : localhost:3306
  Source Schema         : bangbangying
 
  Target Server Type    : MySQL
- Target Server Version : 80035
+ Target Server Version : 80037
  File Encoding         : 65001
 
- Date: 08/07/2024 10:36:53
+ Date: 09/07/2024 09:59:22
 */
 
 SET NAMES utf8mb4;
@@ -28,11 +28,16 @@ CREATE TABLE `admins`  (
   `admin_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`admin_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admins
 -- ----------------------------
+INSERT INTO `admins` VALUES (1, 'test1', '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-08 14:39:56');
+INSERT INTO `admins` VALUES (2, 'test2', '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:08:33');
+INSERT INTO `admins` VALUES (3, 'test3', '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:08:38');
+INSERT INTO `admins` VALUES (4, 'test4', '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:08:40');
+INSERT INTO `admins` VALUES (5, 'test5', '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:08:43');
 
 -- ----------------------------
 -- Table structure for appointments
@@ -49,11 +54,14 @@ CREATE TABLE `appointments`  (
   INDEX `expert_id`(`expert_id` ASC) USING BTREE,
   CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`expert_id`) REFERENCES `experts` (`ex_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of appointments
 -- ----------------------------
+INSERT INTO `appointments` VALUES (3, 1, 1, '2024-07-09 08:00:00', NULL);
+INSERT INTO `appointments` VALUES (4, 1, 1, '2024-07-09 08:00:00', NULL);
+INSERT INTO `appointments` VALUES (6, 1, 1, '2024-07-09 08:00:00', NULL);
 
 -- ----------------------------
 -- Table structure for articles
@@ -65,14 +73,20 @@ CREATE TABLE `articles`  (
   `art_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `art_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `art_time` datetime NULL DEFAULT NULL,
+  `art_pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`art_id`) USING BTREE,
   INDEX `art_author`(`art_author` ASC) USING BTREE,
   CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`art_author`) REFERENCES `experts` (`ex_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of articles
 -- ----------------------------
+INSERT INTO `articles` VALUES (1, 1, 'test1', '测试内容', '2024-07-09 08:56:26', '这里填图片链接');
+INSERT INTO `articles` VALUES (2, 1, 'test2', '测试内容', '2024-07-09 08:57:04', '这里填图片链接');
+INSERT INTO `articles` VALUES (3, 3, 'test3', '测试内容', '2024-07-09 09:31:29', '这里填图片链接');
+INSERT INTO `articles` VALUES (4, 5, 'test4', '测试内容', '2024-07-09 09:31:37', '这里填图片链接');
+INSERT INTO `articles` VALUES (5, 5, 'test5', '测试内容,测试update功能', '2024-07-09 09:33:21', '这里填图片链接');
 
 -- ----------------------------
 -- Table structure for articlescomments
@@ -89,7 +103,7 @@ CREATE TABLE `articlescomments`  (
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `articlescomments_ibfk_1` FOREIGN KEY (`art_id`) REFERENCES `articles` (`art_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `articlescomments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of articlescomments
@@ -107,7 +121,7 @@ CREATE TABLE `consultationlogs`  (
   PRIMARY KEY (`log_id`) USING BTREE,
   INDEX `apt_id`(`apt_id` ASC) USING BTREE,
   CONSTRAINT `consultationlogs_ibfk_1` FOREIGN KEY (`apt_id`) REFERENCES `appointments` (`apt_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of consultationlogs
@@ -123,12 +137,21 @@ CREATE TABLE `experts`  (
   `ex_bio` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `ex_dire` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `ex_qualification` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`ex_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  `ex_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ex_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_time` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`ex_id`) USING BTREE,
+  INDEX `ex_id`(`ex_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of experts
 -- ----------------------------
+INSERT INTO `experts` VALUES (1, 'test1', NULL, NULL, NULL, '202cb962ac59075b964b07152d234b70', '2663076859@qq.com', '2024-07-08 17:00:55');
+INSERT INTO `experts` VALUES (2, 'test2', NULL, NULL, NULL, '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:05:11');
+INSERT INTO `experts` VALUES (3, 'test3', NULL, NULL, NULL, '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:05:19');
+INSERT INTO `experts` VALUES (4, 'test4', NULL, NULL, NULL, '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:05:23');
+INSERT INTO `experts` VALUES (5, 'test5', NULL, NULL, NULL, '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:25:25');
 
 -- ----------------------------
 -- Table structure for psychologicaltests
@@ -141,7 +164,7 @@ CREATE TABLE `psychologicaltests`  (
   `test_score` int NULL DEFAULT NULL,
   `test_answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   PRIMARY KEY (`test_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of psychologicaltests
@@ -157,7 +180,7 @@ CREATE TABLE `stressrelieftools`  (
   `tool_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `tool_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of stressrelieftools
@@ -532,13 +555,18 @@ CREATE TABLE `t_user`  (
   `created` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `last_login` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`) USING BTREE,
-  INDEX `UK_USERNAME`(`username` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+  INDEX `UK_USERNAME`(`username` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (1, 'admin', 'admin_work', 'admin_country', 1, 'admin_avatar', 'admin_email', 'e10adc3949ba59abbe56e057f20f883e', '2024-04-01 01:03:22', '2024-05-04 02:19:04');
+INSERT INTO `t_user` VALUES (1, 'test1', 'admin_work', 'admin_country', 1, 'admin_avatar', '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:07:59', '2024-07-09 09:12:37');
+INSERT INTO `t_user` VALUES (2, 'test2', NULL, NULL, NULL, NULL, '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:22:55', '2024-07-09 09:22:55');
+INSERT INTO `t_user` VALUES (3, 'test3', NULL, NULL, NULL, NULL, '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:22:57', '2024-07-09 09:22:57');
+INSERT INTO `t_user` VALUES (4, 'test4', NULL, NULL, NULL, NULL, '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:22:59', '2024-07-09 09:22:59');
+INSERT INTO `t_user` VALUES (5, 'test5', NULL, NULL, NULL, NULL, '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:23:04', '2024-07-09 09:23:04');
 
 -- ----------------------------
 -- Table structure for usermessages
@@ -555,7 +583,7 @@ CREATE TABLE `usermessages`  (
   INDEX `admin_id`(`admin_id` ASC) USING BTREE,
   CONSTRAINT `usermessages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `usermessages_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`admin_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of usermessages
@@ -573,7 +601,7 @@ CREATE TABLE `usertestresults`  (
   PRIMARY KEY (`res_id`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `usertestresults_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of usertestresults

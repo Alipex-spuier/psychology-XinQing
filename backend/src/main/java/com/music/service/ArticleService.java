@@ -3,9 +3,9 @@ package com.music.service;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.music.entity.User;
+import com.music.entity.Article;
 
-public interface UserService extends IService<User> {
-    public String registerService(User user);
-    IPage pageCC(IPage<User> page, Wrapper wrapper);
+public interface ArticleService extends IService<Article> {
+    IPage pageCC(IPage<Article> page, Wrapper wrapper);
+
 }
