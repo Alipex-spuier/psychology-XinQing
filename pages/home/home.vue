@@ -33,26 +33,29 @@
 					</view>
 				</view>
 			</view>
+			
 			<view class="nav-bar-wrapper">
 				<view class="nav-bar-item" v-for="(item,index) in nav" :key="index" @tap="redirectToInput(item)">
 					<text class="nav-bar-item-icon" :class="item.class">{{item.icon}}</text>
 					<text class="nav-bar-item-text">{{item.text}}</text>
 				</view>
 			</view>
-			<view class="nav-image-wrapper">
+			
+			<view class="nav-image-wrapper" >
 				<view class="nav-image-item-view" v-for="(item,index) in ruk" :key="index" @click="itemClick(item)">
 					<image :src="item.albumCover" class="nav-image-item" mode="widthFix"></image>
 					<view class="nav-image-content-wrapper">
 						<view class="nav-image-content">
-							<text class="nav-image-text">{{item.title}}</text>
-							<text class="nav-image-text-sm">随便看看</text>
+							<text class="nav-image-text">{{city}}</text>
+							<text class="nav-image-text-sm">{{temperature}} C</text>
 						</view>
 					</view>
 				</view>
 			</view>
+			
 		</view>
 
-		<view class="line-bar">
+		<!-- <view class="line-bar">
 			<view class="line-bar-wrapper">
 				<view class="bar-title">
 					<view class="bar-title-left">咨讯广场</view>
@@ -70,7 +73,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 
 		<view class="qu-bar">
 			<view class="qu-bar-wrapper">
@@ -101,7 +104,8 @@
 			this.userId = res.data.data.userId;
 			this.authorization = res.header.authorization;
 			this.getMusic(this.ruk);
-			this.getMusic(this.qu);
+			this.getArtcles();
+			//this.getMusic(this.qu);
 			this.getLocation()
 		},
 		mounted() {
@@ -110,7 +114,8 @@
 			this.userId = res.data.data.userId;
 			this.authorization = res.header.authorization;
 			this.getMusic(this.ruk);
-			this.getMusic(this.qu);
+			//this.getMusic(this.qu);
+			this.getArtcles();
 		},
 		data() {
 			return {
@@ -130,6 +135,9 @@
 				authorization: null,
 				navLevel: 'nav1',
 				adcode:"",
+				city:" ",
+				temperature:" ",
+				
 				activeColor: ['#ffe3cb', '#ffe3cb', '#ffe3cb', '#ffe3cb', '#1d1b1b'],
 				banner: [
 					"/static/banner/banner1.jpg",
@@ -138,34 +146,38 @@
 					"/static/banner/banner4.jpg"
 				],
 				nav: [{
-						icon: "\u{e63b}",
+						icon: "\u{e601}",
 						text: '解压工具',
 						class: "nav1-color"
 					},
 					{
-						icon: "\u{e601}",
+						icon: "\u{e625}",
 						text: '咨询日志',
 						class: "nav2-color"
 					},
 					{
-						icon: "\u{e600}",
+						icon: "\u{e63c}",
 						text: '心理测试',
 						class: "nav3-color"
 					},
 					{
-						icon: "\u{e763}",
+						icon: "\u{e667}",
 						text: '指数分析',
 						class: "nav4-color"
 					},
 				],
 				ruk: [{
 						albumCover: this.$basePhotoURL+"/photo/134.jpg",
-						title: "Skyline Mirage"
-					},
-					{
-						albumCover: this.$basePhotoURL+"/photo/78.jpg",
-						title: "Told Me"
-					}
+						title: "Skyline Mirage",
+						city:this.city,
+						temperature:this.temperature+"C"
+					}//,
+					// {
+					// 	albumCover: this.$basePhotoURL+"/photo/78.jpg",
+					// 	title: "Told Me",
+					// 	city:this.weather,
+					// 	temperature:this.temperature
+					// }
 				],
 				line: [{
 						image: "/static/emotion/happy.jpg",
@@ -326,6 +338,7 @@
 					success: (response) => {
 						const res = response.data;
 						this.adcode=res.adcode;
+						//console.log(res)
 						this.getWeather();
 					}
 				});
@@ -339,30 +352,55 @@
 					method: 'GET',
 					success: (response) => {
 						const res = response.data;
-						console.log(res)
+						this.temperature=res["lives"][0]["temperature"];
+						console.log(this.temperature);
+						this.city=res["lives"][0]["city"];
+					
 					}
 				});
-			}
+			},
+			getArtcles() {
+				uni.request({
+					url: this.$baseURL + '/api​/v1​/article​/index',
+					method: 'GET',
+					success: (response) => {
+						const res = response.data;
+						for(var i=0;i<3;i++){
+							qu[i].albumCover=res[i].artPic;
+							qu[i].title=res[i].artTitle;
+							qu[i].hotComment=res[i].artAuthor;
+						}
+					}
+				});
+			},
 		}
 	}
 </script>
 
 <style>
+	
+	/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 	@font-face {
+	  font-family: texticons;
+	  font-weight: normal;
+	  font-style: normal;
+	  src: url('//at.alicdn.com/t/c/font_4614114_1rc8ancrsef.ttf?t=1720595388022') format('truetype');
+	}
+	/* @font-face {
 
 		font-family: texticons;
 		font-weight: normal;
 		font-style: normal;
 		src: url('https://at.alicdn.com/t/c/font_4082971_rjo1s6t6mpj.ttf?t=1710063944182') format('truetype');
 	}
-
+	
 	@font-face {
 
 		font-family: texticons;
 		font-weight: normal;
 		font-style: normal;
 		src: url('https://at.alicdn.com/t/c/font_4528601_ny9blfp6n89.ttf?t=1714297680581') format('truetype');
-	}
+	} */
 
 	page,
 	view {
@@ -543,12 +581,12 @@
 	}
 
 	.nav3-color {
-		color: #ff9005;
+		color: #f49fde;
 		font-size: 70rpx;
 	}
 
 	.nav4-color {
-		color: #ffc143;
+		color: #ff00ff;
 		font-size: 70rpx;
 	}
 
@@ -560,6 +598,7 @@
 	}
 
 	.nav-image-wrapper {
+		//height:50%;
 		flex-direction: row;
 		margin: 10rpx $margin 10rpx;
 	}
@@ -580,8 +619,10 @@
 	}
 
 	.nav-image-item {
+		height: 70rpx;
 		width: 100%;
 		margin: 0rpx 0;
+		padding: 100rpx;
 		border-radius: $radius;
 	}
 
@@ -589,7 +630,7 @@
 		position: absolute;
 		z-index: 10;
 		width: 100%;
-		height: 100%;
+		height: 50%;
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
@@ -603,12 +644,12 @@
 	}
 
 	.nav-image-text {
-		font-size: 30rpx;
+		font-size: 50rpx;
 		font-weight: bold;
 	}
 
 	.nav-image-text-sm {
-		font-size: 26rpx;
+		font-size: 70rpx;
 	}
 
 	.qu-bar-wrapper {
