@@ -11,7 +11,7 @@
  Target Server Version : 80037
  File Encoding         : 65001
 
- Date: 09/07/2024 09:59:22
+ Date: 10/07/2024 15:21:33
 */
 
 SET NAMES utf8mb4;
@@ -54,7 +54,7 @@ CREATE TABLE `appointments`  (
   INDEX `expert_id`(`expert_id` ASC) USING BTREE,
   CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`expert_id`) REFERENCES `experts` (`ex_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of appointments
@@ -62,6 +62,9 @@ CREATE TABLE `appointments`  (
 INSERT INTO `appointments` VALUES (3, 1, 1, '2024-07-09 08:00:00', NULL);
 INSERT INTO `appointments` VALUES (4, 1, 1, '2024-07-09 08:00:00', NULL);
 INSERT INTO `appointments` VALUES (6, 1, 1, '2024-07-09 08:00:00', NULL);
+INSERT INTO `appointments` VALUES (7, 1, 1, '2024-07-10 08:00:00', 'N');
+INSERT INTO `appointments` VALUES (8, 1, 1, '2024-07-10 23:12:00', 'N');
+INSERT INTO `appointments` VALUES (9, 1, 1, '2024-07-10 23:12:00', 'N');
 
 -- ----------------------------
 -- Table structure for articles
@@ -77,7 +80,7 @@ CREATE TABLE `articles`  (
   PRIMARY KEY (`art_id`) USING BTREE,
   INDEX `art_author`(`art_author` ASC) USING BTREE,
   CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`art_author`) REFERENCES `experts` (`ex_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of articles
@@ -87,6 +90,8 @@ INSERT INTO `articles` VALUES (2, 1, 'test2', '测试内容', '2024-07-09 08:57:
 INSERT INTO `articles` VALUES (3, 3, 'test3', '测试内容', '2024-07-09 09:31:29', '这里填图片链接');
 INSERT INTO `articles` VALUES (4, 5, 'test4', '测试内容', '2024-07-09 09:31:37', '这里填图片链接');
 INSERT INTO `articles` VALUES (5, 5, 'test5', '测试内容,测试update功能', '2024-07-09 09:33:21', '这里填图片链接');
+INSERT INTO `articles` VALUES (6, 1, '抑郁症', '这是一个测试1', '2024-07-10 09:10:31', NULL);
+INSERT INTO `articles` VALUES (7, 1, '这是一个测试2', '抑郁症', '2024-07-10 09:10:58', NULL);
 
 -- ----------------------------
 -- Table structure for articlescomments
@@ -103,11 +108,17 @@ CREATE TABLE `articlescomments`  (
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `articlescomments_ibfk_1` FOREIGN KEY (`art_id`) REFERENCES `articles` (`art_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `articlescomments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of articlescomments
 -- ----------------------------
+INSERT INTO `articlescomments` VALUES (1, 2, 3, '评论内容1,更新修改', '2024-07-09 14:52:36');
+INSERT INTO `articlescomments` VALUES (2, 1, 2, '评论内容2', '2024-07-09 14:49:21');
+INSERT INTO `articlescomments` VALUES (3, 2, 1, '评论内容3', '2024-07-09 14:50:03');
+INSERT INTO `articlescomments` VALUES (4, 5, 3, '评论内容4', '2024-07-09 14:50:15');
+INSERT INTO `articlescomments` VALUES (5, 4, 3, '评论内容5', '2024-07-09 14:50:20');
+INSERT INTO `articlescomments` VALUES (6, 2, 3, '评论内容6', '2024-07-09 14:50:23');
 
 -- ----------------------------
 -- Table structure for consultationlogs
@@ -121,11 +132,14 @@ CREATE TABLE `consultationlogs`  (
   PRIMARY KEY (`log_id`) USING BTREE,
   INDEX `apt_id`(`apt_id` ASC) USING BTREE,
   CONSTRAINT `consultationlogs_ibfk_1` FOREIGN KEY (`apt_id`) REFERENCES `appointments` (`apt_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of consultationlogs
 -- ----------------------------
+INSERT INTO `consultationlogs` VALUES (2, 8, '这只是一个测试1', '2024-07-10 15:14:48');
+INSERT INTO `consultationlogs` VALUES (3, 9, '这只是一个测试2', '2024-07-10 15:14:55');
+INSERT INTO `consultationlogs` VALUES (4, 9, '这只是一个测试5', '2024-07-10 15:18:52');
 
 -- ----------------------------
 -- Table structure for experts
@@ -142,7 +156,7 @@ CREATE TABLE `experts`  (
   `created_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`ex_id`) USING BTREE,
   INDEX `ex_id`(`ex_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of experts
@@ -152,6 +166,7 @@ INSERT INTO `experts` VALUES (2, 'test2', NULL, NULL, NULL, '202cb962ac59075b964
 INSERT INTO `experts` VALUES (3, 'test3', NULL, NULL, NULL, '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:05:19');
 INSERT INTO `experts` VALUES (4, 'test4', NULL, NULL, NULL, '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:05:23');
 INSERT INTO `experts` VALUES (5, 'test5', NULL, NULL, NULL, '202cb962ac59075b964b07152d234b70', '123@qq.com', '2024-07-09 09:25:25');
+INSERT INTO `experts` VALUES (6, 'test6', '这是一个测试1', '抑郁症', '专家', '202cb962ac59075b964b07152d234b70', '123@qq.com', NULL);
 
 -- ----------------------------
 -- Table structure for psychologicaltests
@@ -163,12 +178,21 @@ CREATE TABLE `psychologicaltests`  (
   `test_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `test_score` int NULL DEFAULT NULL,
   `test_answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `belonging_id` int NULL DEFAULT NULL,
+  `test_cho_a` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'N',
+  `test_cho_b` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'N',
+  `test_cho_c` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'N',
+  `test_cho_d` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'N',
   PRIMARY KEY (`test_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of psychologicaltests
 -- ----------------------------
+INSERT INTO `psychologicaltests` VALUES (1, 'test1', '这是一道两个选项测试题，正确答案为B', 10, 'B', 1, '选项A', '选项B', 'N', 'N');
+INSERT INTO `psychologicaltests` VALUES (2, 'test2', '这是一道两个选项测试题，正确答案为A', 10, 'A', 1, '选项A', '选项B', 'N', 'N');
+INSERT INTO `psychologicaltests` VALUES (3, 'test3', '这是一道四个选项测试题，正确答案为D', 10, 'D', 2, '选项A', '选项B', '选项C', '选项D');
+INSERT INTO `psychologicaltests` VALUES (4, 'test4', '这是一道三个选项测试题，正确答案为C', 25, 'C', 5, '选项A', '选项B', '选项C', 'N');
 
 -- ----------------------------
 -- Table structure for stressrelieftools
@@ -180,11 +204,14 @@ CREATE TABLE `stressrelieftools`  (
   `tool_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `tool_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of stressrelieftools
 -- ----------------------------
+INSERT INTO `stressrelieftools` VALUES (1, 'test1', '这只是一个测试1', '123.com');
+INSERT INTO `stressrelieftools` VALUES (2, 'test2', '这只是一个测试2', '1234.com');
+INSERT INTO `stressrelieftools` VALUES (3, 'test3', '这只是一个测试3', '123.com');
 
 -- ----------------------------
 -- Table structure for t_favorite
@@ -562,11 +589,11 @@ CREATE TABLE `t_user`  (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (1, 'test1', 'admin_work', 'admin_country', 1, 'admin_avatar', '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:07:59', '2024-07-09 09:12:37');
+INSERT INTO `t_user` VALUES (1, 'test1', 'admin_work', 'admin_country', 1, 'admin_avatar', '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:07:59', '2024-07-09 15:32:21');
 INSERT INTO `t_user` VALUES (2, 'test2', NULL, NULL, NULL, NULL, '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:22:55', '2024-07-09 09:22:55');
 INSERT INTO `t_user` VALUES (3, 'test3', NULL, NULL, NULL, NULL, '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:22:57', '2024-07-09 09:22:57');
 INSERT INTO `t_user` VALUES (4, 'test4', NULL, NULL, NULL, NULL, '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:22:59', '2024-07-09 09:22:59');
-INSERT INTO `t_user` VALUES (5, 'test5', NULL, NULL, NULL, NULL, '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:23:04', '2024-07-09 09:23:04');
+INSERT INTO `t_user` VALUES (5, 'test5', NULL, NULL, NULL, NULL, '123@qq.com', '202cb962ac59075b964b07152d234b70', '2024-07-09 09:23:04', '2024-07-09 15:28:44');
 
 -- ----------------------------
 -- Table structure for usermessages
@@ -583,11 +610,15 @@ CREATE TABLE `usermessages`  (
   INDEX `admin_id`(`admin_id` ASC) USING BTREE,
   CONSTRAINT `usermessages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `usermessages_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`admin_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of usermessages
 -- ----------------------------
+INSERT INTO `usermessages` VALUES (1, 1, 1, '这只是一个测试1', '2024-07-09 14:43:16');
+INSERT INTO `usermessages` VALUES (2, 1, 1, '这只是一个测试2', '2024-07-09 14:43:22');
+INSERT INTO `usermessages` VALUES (3, 2, 1, '这只是一个测试3', '2024-07-09 14:43:27');
+INSERT INTO `usermessages` VALUES (5, 2, 3, '这只是一个测试5', '2024-07-09 14:43:40');
 
 -- ----------------------------
 -- Table structure for usertestresults
@@ -601,7 +632,7 @@ CREATE TABLE `usertestresults`  (
   PRIMARY KEY (`res_id`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `usertestresults_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of usertestresults
