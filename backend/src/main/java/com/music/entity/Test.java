@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -18,25 +19,27 @@ import java.util.Date;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("articles")
-public class Article implements Serializable {
+@TableName("psychologicaltests")
+public class Test implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "art_id", type = IdType.AUTO)
-    private Long artId;
+    @TableId(value = "test_id", type = IdType.AUTO)
+    private Long testId;
 
-    @NotBlank(message = "作者不能为空")
-    private Integer artAuthor;
+    @NotBlank(message = "名称不能为空")
+    private String testName;
 
-    @NotBlank(message = "标题不能为空")
-    private String artTitle;
+    private Integer belongingId;
 
-    private String artContent;
+    private String testChoA;
+    private String testChoB;
+    private String testChoC;
+    private String testChoD;
 
-    @NotBlank(message = "封面图片不能为空")
-    private String artPic;
+    private String testContent;
 
-    private Date artTime;
+    private String testAnswer;
 
+    private Integer testScore;
 }
