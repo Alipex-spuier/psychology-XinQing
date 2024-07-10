@@ -1,11 +1,19 @@
 {
 	"pages": [
 		{
+			"path": "pages/Test/Test",
+			"style": {
+				"navigationBarTitleText": "心理测试"
+			}
+		},
+		
+		{
 			"path": "pages/index",
 			"style": {
 				"navigationBarTitleText": "心晴"
 			}
 		},
+		
 		{
 			"path" : "pages/login/index",
 			"style" : 
@@ -84,7 +92,14 @@
         		"navigationBarTitleText" : "头像选择",
         		"enablePullDownRefresh" : false
         	}
-        }
+        },
+        {
+        	"path" : "pages/Test/Test",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : ""
+        	}
+        },
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
