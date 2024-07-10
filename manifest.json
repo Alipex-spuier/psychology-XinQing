@@ -18,7 +18,9 @@
         },
         /* 模块配置 */
         "modules" : {
-            "LivePusher" : {}
+            "LivePusher" : {},
+            "Geolocation" : {},
+            "Maps" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -49,7 +51,22 @@
             },
             /* SDK配置 */
             "sdkConfigs" : {
-                "ad" : {}
+                "ad" : {},
+                "geolocation" : {
+                    "amap" : {
+                        "name" : "amapCuy3NCOK5",
+                        "__platform__" : [ "ios", "android" ],
+                        "appkey_ios" : "221834b86b1087898739a250b7cd8b15",
+                        "appkey_android" : "221834b86b1087898739a250b7cd8b15"
+                    }
+                },
+                "maps" : {
+                    "amap" : {
+                        "name" : "amapCuy3NCOK5",
+                        "appkey_ios" : "221834b86b1087898739a250b7cd8b15",
+                        "appkey_android" : "221834b86b1087898739a250b7cd8b15"
+                    }
+                }
             },
             "icons" : {
                 "android" : {
