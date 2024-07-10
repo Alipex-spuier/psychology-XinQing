@@ -102,6 +102,7 @@
 			this.authorization = res.header.authorization;
 			this.getMusic(this.ruk);
 			this.getMusic(this.qu);
+			this.getLocation()
 		},
 		mounted() {
 			this.getAllMusic();
@@ -128,6 +129,7 @@
 				current: 0,
 				authorization: null,
 				navLevel: 'nav1',
+				adcode:"",
 				activeColor: ['#ffe3cb', '#ffe3cb', '#ffe3cb', '#ffe3cb', '#1d1b1b'],
 				banner: [
 					"/static/banner/banner1.jpg",
@@ -315,7 +317,51 @@
 						})
 					}
 				});
+			},
+			getLocation(){
+				const url = "https://restapi.amap.com/v3/ip?key=bb9a64689b4a7dd9e7c96f7513c80a60";
+				uni.request({
+					url: url,
+					method: 'GET',
+					success: (response) => {
+						const res = response.data;
+						this.adcode=res.adcode;
+						this.getWeather();
+					}
+				});
+				
+			},
+			getWeather(){
+				const weatheradcode = this.adcode;
+				const url = `https://restapi.amap.com/v3/weather/weatherInfo?city=${weatheradcode}&key=bb9a64689b4a7dd9e7c96f7513c80a60`;
+				uni.request({
+					url: url,
+					method: 'GET',
+					success: (response) => {
+						const res = response.data;
+						console.log(res)
+					}
+				});
 			}
+			//getLocation(){
+				// uni.getLocation({
+				// 			    type: 'wgs84',
+				// 				//type:'gj'
+				// 				geocode:true,//设置该参数为true可直接获取经纬度及城市信息
+				// 			    success: function (res) {
+				// 					console.log("success")
+				// 					console.log(res)
+				// 					that.addrDel = res;
+							
+				// 			    },
+				// 				fail: function () {
+				// 					uni.showToast({
+				// 					    title: '获取地址失败，将导致部分功能不可用',
+				// 						icon:'none'
+				// 					});
+				// 				}
+				// 			});
+			//}
 		}
 	}
 </script>

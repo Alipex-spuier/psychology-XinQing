@@ -1,11 +1,11 @@
 {
 	"pages": [
-		// {
-		// 	"path": "pages/index",
-		// 	"style": {
-		// 		"navigationBarTitleText": "心晴"
-		// 	}
-		// },
+		{
+			"path": "pages/index",
+			"style": {
+				"navigationBarTitleText": "心晴"
+			}
+		},
 		{
 			"path" : "pages/login/index",
 			"style" : 
@@ -38,12 +38,12 @@
 				"enablePullDownRefresh" : false
 			}
 		},
-		{
-			"path": "pages/index",
-			"style": {
-				"navigationBarTitleText": "心晴"
-			}
-		},
+		// {
+		// 	"path": "pages/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "心晴"
+		// 	}
+		// },
 		{
 			"path" : "pages/player/player",
 			"style" : 
