@@ -343,25 +343,6 @@
 					}
 				});
 			}
-			//getLocation(){
-				// uni.getLocation({
-				// 			    type: 'wgs84',
-				// 				//type:'gj'
-				// 				geocode:true,//设置该参数为true可直接获取经纬度及城市信息
-				// 			    success: function (res) {
-				// 					console.log("success")
-				// 					console.log(res)
-				// 					that.addrDel = res;
-							
-				// 			    },
-				// 				fail: function () {
-				// 					uni.showToast({
-				// 					    title: '获取地址失败，将导致部分功能不可用',
-				// 						icon:'none'
-				// 					});
-				// 				}
-				// 			});
-			//}
 		}
 	}
 </script>
