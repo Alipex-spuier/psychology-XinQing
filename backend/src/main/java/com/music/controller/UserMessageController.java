@@ -83,12 +83,12 @@ public class UserMessageController {
         return Result.succ(userMessageService.removeById(mesId));
     }//删除
 
-    @PutMapping("/save")
+    @PostMapping("/save")
     public Result save(@RequestBody UserMessage userMessage){
         userMessage.setMesTime(new Date());
         return userMessageService.save(userMessage)?Result.succ(userMessage):Result.fail("保存失败！");
     }//增加
-    @PostMapping("/update")
+    @PutMapping("/update")
     public Result update(@RequestBody UserMessage userMessage){
         if(ObjectUtil.isEmpty(userMessageService.getById(userMessage.getMesId())))
             return Result.fail("没有这个消息");
@@ -96,6 +96,7 @@ public class UserMessageController {
             return Result.fail("没有这个用户");
         if(ObjectUtil.isEmpty(adminService.getById(userMessage.getAdminId())))
             return Result.fail("没有这个管理员");
+        userMessage.setMesTime(new Date());
         userMessageService.updateById(userMessage);
         UserMessage newUserMessage = userMessageService.getById(userMessage.getMesId());
         return Result.succ(MapUtil.builder()

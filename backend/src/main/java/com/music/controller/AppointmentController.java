@@ -29,7 +29,7 @@ public class AppointmentController {
     ExpertService expertService;
 
     @RequiresAuthentication
-    @PostMapping("/index")
+    @GetMapping("/index")
     public Result index(){
         return Result.succ(appointmentService.list());
     }//全查找
@@ -83,7 +83,7 @@ public class AppointmentController {
     }//删除
 
     @RequiresAuthentication
-    @PostMapping("/update")
+    @PutMapping("/update")
     public Result update(@RequestBody Appointment appointment){
         if(ObjectUtil.isEmpty(appointmentService.getById(appointment.getAptId())))
             return Result.fail("没有这个预约记录");

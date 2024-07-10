@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -18,25 +17,12 @@ import java.util.Date;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("articles")
-public class Article implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @TableId(value = "art_id", type = IdType.AUTO)
-    private Long artId;
-
-    @NotBlank(message = "作者不能为空")
-    private Integer artAuthor;
-
-    @NotBlank(message = "标题不能为空")
-    private String artTitle;
-
-    private String artContent;
-
-    @NotBlank(message = "封面图片不能为空")
-    private String artPic;
-
-    private Date artTime;
-
+@TableName("consultationlogs")
+public class ConsultationLog {
+    @TableId(value = "log_id",type = IdType.AUTO)
+    private Long logId;
+    @NotBlank(message = "aptId不能为空")
+    private Long aptId;
+    private String logContent;
+    private Date logTime;
 }

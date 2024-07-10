@@ -9,4 +9,7 @@
     <select id = "pageCC" resultType = "com.music.entity.Expert">
         select * from experts ${ew.customSqlSegment}
     </select>
+    <select id="searchAllByExDire" resultType="com.music.entity.Expert">
+        select * from experts where ex_dire = #{exDire}
+    </select>
 </mapper>

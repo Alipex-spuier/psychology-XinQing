@@ -4,11 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.music.entity.Expert;
-import com.music.entity.User;
 import com.music.mapper.ExpertMapper;
 import com.music.service.ExpertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ExpertServiceImpl extends ServiceImpl<ExpertMapper, Expert> implements ExpertService {
@@ -34,5 +35,10 @@ public class ExpertServiceImpl extends ServiceImpl<ExpertMapper, Expert> impleme
     @Override
     public IPage pageCC(IPage<Expert> page, Wrapper wrapper) {
         return expertMapper.pageCC(page,wrapper);
+    }
+
+    @Override
+    public List<Expert> searchAllByExDire(String exDire){
+        return expertMapper.searchAllByExDire(exDire);
     }
 }

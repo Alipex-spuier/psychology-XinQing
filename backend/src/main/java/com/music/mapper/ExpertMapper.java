@@ -9,9 +9,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface ExpertMapper extends BaseMapper<Expert> {
-    Expert searchByExName(String expertName);
-    IPage pageCC(IPage<Expert> page, @Param(Constants.WRAPPER) Wrapper wrapper);
+    Expert searchByExName(String exName);
+    IPage<Expert> pageCC(IPage<Expert> page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
+    List<Expert> searchAllByExDire(String exDire);
 }
