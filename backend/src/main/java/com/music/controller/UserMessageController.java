@@ -11,8 +11,10 @@ import com.music.entity.UserMessage;
 import com.music.service.AdminService;
 import com.music.service.UserMessageService;
 import com.music.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -26,17 +28,23 @@ public class UserMessageController {
     AdminService adminService;
     @Autowired
     UserService userService;
+    @ApiOperation(value = "用于userService的全查询 "+
+            "不需要传参数")
     @GetMapping("/index")
     public Result index() {
         return Result.succ(userMessageService.list());
     }
     //查询
+    @ApiOperation(value = "用于单独查询某一条记录 "+
+            " \"mesId\":* ")
     @GetMapping("/index/{mesId}")
     public Result getOneByMesId(@PathVariable Integer mesId){
         return Result.succ(userMessageService.getById(mesId));
     }//根据mesId查询
 
-    @RequiresAuthentication
+    @ApiOperation(value = "用于分页查询 "+
+            "\"pageSize\":1,\n" +
+            "    \"pageNum\":1")
     @PostMapping("/indexPage")
     public Result indexPage(@RequestBody QueryPageParam query){
         Page<UserMessage> page = new Page<>();
@@ -49,7 +57,12 @@ public class UserMessageController {
         return Result.succ(result.getRecords());
     }//分页模糊查询显示
 
-    @RequiresAuthentication
+    @ApiOperation(value = "用于根据userId的分页查询（查询一个用户的所有message）"+
+            "\"pageSize\":*,\n" +
+            "   \"pageNum\":*,\n" +
+            "   \"param\":{\n" +
+            "       \"userId\": *\n" +
+            "   }")
     @PostMapping("/indexPage/user/{userId}")
     public Result indexPageByUserId(@RequestBody QueryPageParam query,@PathVariable Integer userId){
         Page<UserMessage> page = new Page<>();
@@ -63,7 +76,12 @@ public class UserMessageController {
 
         return Result.succ(result.getRecords());
     }//根据userId分页模糊查询显示
-    @RequiresAuthentication
+    @ApiOperation(value = "用于根据adminId的分页查询（查询一个管理员的所有message）"+
+            "   \"pageSize\":2,\n" +
+            "   \"pageNum\":1,\n" +
+            "   \"param\":{\n" +
+            "       \"adminId\": *\n" +
+            "   }")
     @PostMapping("/indexPage/admin/{adminId}")
     public Result indexPageByExpertId(@RequestBody QueryPageParam query,@PathVariable Integer adminId){
         Page<UserMessage> page = new Page<>();
@@ -77,17 +95,28 @@ public class UserMessageController {
 
         return Result.succ(result.getRecords());
     }//根据adminId分页模糊查询显示
-
+    @ApiOperation(value = "用于删除一条记录"+
+            "\"mesId\": *")
     @DeleteMapping("/delete/{mesId}")
     public Result delete(@PathVariable Integer mesId){
-        return Result.succ(userMessageService.removeById(mesId));
+        return ObjectUtil.isNotEmpty(userMessageService.getById(mesId))?Result.succ(userMessageService.removeById(mesId)):Result.fail("没有这个用户留言");
     }//删除
 
+    @ApiOperation(value = "用于添加一条userMessage"+
+            "\"userId\": *")
     @PostMapping("/save")
-    public Result save(@RequestBody UserMessage userMessage){
+    public Result save(@Validated @RequestBody UserMessage userMessage){
+        if(ObjectUtil.isEmpty(userService.getById(userMessage.getUserId())))
+            return Result.fail("没有这个用户");
+        if(ObjectUtil.isEmpty(adminService.getById(userMessage.getAdminId())))
+            return Result.fail("没有这个管理员");
         userMessage.setMesTime(new Date());
         return userMessageService.save(userMessage)?Result.succ(userMessage):Result.fail("保存失败！");
     }//增加
+    @ApiOperation(value = "用于根据mesId更新一条记录"+
+            "\"userId\":1,\n" +
+            "    \"adminId\":1,\n" +
+            "    \"mesConten\":\"test1\"")
     @PutMapping("/update")
     public Result update(@RequestBody UserMessage userMessage){
         if(ObjectUtil.isEmpty(userMessageService.getById(userMessage.getMesId())))
