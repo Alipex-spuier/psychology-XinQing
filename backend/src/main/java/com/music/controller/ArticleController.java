@@ -10,6 +10,7 @@ import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
 import com.music.entity.Article;
 import com.music.service.ArticleService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,17 +30,29 @@ public class ArticleController {
     }
 
     @GetMapping("/index")
+    @ApiOperation(value ="列出数据库中所有资讯文章 "+
+            "{不传参}"
+    )
     public Result index() {
         return Result.succ(articleService.list());
     }
 
     @PostMapping("/index/{artId}")
+    @ApiOperation(value ="列出数据库中artId为{artId}的资讯文章"+
+            "{参数通过url传入}"
+    )
     public Result index(@PathVariable Integer artId) {
         Article article = articleService.getById(artId);
         return Result.succ(article);
     }
 
     @PostMapping("/indexPageByTitle")
+    @ApiOperation(value = "通过artTitle分页查询数据库中的资讯文章 "+
+            "\"pageSize\":2,\n" +
+            "\"pageNum\":1,\n" +
+            "\"param\":{\n" +
+            "    \"artTitle\":\"文章标题关键字\"\n" +
+            "}")
     public Result indexPageByTitle(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
         String name = (String)param.get("artTitle");
@@ -59,6 +72,12 @@ public class ArticleController {
         return Result.succ(result.getRecords());
     }
 
+    @ApiOperation(value = "通过artAuthor分页查询数据库中的资讯文章 "+
+            "\"pageSize\":2,\n" +
+            "\"pageNum\":1,\n" +
+            "\"param\":{\n" +
+            "    \"artAuthor\":4\n" +
+            "}")
     @PostMapping("/indexPageByAuthor")
     public Result indexPageByAuthor(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
@@ -79,6 +98,14 @@ public class ArticleController {
         return Result.succ(result.getRecords());
     }
 
+    @ApiOperation(value ="更新资讯文章信息,artId必填，其他几个想改啥填啥 "+
+            "{\"artId\":5,\n" +
+            "\"artAuthor\":4,\n" +
+            "\"artTitle\":\"文章标题信息\"\n" +
+            "\"artContent\":\"文章正文\"\n" +
+            "\"artPic\":\"文章封面图片url\"\n"+
+            "}"
+    )
     @PutMapping("/update")
     public Result update(@RequestBody Article article){
         article.setArtTime(new Date());
@@ -88,18 +115,30 @@ public class ArticleController {
                 .put("artId", newArticle.getArtId())
                 .put("artAuthor", newArticle.getArtAuthor())
                 .put("artTitle", newArticle.getArtTitle())
+                .put("artContent", newArticle.getArtContent())
                 .put("artPic", newArticle.getArtPic())
                 .put("artTime", newArticle.getArtTime())
                 .map());
     }
 
     @PostMapping("/save")
+    @ApiOperation(value ="新建并保存一个文章，artId、artAuthor、artTitle、artPic必填，artContent选填 "+
+            "{\"artId\":5,\n" +
+            "\"artAuthor\":4,\n" +
+            "\"artTitle\":\"文章标题信息\"\n" +
+            "\"artContent\":\"文章正文\"\n" +
+            "\"artPic\":\"文章封面图片url\"\n"+
+            "}"
+    )
     public Result save(@RequestBody Article article){
         article.setArtTime(new Date());
         return articleService.save(article)?Result.succ(article):Result.fail("保存失败！");
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="通过artId删除一个文章 "+
+            "{参数通过url传入}"
+    )
     @DeleteMapping("/delete/{artId}")
     public Result delete(@PathVariable Integer artId) {
         return Result.succ(articleService.removeById(artId));

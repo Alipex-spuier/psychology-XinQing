@@ -10,6 +10,7 @@ import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
 import com.music.entity.Admin;
 import com.music.service.AdminService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +29,18 @@ public class AdminController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="列出数据库中所有admin "+
+            "{不传参}"
+    )
     @GetMapping("/index")
     public Result index() {
         return Result.succ(adminService.list());
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="列出数据库中adminId为{adminId}的管理员 "+
+            "{参数通过url传入}"
+    )
     @PostMapping("/index/{adminId}")
     public Result index(@PathVariable Integer adminId) {
         Admin admin = adminService.getById(adminId);
@@ -41,6 +48,13 @@ public class AdminController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="通过名字（模糊查询）分页查询数据库中的管理员 "+
+            "{\"pageSize\":2,\n" +
+            "\"pageNum\":1,\n" +
+            "\"param\":{\n" +
+            "    \"name\":\"te\"\n" +
+            "}}"
+    )
     @PostMapping("/indexPage")
     public Result indexPage(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
@@ -62,6 +76,12 @@ public class AdminController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="更新管理员信息,adminId必填，其他三个想改啥填啥 "+
+            "{\"adminId\":1\n" +
+            "\"adminName\":\"test6\",\n" +
+            "\"adminPassword\":\"123\",\n" +
+            "\"adminEmail\":\"123@qq.com\"}"
+    )
     @PutMapping("/update")
     public Result update(@RequestBody Admin admin){
         String password = SecureUtil.md5(admin.getAdminPassword());
@@ -77,6 +97,10 @@ public class AdminController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="新建并保存一个管理员，以下两个必填，其他选填 "+
+            "{\"adminName\":\"test6\",\n" +
+            "\"adminPassword\":\"123\"}"
+    )
     @PostMapping("/save")
     public Result save(@RequestBody Admin admin){
         String password = SecureUtil.md5(admin.getAdminPassword());
@@ -85,6 +109,9 @@ public class AdminController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="通过adminId删除一个管理员 "+
+            "{参数通过url传入}"
+    )
     @DeleteMapping("/delete/{adminId}")
     public Result delete(@PathVariable Integer adminId) {
         return Result.succ(adminService.removeById(adminId));

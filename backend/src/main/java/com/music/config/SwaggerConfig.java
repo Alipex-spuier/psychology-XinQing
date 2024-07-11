@@ -30,10 +30,10 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        Contact contact = new Contact("QingTong", "https://qingting.com", "2992852190@qq.com");
+        Contact contact = new Contact("心·晴", "https://qingting.com", "2992852190@qq.com");
         return new ApiInfo(
-                "QingTingApi",
-                "QingTing接口文档",
+                "心·晴Api",
+                "心·晴接口文档",
                 "v1.0",
                 "https://qingting.com",
                 contact,
