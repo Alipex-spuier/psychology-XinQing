@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -21,7 +22,7 @@ import java.util.Date;
 public class ConsultationLog {
     @TableId(value = "log_id",type = IdType.AUTO)
     private Long logId;
-    @NotBlank(message = "aptId不能为空")
+    @NotNull(message = "aptId不能为空")
     private Long aptId;
     private String logContent;
     private Date logTime;

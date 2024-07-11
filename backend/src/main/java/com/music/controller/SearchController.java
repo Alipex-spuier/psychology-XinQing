@@ -10,6 +10,7 @@ import com.music.entity.Article;
 import com.music.entity.Expert;
 import com.music.service.ArticleService;
 import com.music.service.ExpertService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,12 @@ public class SearchController {
     ExpertService expertService;
     @Autowired
     ArticleService articleService;
-
+    @ApiOperation(value = "用于根据方向搜索专家和资讯"+
+            "\"pageSize\":1,\n" +
+            "    \"pageNum\":1,\n" +
+            "    \"param\":{\n" +
+            "        \"dire\":\"抑郁症\"\n" +
+            "    }")
     @PostMapping("")
     public Result Search(@RequestBody QueryPageParam queryPageParam){
         String dire = (String) queryPageParam.getParam().get("dire");
@@ -31,6 +37,7 @@ public class SearchController {
         pageExpert.setCurrent(queryPageParam.getPageNum());
         LambdaQueryWrapper<Expert> lambdaQueryWrapperExpert = new LambdaQueryWrapper<>();
         lambdaQueryWrapperExpert.like(Expert::getExDire,dire);
+        lambdaQueryWrapperExpert.orderByDesc(Expert::getExName);
         IPage expertIpage = expertService.pageCC(pageExpert,lambdaQueryWrapperExpert);
         List<Expert> expertList = expertIpage.getRecords();//Expert的分页处理
 
@@ -40,6 +47,7 @@ public class SearchController {
         LambdaQueryWrapper<Article> lambdaQueryWrapperArticle = new LambdaQueryWrapper<>();
         lambdaQueryWrapperArticle.like(Article::getArtTitle,dire).or().like(Article::getArtContent,dire);
         IPage articleIPage = articleService.pageCC(pageArticle,lambdaQueryWrapperArticle);
+        lambdaQueryWrapperArticle.orderByDesc(Article::getArtTitle);
         List<Article> articleList = articleIPage.getRecords();//Article的分页处理
         return Result.succ(MapUtil.builder()
                 .put("expertList",expertList)

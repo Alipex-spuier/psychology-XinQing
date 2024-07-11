@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,9 +15,9 @@ import java.util.Date;
 public class UserMessage implements Serializable {
     @TableId(value = "mes_id", type = IdType.AUTO)
     private Long mesId;
-    @NotBlank(message = "userId不能为空")
+    @NotNull(message = "userId不能为空")
     private Long userId;
-    @NotBlank(message = "adminId不能为空")
+    @NotNull(message = "adminId不能为空")
     private Long adminId;
 
     private String mesContent;

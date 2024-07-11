@@ -4,7 +4,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://db:3306/bangbangying
     url: jdbc:mysql://8.217.178.86:3306/bangbangying
+<<<<<<< HEAD
 
+=======
+>>>>>>> b80eb14ba967ac2082bdeccb858a5634ece444db
     username: root
     password: 123456
   mvc:
@@ -16,7 +19,11 @@ shiro-redis:
   enabled: true
   redis-manager:
 #    host: redis:6379
+<<<<<<< HEAD
   host: 127.0.0.1:6379
+=======
+    host:127.0.0.1:6379
+>>>>>>> b80eb14ba967ac2082bdeccb858a5634ece444db
 server:
   port: 8080
 music:
