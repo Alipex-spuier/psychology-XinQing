@@ -27,4 +27,8 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
     public IPage<Appointment> pageCC(IPage<Appointment> page, Wrapper wrapper){
         return  appointmentMapper.pageCC(page,wrapper);
     }
+    @Override
+    public Integer accountByDay(Wrapper wrapper){
+        return appointmentMapper.accountByDay(wrapper);
+    }
 }

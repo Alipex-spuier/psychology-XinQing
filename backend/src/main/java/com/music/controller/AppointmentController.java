@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 
 @RestController
@@ -152,13 +153,43 @@ public class AppointmentController {
     }//修改
 
     @ApiOperation(value = "用于添加一条预约记录 "+
-            "\"userId\":1,\n" +
-            "    \"expertId\":1,\n" +
-            "    \"aptTime\":\"2024-07-01\"")
+            "    \"expertId\":2,\n" +
+            "    \"aptTime\":\"2024-07-11T14:00:00\"")
     @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@Validated @RequestBody Appointment appointment){
+        appointment.setUserId(null);
         appointment.setAptStatus("N");
         return appointmentService.save(appointment)?Result.succ(appointment):Result.fail("保存失败！");
-    }//第一次保存预约的时候需要把statue设置成N，即未预约
+    }//放预约时间的时候需要把statue设置成N，即未被预约,userId设置为Null
+    @RequiresAuthentication
+    @PostMapping("/appoint/{userId}")
+    public Result appoint(@Validated @RequestBody Appointment appointment,@PathVariable Long userId){
+        if (ObjectUtil.isEmpty(userService.getById(userId)))
+            return Result.fail("没有这个用户");
+        appointment.setUserId(userId);
+        appointment.setAptStatus("Y");
+        return appointmentService.updateById(appointment)?Result.succ(appointmentService.getById(appointment.getAptId())):Result.fail("预约失败");
+    }
+
+
+    @RequiresAuthentication
+    @PostMapping("/accountByDay")
+    public Result appointmentAccountByDay(@RequestBody HashMap param){
+        String aptTime = (String) param.get("aptTime");
+        String endDay = aptTime+" 23:59:59";
+        aptTime +=" 00:00:00";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date = new Date();Date endDate = new Date();
+        try{
+            date = simpleDateFormat.parse(aptTime);
+            endDate = simpleDateFormat.parse(endDay);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.between(Appointment::getAptTime,date,endDate);
+        return Result.succ(appointmentService.accountByDay(lambdaQueryWrapper));
+    }
 }

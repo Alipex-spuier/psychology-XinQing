@@ -8,33 +8,32 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("appointments")
-public class Appointment implements Serializable {
-    @TableId(value = "apt_id", type = IdType.AUTO)
-    private Long aptId;
+@TableName("usertestresults")
+public class TestResult implements Serializable {
 
-    private Long userId;
+    private static final long serialVersionUID = 1L;
 
-    @NotNull(message = "预约的专家id不能为空")
-    @Valid
-    private Long expertId;
+    @TableId(value = "res_id", type = IdType.AUTO)
+    private Long resId;
 
-    @NotNull(message = "预约时间不能为空")
-    @Valid
-    private Date aptTime;
+    @NotNull(message = "用户不能为空")
+    private Integer userId;
 
-    private String aptStatus;
+    private String resResult;
+
+    private Integer belongingId;
+
+    private Date resTime;
 }

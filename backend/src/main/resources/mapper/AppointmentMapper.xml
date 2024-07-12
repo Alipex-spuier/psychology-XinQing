@@ -15,4 +15,7 @@
         select *
         from appointments ${ew.customSqlSegment}
     </select>
+    <select id="accountByDay" resultType="java.lang.Integer">
+        select count(*) from appointments ${ew.customSqlSegment}
+    </select>
 </mapper>

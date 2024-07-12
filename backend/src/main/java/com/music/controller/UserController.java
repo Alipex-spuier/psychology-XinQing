@@ -1,6 +1,7 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -8,19 +9,27 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
+import com.music.entity.Appointment;
 import com.music.entity.User;
+import com.music.service.AppointmentService;
 import com.music.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
 
     private final UserService userService;
+
+    @Autowired
+    AppointmentService appointmentService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -95,4 +104,5 @@ public class UserController {
     public Result delete(@PathVariable Integer userId) {
         return Result.succ(userService.removeById(userId));
     }
+
 }
