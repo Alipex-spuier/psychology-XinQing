@@ -31,8 +31,10 @@ public class TestResult implements Serializable {
     @NotNull(message = "用户不能为空")
     private Integer userId;
 
+    @NotBlank(message = "测试结果不能为空")
     private String resResult;
 
+    @NotNull(message = "所属题单不能为空")
     private Integer belongingId;
 
     private Date resTime;
