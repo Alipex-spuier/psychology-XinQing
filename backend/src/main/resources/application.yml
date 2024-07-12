@@ -15,11 +15,7 @@ shiro-redis:
   enabled: true
   redis-manager:
     host: redis:6379
-<<<<<<< HEAD
 #    host:127.0.0.1:6379
-=======
-#    host: 127.0.0.1:6379
->>>>>>> 76fc26f0c13e30d044d7a50022e9ffe733556eb3
 server:
   port: 8080
 music:

@@ -30,13 +30,6 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-<<<<<<< HEAD
-    AppointmentService appointmentService;
-
-    @Autowired
-=======
-
->>>>>>> 76fc26f0c13e30d044d7a50022e9ffe733556eb3
     public UserController(UserService userService) {
         this.userService = userService;
     }
