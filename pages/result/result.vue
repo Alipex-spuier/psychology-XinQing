@@ -15,8 +15,8 @@
 				resultsArr: []
 			}
 		},
-		onLoad(options) {
-			this.resultsArr = JSON.parse(decodeURIComponent(options.result));
+		onLoad(options) {//反序列化
+			this.resultsArr = JSON.parse(decodeURIComponent(options.result));//解码
 			uni.setNavigationBarTitle({
 				title: options.result.pageTitle
 			})

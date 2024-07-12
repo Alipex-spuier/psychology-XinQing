@@ -196,21 +196,18 @@
 					}
 				],
 				qu: [{
-						albumCover: "image1",
-						title: 'textTitle1',
-						hotComment: 'textSubTitle1',
-					},
-					{
-						albumCover: "image2",
-						title: 'textTitle2',
-						hotComment: 'textSubTitle2',
-					},
-					{
-						albumCover: "image3",
-						title: 'textTitle3',
-						hotComment: 'textSubTitle3',
-					}
-				]
+					albumCover:"res[i].artPic;",
+					title:"res[i].artTitle;",
+					hotComment:"res[i].artAuthor;"
+				},{
+					albumCover:"res[i].artPic;",
+					title:"res[i].artTitle;",
+					hotComment:"res[i].artAuthor;"
+				},{
+					albumCover:"res[i].artPic;",
+					title:"res[i].artTitle;",
+					hotComment:"res[i].artAuthor;"
+				}]
 			}
 		},
 
@@ -254,37 +251,17 @@
 				})
 			},
 			redirectToInput(item) {
-				if (item.class == "nav1-color") {
+				if (item.class == "nav1-color") {//解压工具
 					this.Focus = true;
-				} else if (item.class == "nav2-color") {
-					this.$emit('custom-event2',item);
-				} else if (item.class == "nav3-color") {
-				uni.request({
-					url: this.$baseURL + '/favorite/' + this.userId,
-					method: 'GET',
-					header: {
-						Authorization: this.authorization
-					},
-					success: res => {
-						if (res.data.code == 200) {
-							let fav = res.data.data.records;
-							const allMusicTmp=uni.getStorageSync("allMusic").data.records;
-							let favorite=[]
-							for(let j=0;j<fav.length;j++){
-								for(let i =0;i<allMusicTmp.length;i++){
-									if(allMusicTmp[i].recommendId===fav[j].musicId){
-										favorite[j]=allMusicTmp[i];
-										break
-									}
-								}
-							}
-							uni.navigateTo({
-								url: './result/result?result=' + encodeURIComponent(JSON.stringify(favorite))
-							})
-						}
-					}
+				} else if (item.class == "nav2-color") {//咨询日志
+					uni.navigateTo({
+						url: './Test/Skip' 
+					})
+				} else if (item.class == "nav3-color") {//心理测评
+				uni.navigateTo({
+					url: './Test/Skip' 
 				})
-				} else if (item.class == "nav4-color") {
+				} else if (item.class == "nav4-color") {//指数分析
 					uni.request({
 						url: this.$baseURL+'/history/'+this.userId,
 						method: "GET",
@@ -355,24 +332,26 @@
 						this.temperature=res["lives"][0]["temperature"];
 						console.log(this.temperature);
 						this.city=res["lives"][0]["city"];
-					
+						
 					}
 				});
 			},
 			getArtcles() {
 				uni.request({
-					url: this.$baseURL + '/api​/v1​/article​/index',
+					url: this.$baseURL + '/api/v1/article/index',
 					method: 'GET',
 					success: (response) => {
 						const res = response.data;
-						for(var i=0;i<3;i++){
-							qu[i].albumCover=res[i].artPic;
-							qu[i].title=res[i].artTitle;
-							qu[i].hotComment=res[i].artAuthor;
+						for(let i=0;i<3;i++){
+							this.qu[i].albumCover=res.data[i].artPic;
+							this.qu[i].title=res.data[i].artTitle;
+							this.qu[i].hotComment=res.data[i].artAuthor;
+							
 						}
 					}
 				});
-			},
+			}
+			
 		}
 	}
 </script>
@@ -384,7 +363,7 @@
 	  font-family: texticons;
 	  font-weight: normal;
 	  font-style: normal;
-	  src: url('//at.alicdn.com/t/c/font_4614114_1rc8ancrsef.ttf?t=1720595388022') format('truetype');
+	  src: url('https://at.alicdn.com/t/c/font_4614114_1rc8ancrsef.ttf?t=1720595388022') format('truetype');
 	}
 	/* @font-face {
 

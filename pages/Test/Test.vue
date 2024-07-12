@@ -8,60 +8,50 @@
     export default {
         data() {
             return {
+				testNumber:1,
                 dataObj: {
                     pkId: '1', //问卷ID
                     title: '抑郁指数测试', //问卷标题
                     desc: '关于抑郁症的问卷测试，得分越高，抑郁倾向性越强', //问卷描述
-                    number: 3, //问卷总题目数量
+                    number:10, //问卷总题目数量
                     questions: [{
-                        questionId: '11',
+                        questionId: 11,
                         questionType: 'SINGLE',
                         title: '这是一个单选题？',
+						score:10,
+						answer:'A',
                         children: [{
-                            id: '111',
+                            id: 'A',
                             state: 0, //是否选中(0未选中；1:已选中)
-                            serial: 'A', //选项序号
+                            //serial: 'A', //选项序号
                             content: '单选第一个选项' //选项内容
                         }, {
-                            id: '222',
+                            id: 'B',
                             state: 0, //是否选中(0未选中；1:已选中)
-                            serial: 'B', //选项序号
+                            //serial: 'B', //选项序号
                             content: '单选第二个选项' //选项内容
                         }, {
-                            id: '333',
+                            id: 'C',
                             state: 0, //是否选中(0未选中；1:已选中)
-                            serial: 'C', //选项序号
+                            //serial: 'C', //选项序号
                             content: '单选第三个选项' //选项内容
+                        },{
+                            id: 'D',
+                            state: 0, //是否选中(0未选中；1:已选中)
+                            //serial: 'C', //选项序号
+                            content: '单选第四个选项' //选项内容
                         }]
-                    }, {
-                        questionId: '22',
-                        questionType: 'MULTY',
-                        title: '这是一个多选题？',
-                        children: [{
-                            id: '111',
-                            state: 0, //是否选中(0未选中；1:已选中)
-                            serial: 'A', //选项序号
-                            content: '多选第一个选项' //选项内容
-                        }, {
-                            id: '222',
-                            state: 0, //是否选中(0未选中；1:已选中)
-                            serial: 'B', //选项序号
-                            content: '多选第二个选项' //选项内容
-                        }, {
-                            id: '333',
-                            state: 0, //是否选中(0未选中；1:已选中)
-                            serial: 'C', //选项序号
-                            content: '多选第三个选项' //选项内容
-                        }]
-                    }, {
-                        questionId: '33',
-                        questionType: 'QUESTION',
-                        title: '这个是简答题？',
-                        children: []
                     }]
                 },
             }
         },
+		onLoad(options) {//反序列化
+			this.testNumber= JSON.parse(decodeURIComponent(options.testNumber));//解码
+			// uni.setNavigationBarTitle({
+			// 	title: options.result.pageTitle
+			// })
+			this.LoadQuestion();
+		},
         mounted() {
             this.$nextTick(res => {
                 this.init()
@@ -97,6 +87,42 @@
 				this.page=1;
 				this.getTabelData();
 			},
+			LoadQuestion(){
+				uni.request({
+					url: this.$baseURL + '/api/v1/test/indexPageById',
+					method: 'POST',
+					data:{
+						pageNum: 1,
+						pageSize: 20,
+						param: {
+						    belongingId:this.testNumber
+						  }
+					},
+
+					success: (response) => {
+						//if(!res.data){ console.log("No data received or data format is incorrect");}
+						const res = response.data;
+						for(let i=0;i<res.data.length;i++){
+							 this.dataObj.questions[i].questionId=res.data[i].testId;
+							 this.dataObj.questions[i].questionType='SINGLE';
+							 this.dataObj.questions[i].title=res.data[i].testContent;
+							 this.dataObj.questions[i].score=res.data[i].testScore;
+							 this.dataObj.questions[i].children[0].content=res.data[i].testChoA;
+							 this.dataObj.questions[i].children[1].content=res.data[i].testChoB;
+							 if(res.data[i].testChoD!=='N'){ this.questions[i].children[3].content=res.data[i].testChoD;}
+							 if(res.data[i].testChoC!=='N'){this.questions[i].children[2].content=res.data[i].testChoC;}
+							 this.questions[i].score=res.data[i].testScore;
+							 this.questions[i].answer=res.data[i].testAnswer;
+						}
+					},
+					fail : (response) => {
+						console.log("fail")
+					}
+				});
+				
+			}
+			
+			
         }
     }
 </script>

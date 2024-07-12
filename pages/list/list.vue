@@ -91,7 +91,6 @@
 					url: './player/player?result='+ encodeURIComponent(JSON.stringify(clickedMusic))
 				})
 			}
-
 		}
 	}
 </script>

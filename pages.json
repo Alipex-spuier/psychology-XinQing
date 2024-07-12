@@ -1,18 +1,18 @@
 {
 	"pages": [
-		{
-			"path": "pages/Test/Test",
-			"style": {
-				"navigationBarTitleText": "心理测试"
-			}
-		},
+		// {
+		// 	"path": "pages/Test/Test",
+		// 	"style": {
+		// 		"navigationBarTitleText": "心理测试"
+		// 	}
+		// },
 		
-		{
-			"path": "pages/index",
-			"style": {
-				"navigationBarTitleText": "心晴"
-			}
-		},
+		// {
+		// 	"path": "pages/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "心晴"
+		// 	}
+		// },
 		
 		{
 			"path" : "pages/login/index",
@@ -46,12 +46,12 @@
 				"enablePullDownRefresh" : false
 			}
 		},
-		// {
-		// 	"path": "pages/index",
-		// 	"style": {
-		// 		"navigationBarTitleText": "心晴"
-		// 	}
-		// },
+		{
+			"path": "pages/index",
+			"style": {
+				"navigationBarTitleText": "心晴"
+			}
+		},
 		{
 			"path" : "pages/player/player",
 			"style" : 
@@ -93,13 +93,20 @@
         		"enablePullDownRefresh" : false
         	}
         },
+		{
+			"path" : "pages/Test/Skip",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
         {
         	"path" : "pages/Test/Test",
         	"style" : 
         	{
         		"navigationBarTitleText" : ""
         	}
-        },
+        }
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

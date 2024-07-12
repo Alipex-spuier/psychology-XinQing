@@ -58,6 +58,7 @@
 				dataObj: {},
 				totalnum: 0,
 				comnum: 0,
+				comScore:0,
 				questionsAnswer: [], //问卷问题列表数据
 				formSubmitData: [], //答题完成的数据
 			};
@@ -73,6 +74,7 @@
 						questionType: this.questionsAnswer[i].questionType, //每个问题类型(单选:SINGLE  多选:MULTY  简答:QUESTION)
 						questionId: this.questionsAnswer[i].questionId, //每个问题ID
 						userAnswer: '', //每个问题用户选择的答案(逗号拼接)
+						questionAnswer:'',
 					}
 					this.formSubmitData.push(arr)
 				}
@@ -113,6 +115,7 @@
 					if (res.userAnswer) this.comnum += 1
 				})
 			},
+			
 			//问卷结果提交
 			submitData() {
 				let num = ''
