@@ -46,6 +46,7 @@
 					},
 					success: res => {
 						if (res.data.code === 200) {
+							console.log(res)
 							this.getAllMusic()
 							// 登录成功处理
 							uni.showToast({

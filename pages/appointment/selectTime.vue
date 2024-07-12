@@ -82,7 +82,7 @@
 			},
 			disableText: { //禁用显示的文本
 				type: String,
-				default: "已约满"
+				default: "已超时"
 			},
 			undisableText: { //未禁用显示的文本
 				type: String,
@@ -345,7 +345,7 @@
 						endTime: `${this.selectDate} ${this.timeQuanEnd}`
 					})
 					return
-				}
+				}//alldata
 				console.log(this.orderTimeArr)
 				if (this.isMultiple) {
 					if (this.isQuantum) {
