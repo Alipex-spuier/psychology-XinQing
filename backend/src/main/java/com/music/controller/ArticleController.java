@@ -135,7 +135,7 @@ public class ArticleController {
         return articleService.save(article)?Result.succ(article):Result.fail("保存失败！");
     }
 
-    @RequiresAuthentication
+    //@RequiresAuthentication
     @ApiOperation(value ="通过artId删除一个文章 "+
             "{参数通过url传入}"
     )
