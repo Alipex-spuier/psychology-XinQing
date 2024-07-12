@@ -13,6 +13,7 @@ import com.music.entity.Appointment;
 import com.music.entity.User;
 import com.music.service.AppointmentService;
 import com.music.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -29,20 +30,30 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
+<<<<<<< HEAD
     AppointmentService appointmentService;
 
     @Autowired
+=======
+
+>>>>>>> 76fc26f0c13e30d044d7a50022e9ffe733556eb3
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="列出数据库中所有user "+
+            "{不传参}"
+    )
     @GetMapping("/index")
     public Result index() {
         return Result.succ(userService.list());
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="列出数据库中userId为{userId}的管理员 "+
+            "{参数通过url传入}"
+    )
     @PostMapping("/index/{userId}")
     public Result index(@PathVariable Integer userId) {
         User user = userService.getById(userId);
@@ -50,6 +61,13 @@ public class UserController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="通过名字（模糊查询）分页查询数据库中的用户 "+
+            "{\"pageSize\":2,\n" +
+            "\"pageNum\":1,\n" +
+            "\"param\":{\n" +
+            "    \"name\":\"te\"\n" +
+            "}}"
+    )
     @PostMapping("/indexPage")
     public Result indexPage(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
@@ -71,6 +89,16 @@ public class UserController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="更新用户信息,userId必填，其他几个想改啥填啥 "+
+            "{\"userId\":5,\n" +
+            "\"username\": \"test5,更新测试\",\n" +
+            "\"password\": \"123\",\n" +
+            "\"email\":\"123@qq.com\",\n" +
+            "\"work\":\"工作测试\",\n" +
+            "\"country\":\"国家测试\",\n" +
+            "\"age\":11,\n" +
+            "\"avatar\":\"avatar测试\"}"
+    )
     @PutMapping("/update")
     public Result update(@RequestBody User user){
         String password = SecureUtil.md5(user.getPassword());
@@ -92,6 +120,10 @@ public class UserController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="新建并保存一个用户，以下两个必填，其他选填 "+
+            "{\"username\":\"test6\",\n" +
+            "\"password\":\"123\"}"
+    )
     @PostMapping("/save")
     public Result save(@RequestBody User user){
         String password = SecureUtil.md5(user.getPassword());
@@ -100,6 +132,9 @@ public class UserController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="通过userId删除一个用户 "+
+            "{参数通过url传入}"
+    )
     @DeleteMapping("/delete/{userId}")
     public Result delete(@PathVariable Integer userId) {
         return Result.succ(userService.removeById(userId));

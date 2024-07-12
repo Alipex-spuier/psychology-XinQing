@@ -30,6 +30,7 @@ public class UserMessageController {
     UserService userService;
     @ApiOperation(value = "用于userService的全查询 "+
             "不需要传参数")
+    @RequiresAuthentication
     @GetMapping("/index")
     public Result index() {
         return Result.succ(userMessageService.list());
@@ -37,6 +38,7 @@ public class UserMessageController {
     //查询
     @ApiOperation(value = "用于单独查询某一条记录 "+
             " \"mesId\":* ")
+    @RequiresAuthentication
     @GetMapping("/index/{mesId}")
     public Result getOneByMesId(@PathVariable Integer mesId){
         return Result.succ(userMessageService.getById(mesId));
@@ -45,6 +47,7 @@ public class UserMessageController {
     @ApiOperation(value = "用于分页查询 "+
             "\"pageSize\":1,\n" +
             "    \"pageNum\":1")
+    @RequiresAuthentication
     @PostMapping("/indexPage")
     public Result indexPage(@RequestBody QueryPageParam query){
         Page<UserMessage> page = new Page<>();
@@ -63,6 +66,7 @@ public class UserMessageController {
             "   \"param\":{\n" +
             "       \"userId\": *\n" +
             "   }")
+    @RequiresAuthentication
     @PostMapping("/indexPage/user/{userId}")
     public Result indexPageByUserId(@RequestBody QueryPageParam query,@PathVariable Integer userId){
         Page<UserMessage> page = new Page<>();
@@ -82,6 +86,7 @@ public class UserMessageController {
             "   \"param\":{\n" +
             "       \"adminId\": *\n" +
             "   }")
+    @RequiresAuthentication
     @PostMapping("/indexPage/admin/{adminId}")
     public Result indexPageByExpertId(@RequestBody QueryPageParam query,@PathVariable Integer adminId){
         Page<UserMessage> page = new Page<>();
@@ -97,6 +102,7 @@ public class UserMessageController {
     }//根据adminId分页模糊查询显示
     @ApiOperation(value = "用于删除一条记录"+
             "\"mesId\": *")
+    @RequiresAuthentication
     @DeleteMapping("/delete/{mesId}")
     public Result delete(@PathVariable Integer mesId){
         return ObjectUtil.isNotEmpty(userMessageService.getById(mesId))?Result.succ(userMessageService.removeById(mesId)):Result.fail("没有这个用户留言");
@@ -104,6 +110,7 @@ public class UserMessageController {
 
     @ApiOperation(value = "用于添加一条userMessage"+
             "\"userId\": *")
+    @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@Validated @RequestBody UserMessage userMessage){
         if(ObjectUtil.isEmpty(userService.getById(userMessage.getUserId())))
@@ -117,6 +124,7 @@ public class UserMessageController {
             "\"userId\":1,\n" +
             "    \"adminId\":1,\n" +
             "    \"mesConten\":\"test1\"")
+    @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody UserMessage userMessage){
         if(ObjectUtil.isEmpty(userMessageService.getById(userMessage.getMesId())))

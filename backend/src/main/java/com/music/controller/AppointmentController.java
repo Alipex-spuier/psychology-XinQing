@@ -162,20 +162,29 @@ public class AppointmentController {
         appointment.setAptStatus("N");
         return appointmentService.save(appointment)?Result.succ(appointment):Result.fail("保存失败！");
     }//放预约时间的时候需要把statue设置成N，即未被预约,userId设置为Null
+    @ApiOperation(value = "用于用户预约一条记录 "+
+            "     \"aptId\":10,\n" +
+            "    \"expertId\":4,\n" +
+            "    \"aptTime\":\"2024-07-11T14:00:00\"")
     @RequiresAuthentication
     @PostMapping("/appoint/{userId}")
     public Result appoint(@Validated @RequestBody Appointment appointment,@PathVariable Long userId){
         if (ObjectUtil.isEmpty(userService.getById(userId)))
             return Result.fail("没有这个用户");
+        if("Y".equals(appointmentService.getById(appointment.getAptId()).getAptStatus()))
+            return Result.fail("该预约已被预约");
         appointment.setUserId(userId);
         appointment.setAptStatus("Y");
         return appointmentService.updateById(appointment)?Result.succ(appointmentService.getById(appointment.getAptId())):Result.fail("预约失败");
     }
 
-
+    @ApiOperation(value = "用于用户预约一条记录 "+
+            " \"aptTime\":\"2024-07-11\"")
     @RequiresAuthentication
     @PostMapping("/accountByDay")
     public Result appointmentAccountByDay(@RequestBody HashMap param){
+        if(ObjectUtil.isEmpty(param.get("aptTime"))||"".equals((String) param.get("aptTime")))
+            return Result.fail("请传正确的时间");
         String aptTime = (String) param.get("aptTime");
         String endDay = aptTime+" 23:59:59";
         aptTime +=" 00:00:00";

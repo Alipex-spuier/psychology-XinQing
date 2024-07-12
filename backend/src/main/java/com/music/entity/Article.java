@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,7 +27,7 @@ public class Article implements Serializable {
     @TableId(value = "art_id", type = IdType.AUTO)
     private Long artId;
 
-    @NotBlank(message = "作者不能为空")
+    @NotNull(message = "作者不能为空")
     private Integer artAuthor;
 
     @NotBlank(message = "标题不能为空")

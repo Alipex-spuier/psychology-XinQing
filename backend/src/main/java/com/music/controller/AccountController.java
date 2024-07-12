@@ -14,6 +14,7 @@ import com.music.entity.User;
 import com.music.service.AdminService;
 import com.music.service.ExpertService;
 import com.music.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,10 @@ public class AccountController {
     JwtUtils jwtUtils;
 
     @PostMapping("/login")
+    @ApiOperation(value ="用户登录接口 "+
+            "{\"username\": \"test1\",\n" +
+            "\"password\": \"123\"}"
+    )
     public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
         User user = userService.getOne(new QueryWrapper<User>().eq("username", loginDto.getUsername()));
         Assert.notNull(user, "用户不存在");
@@ -66,6 +71,10 @@ public class AccountController {
     }
 
     @PostMapping("/adminLogin")
+    @ApiOperation(value ="管理员登录接口 "+
+            "{\"adminName\":\"test5\",\n" +
+            "\"adminPassword\":\"123\"}"
+    )
     public Result adminLogin(@Validated @RequestBody AdminLoginDto adminLoginDto, HttpServletResponse response) {
         Admin admin = adminService.getOne(new QueryWrapper<Admin>().eq("admin_name", adminLoginDto.getAdminName()));
         Assert.notNull(admin, "管理员不存在");
@@ -86,6 +95,10 @@ public class AccountController {
     }
 
     @PostMapping("/expertLogin")
+    @ApiOperation(value ="专家登录接口 "+
+            "{\"exName\":\"test5\",\n" +
+            "\"exPassword\":\"123\"}"
+    )
     public Result expertLogin(@Validated @RequestBody ExpertLoginDto expertLoginDto, HttpServletResponse response) {
         Expert expert = expertService.getOne(new QueryWrapper<Expert>().eq("ex_name", expertLoginDto.getExName()));
         Assert.notNull(expert, "专家不存在");
@@ -109,6 +122,9 @@ public class AccountController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="用户退出登录接口 "+
+            "{不传参，使用token确定用户}"
+    )
     @PostMapping("/logout")
     public Result logout() {
         SecurityUtils.getSubject().logout();
@@ -116,6 +132,9 @@ public class AccountController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="管理员退出登录接口 "+
+            "{不传参，使用token确定管理员}"
+    )
     @PostMapping("/adminLogout")
     public Result adminLogout() {
         SecurityUtils.getSubject().logout();
@@ -123,6 +142,9 @@ public class AccountController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="专家退出登录接口 "+
+            "{不传参，使用token确定专家}"
+    )
     @PostMapping("/expertLogout")
     public Result expertLogout() {
         SecurityUtils.getSubject().logout();
@@ -130,6 +152,12 @@ public class AccountController {
     }
 
     @PostMapping("/register")
+    @ApiOperation(value ="用户注册接口 "+
+            "{\"username\": \"test1\",\n" +
+            "\"password\": \"123\",\n" +
+            "\"email\":\"123@qq.com\"" +
+            "这三个必须，其他属性非必须，可通过update更新}"
+    )
     public Result register(@Validated @RequestBody User user) {
 
         String encryptedPassword = SecureUtil.md5(user.getPassword());
@@ -145,6 +173,12 @@ public class AccountController {
     }
 
     @PostMapping("/adminRegister")
+    @ApiOperation(value ="管理员注册接口 "+
+            "{\"adminName\":\"test5\",\n" +
+            "\"adminPassword\":\"123\",\n" +
+            "\"adminEmail\":\"123@qq.com\"" +
+            "这三个必须，其他属性非必须，可通过update更新}"
+    )
     public Result adminRegister(@Validated @RequestBody Admin admin) {
 
         String encryptedPassword = SecureUtil.md5(admin.getAdminPassword());
@@ -160,6 +194,12 @@ public class AccountController {
     }
 
     @PostMapping("/expertRegister")
+    @ApiOperation(value ="专家注册接口 "+
+            "{\"exName\":\"test5\",\n" +
+            "\"exPassword\":\"123\",\n" +
+            "\"exEmail\":\"123@qq.com\"" +
+            "这三个必须，其他属性非必须，可通过update更新}"
+    )
     public Result expertRegister(@Validated @RequestBody Expert expert) {
 
         String encryptedPassword = SecureUtil.md5(expert.getExPassword());

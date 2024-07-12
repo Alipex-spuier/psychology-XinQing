@@ -11,6 +11,7 @@ import com.music.entity.ConsultationLog;
 import com.music.service.AppointmentService;
 import com.music.service.ConsultationLogService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +28,14 @@ public class ConsultationLogController {
     AppointmentService appointmentService;
     @ApiOperation(value = "用于查找所有记录 "+
             "不传参数")
+    @RequiresAuthentication
     @GetMapping("index")
     public Result index(){
         return Result.succ(consultationLogService.list());
     }//全查询
     @ApiOperation(value = "用于根据logId查找某一条记录 "+
             "\"logId\": *")
+    @RequiresAuthentication
     @PostMapping("index/{logId}")
     public Result indexByLogId(@PathVariable Integer logId){
         return ObjectUtil.isEmpty(consultationLogService.getById(logId))?Result.fail("没有该记录"):Result.succ(consultationLogService.getById(logId));
@@ -40,6 +43,7 @@ public class ConsultationLogController {
     @ApiOperation(value = "用于分页全查询 "+
             "\"pageSize\":2,\n" +
             "\"pageNum\":2")
+    @RequiresAuthentication
     @PostMapping("indexPage")
     public Result indexPage(@RequestBody QueryPageParam queryPageParam){
         Page<ConsultationLog> page = new Page<>();
@@ -54,6 +58,7 @@ public class ConsultationLogController {
             "   \"param\":{\n" +
             "    \"startTime\":\"2024-07-10\"\n" +
             "   }" + "日期传年月日\"yyyy-MM-dd\"格式")
+    @RequiresAuthentication
     @PostMapping("indexPageByStartTime")
     public Result indexPageByStartTime(@RequestBody QueryPageParam queryPageParam){
         Page<ConsultationLog> page = new Page<>();
@@ -83,6 +88,7 @@ public class ConsultationLogController {
             "        \"startTime\":\"2024-07-10\",\n" +
             "        \"endTime\":\"2024-07-11\"\n" +
             "   }" + "日期传年月日\"yyyy-MM-dd\"格式")
+    @RequiresAuthentication
     @PostMapping("indexPageByRangeTime")
     public Result indexPageByRangeTime(@RequestBody QueryPageParam queryPageParam){
         Page<ConsultationLog> page = new Page<>();
@@ -111,6 +117,7 @@ public class ConsultationLogController {
     @ApiOperation(value = "用于增加记录 "+
             " \"aptId\":1,\n" +
             "    \"logContent\":\"test1\"")
+    @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@Validated @RequestBody ConsultationLog consultationLog){
         if(ObjectUtil.isEmpty(appointmentService.getById(consultationLog.getAptId())))
@@ -120,6 +127,7 @@ public class ConsultationLogController {
     }//增加
     @ApiOperation(value = "用于删除记录 "+
             "\"logId\":1")
+    @RequiresAuthentication
     @DeleteMapping("/delete/{logId}")
     public Result delete(@PathVariable Integer logId){
         return ObjectUtil.isNotEmpty(consultationLogService.getById(logId))?Result.succ(consultationLogService.removeById(logId)):Result.fail("没有这个日志记录");
@@ -128,6 +136,7 @@ public class ConsultationLogController {
             "    \"logId\":1,\n" +
             "    \"aptId\":1,\n" +
             "    \"logContent\":\"test1\"")
+    @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody ConsultationLog consultationLog){
         if(ObjectUtil.isEmpty(consultationLogService.getById(consultationLog.getLogId())))
