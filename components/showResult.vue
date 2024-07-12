@@ -2,10 +2,12 @@
 	<view>
 		<view class="results--box">
 			<view class="results--item" v-for="(item, index) in lists" :key="index" @click="$emit('onResults', item)">
+				<!-- <view class="item--cover" :style="{backgroundImage: 'url(' + item.albumCover + ')'}" /> -->
 				<view class="item--cover" :style="{backgroundImage: 'url(' + item.albumCover + ')'}" />
 				<view class="item--content">
-					<view class="title">《{{item.title}}》</view>
-					<view class="author"> —— {{item.author || 'unknown'}}</view>
+					<view class="author">{{item.exName || 'unknownexport'}}</view>
+					<view class="title">———{{item.exEmail|| 'unknowntitle'}}</view>
+					<!-- <view class="author"> —— {{item.exName || 'unknownexport'}}</view> -->
 				</view>
 			</view>
 		</view>
@@ -18,7 +20,7 @@
 				type	: Array,
 				required: true,
 				default : () => {
-					return []
+					return [ ]
 				}
 			}
 		},

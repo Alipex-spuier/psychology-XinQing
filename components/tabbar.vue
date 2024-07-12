@@ -110,8 +110,8 @@
 				<text class="txtBtn" :class="{'txtBtnSel' :active==1}">资讯广场</text>
 			</view>
 			<view class="itmMain">
-				<navigator url="../pages/scan/camera">
-				<view class="fixTpm">
+				<navigator url="../pages/appointment/selectExport">
+				<view class="fixTpm" @click="toselect">
 					<view class="imgseTsAnds" ref='leftWidth' :style="'left:'+leftWidth+'px'"></view>
 				</view>
 				</navigator>
@@ -143,10 +143,13 @@ export default{
 			windowWidth: '',
 			windowHeight: '',
 			imagesrc: null,
+			authorization:null,
 			canvasSiz: {
 			    width: 188,
 			    height: 273
-			}
+			},
+			selectres:[],
+			
 		}
 	},
 	onLoad() {
@@ -266,6 +269,27 @@ export default{
 		            _this.windowHeight = res.windowHeight;
 		        }
 		    });
+		},toselect(){
+			let _this= this;
+			const res=uni.getStorageSync("res")
+			_this.authorization=res.header.authorization;
+			uni.request({
+				url: this.$baseURL + '/api/v1/expert/index',
+				method: 'GET',
+				header: {
+					Authorization: _this.authorization
+				},
+				success: (response) => {
+					const res = response.data;
+					this.selectres=res;
+					
+					// console.log(res)
+				}
+			});
+			uni.navigateTo({
+				url: '../pages/appointment/selectExport?result=' + encodeURIComponent(JSON.stringify(this.selectres))
+			})
+
 		}
 	}
 }
