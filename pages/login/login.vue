@@ -82,7 +82,7 @@
 			},
 			jumpToReg(){
 				uni.navigateTo({
-					url:"/api/v1/pages/login/register"
+					url:"/pages/login/register"
 				})
 			},
 			getAllMusic() {

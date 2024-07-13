@@ -100,9 +100,9 @@
 				uni.navigateTo({
 					url: './Test?testNumber=' + encodeURIComponent(JSON.stringify(this.testNumber))
 				})
-				uni.navigateTo({
-					url:'./Test'
-				})
+				// uni.navigateTo({
+				// 	url:'./Test'
+				// })
 				
 				/*uni.navigateTo({
 							url: './result/result?result=' + encodeURIComponent(JSON.stringify(res.data
