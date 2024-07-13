@@ -300,7 +300,6 @@
 						this.getWeather();
 					}
 				});
-				
 			},
 			getWeather(){
 				const weatheradcode = this.adcode;
