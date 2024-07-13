@@ -87,7 +87,7 @@
 						success: function(res) {
 							if (res.confirm) {
 								uni.request({
-									url: _this.$baseURL + '/user/delete/'+_this.userId,
+									url: _this.$baseURL + '/api/v1/user/delete/'+_this.userId,
 									method: 'DELETE',
 									header: {
 										Authorization: _this.authorization

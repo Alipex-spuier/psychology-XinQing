@@ -120,7 +120,7 @@
 				}
 				const _this = this;
 				uni.request({
-					url: this.$baseURL + '/user/update',
+					url: this.$baseURL + '/api/v1/user/update',
 					method: 'PUT',
 					header: {
 						Authorization: _this.authorization
@@ -165,7 +165,7 @@
 			getNewData() {
 				const _this = this;
 				uni.request({
-					url: this.$baseURL + '/user/index/' + _this.userId,
+					url: this.$baseURL + '/api/v1/user/index/' + _this.userId,
 					method: 'POST',
 					header: {
 						Authorization: _this.authorization
