@@ -110,6 +110,8 @@ public class UserController {
     )
     @PutMapping("/update")
     public Result update(@RequestBody User user){
+        if(ObjectUtil.isNotEmpty(userService.searchByUsername(user.getUsername())))
+            return Result.fail("昵称已存在");
         String password = SecureUtil.md5(user.getPassword());
         user.setPassword(password);
         userService.updateById(user);

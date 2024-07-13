@@ -14,4 +14,5 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper extends BaseMapper<User> {
     User searchByUsername(String username);
     IPage pageCC(IPage<User> page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
 }

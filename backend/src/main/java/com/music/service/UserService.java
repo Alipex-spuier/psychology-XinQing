@@ -8,4 +8,6 @@ import com.music.entity.User;
 public interface UserService extends IService<User> {
     public String registerService(User user);
     IPage pageCC(IPage<User> page, Wrapper wrapper);
+
+    User searchByUsername(String username);
 }
