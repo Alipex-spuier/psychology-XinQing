@@ -1,5 +1,6 @@
 #!/bin/sh
 
+docker-compose down --rmi local
 # Navigate to ./backend directory
 cd ./backend || { echo "Failed to change directory to ./backend"; exit 1; }
 
