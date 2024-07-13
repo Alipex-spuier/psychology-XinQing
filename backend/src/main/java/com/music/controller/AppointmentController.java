@@ -101,7 +101,7 @@ public class AppointmentController {
 
         return Result.succ(result.getRecords());
     }//根据expertId分页模糊查询显示
-    @ApiOperation(value = "用于删除一条预约记录 "+
+    @ApiOperation(value = "用于删除一条预约记录 apt对应的consultationLog也会随之删除"+
             "    \"aptId\":1" )
     @RequiresAuthentication
     @DeleteMapping("/delete/{aptId}")
@@ -116,7 +116,7 @@ public class AppointmentController {
             "    \"aptId\":1,\n" +
             "    \"userId\":1,\n" +
             "    \"expertId\":1,\n" +
-            "    \"aptTime\":\"2024-07-01\"")
+            "    \"aptTime\":1720748470000")
     @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody Appointment appointment){
@@ -147,10 +147,10 @@ public class AppointmentController {
         appointment.setUserId(null);
         return appointmentService.save(appointment)?Result.succ(appointment):Result.fail("保存失败！");
     }//放预约时间的时候需要把statue设置成N，即未被预约,userId设置为Null
-    @ApiOperation(value = "用于用户预约一条记录 "+
-            "     \"aptId\":10,\n" +
+    @ApiOperation(value = "用于用户预约一条记录 时间戳为数字(Long型)"+
+            "    \"userId\":1,\n" +
             "    \"expertId\":4,\n" +
-            "    \"aptTime\":\"2024-07-11T14:00:00\"")
+            "    \"aptTime\":1720748470000")
     @RequiresAuthentication
     @PostMapping("/appoint")
     public Result appoint(@Validated @RequestBody Appointment appointment){
@@ -166,6 +166,9 @@ public class AppointmentController {
         }
         return Result.fail("时间段已被预约");
     }
+    @ApiOperation(value = "用于查询某专家某时间段有没有预约记录 时间戳为数字(Long型)"+
+            "  \"expertId\":4,\n" +
+            "    \"aptTime\":1720748470000")
     @RequiresAuthentication
     @PostMapping("/searchOneByExpertIdAndAptTime")
     public Result searchOneByExpertIdAndAptTime(@Validated @RequestBody Appointment appointment){
@@ -177,8 +180,8 @@ public class AppointmentController {
             return Result.fail("该专家该时间段已被预约",false);
     }
 
-    @ApiOperation(value = "用于用户预约一条记录 "+
-            " \"aptTime\":\"2024-07-11\"")
+    @ApiOperation(value = "用于查询某天的预约总数 时间戳精度为毫秒，当天任意时刻时间戳即可 时间戳为数字(Long型)"+
+            " \"aptTime\":1720748470000")
     @RequiresAuthentication
     @PostMapping("/accountByDay")
     public Result appointmentAccountByDay(@RequestBody HashMap param){
