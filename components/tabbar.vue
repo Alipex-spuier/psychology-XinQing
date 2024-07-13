@@ -104,7 +104,7 @@
 				<image class="imgse" :fade-show='false' v-if="active===0" src="/static/tabbar/home_active.png"></image>
 				<text class="txtBtn" :class="{'txtBtnSel' :active==0}">首页</text>
 			</view>
-			<view class="itmMain" @click.stop="switchTabFunc(1, '/pages/list')">
+			<view class="itmMain" @click.stop="switchTabFunc(1, '/pages/news')">
 				<image class="imgse" :fade-show='false' v-if="active!=1" src="/static/tabbar/type.png"></image>
 				<image class="imgse" :fade-show='false' v-if="active===1" src="/static/tabbar/type_active.png"></image>
 				<text class="txtBtn" :class="{'txtBtnSel' :active==1}">资讯广场</text>
@@ -166,6 +166,7 @@ export default{
 			if(this.platforms == 'android'){
 				let temp = this.$refs.leftWidth
 				this.leftWidth = tempSystem.screenWidth / 2
+				
 			}
 			// #endif
 			this.active = this.actives
