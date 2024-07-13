@@ -47,7 +47,7 @@
 			chooseConfig(item) {
 				if (item.id == 3) {
 					uni.request({
-						url: this.$baseURL + '/account/logout',
+						url: this.$baseURL + '/api/v1/account/logout',
 						method: 'POST',
 						header: {
 							Authorization: this.authorization
