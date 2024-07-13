@@ -25,9 +25,10 @@ public class Article implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "art_id", type = IdType.AUTO)
+    @NotNull(message = "文章Id不能为空")
     private Long artId;
 
-    @NotNull(message = "作者不能为空")
+    @NotNull(message = "作者Id不能为空")
     private Integer artAuthor;
 
     @NotBlank(message = "标题不能为空")

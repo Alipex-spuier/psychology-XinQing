@@ -62,7 +62,7 @@ public class ArticleController {
         page.setSize(query.getPageSize());
 
         LambdaQueryWrapper<Article> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if(StringUtils.isNotEmpty(name) && !"null".equals(name)){
+        if(StringUtils.isNotEmpty(name)){
             lambdaQueryWrapper.like(Article::getArtTitle,name);
         }else{
             return Result.fail("标题为空！");
@@ -143,4 +143,5 @@ public class ArticleController {
     public Result delete(@PathVariable Integer artId) {
         return Result.succ(articleService.removeById(artId));
     }
+
 }
