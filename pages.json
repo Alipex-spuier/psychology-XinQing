@@ -39,6 +39,12 @@
 			}
 		},
 		{
+			"path": "pages/news/newsdisplay",
+			"style": {
+				"navigationBarTitleText": "资讯广场"
+			}
+		},
+		{
 			"path" : "pages/userCent/logout",
 			"style" : 
 			{

@@ -48,7 +48,7 @@
 					<view class="nav-image-content-wrapper">
 						<view class="nav-image-content">
 							<text class="nav-image-text">{{city}}</text>
-							<text class="nav-image-text-sm">{{temperature}} C</text>
+							<text class="nav-image-text-sm">{{temperature}}</text>
 						</view>
 					</view>
 				</view>
@@ -117,7 +117,7 @@
 				navLevel: 'nav1',
 				adcode:"",
 				city:" ",
-				temperature:" ",
+				temperature:null,
 				
 				activeColor: ['#ffe3cb', '#ffe3cb', '#ffe3cb', '#ffe3cb', '#1d1b1b'],
 				banner: [
@@ -151,7 +151,7 @@
 						albumCover: this.$basePhotoURL+"/photo/134.jpg",
 						title: "Skyline Mirage",
 						city:this.city,
-						temperature:this.temperature+"C"
+						temperature:this.temperature
 					}//,
 					// {
 					// 	albumCover: this.$basePhotoURL+"/photo/78.jpg",
@@ -310,7 +310,7 @@
 					method: 'GET',
 					success: (response) => {
 						const res = response.data;
-						this.temperature=res["lives"][0]["temperature"];
+						this.temperature=res["lives"][0]["temperature"]+"°C";
 						//console.log(this.temperature);
 						this.city=res["lives"][0]["city"];
 						

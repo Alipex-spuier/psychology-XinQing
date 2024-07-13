@@ -17,7 +17,8 @@
         @clickChat="clickChat(item.id)">
 </Dynamic>
 
-import Dynamic from '../../components/Dynamic/Dynamic.vue'
+<script>
+import Dynamic from '../../components/qizai-dynamic/Dynamic.vue'
 export default {
     components: {
         Dynamic
@@ -149,3 +150,4 @@ export default {
         }
     }
 }
+</script>
