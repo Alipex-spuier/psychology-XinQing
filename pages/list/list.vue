@@ -1,153 +1,375 @@
-<Dynamic v-for="(item,index) in list" key="id" 
-        :imgList="item.imgList" 
-        :avatar="item.avatar"
-        :name="item.name"
-        :publishTime="item.publishTime"
-        :content="item.content"
-        :isLike="item.isLike"
-        :isGiveReward="item.isGiveReward"
-        :likeNumber="item.likeNumber"
-        :giveRewardNumber="item.giveRewardNumber"
-        :chatNumber="item.chatNumber"
-        @clickDynamic="clickDynamic(index)"
-        @clickUser="clickUser(item.id)"
-        @clickFocus="clickFocus(index)"
-        @clickThumbsup="clickThumbsup(item.id)"
-        @clickGiveReward="clickGiveReward(item.id)"
-        @clickChat="clickChat(item.id)">
-</Dynamic>
+<template>
+  <view class="tabs">
+    <scroll-view ref="tabbar1" id="tab-bar" class="tab-bar" :scroll="false" :scroll-x="true" :show-scrollbar="false"
+      :scroll-into-view="scrollInto">
+      <view style="flex-direction: column;">
+        <view style="flex-direction: row;">
+          <view class="uni-tab-item" v-for="(tab,index) in tabList" :key="tab.id" :id="tab.id" :ref="'tabitem'+index"
+            :data-id="index" :data-current="index" @click="ontabtap">
+            <text class="uni-tab-item-title" :class="tabIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
+          </view>
+        </view>
+        <view class="scroll-view-indicator">
+          <view ref="underline" class="scroll-view-underline" :class="isTap ? 'scroll-view-animation':''" :style="{left: indicatorLineLeft + 'px', width: indicatorLineWidth + 'px'}"></view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="tab-bar-line"></view>
+    <swiper class="tab-box" ref="swiper1" :current="tabIndex" :duration="300" @change="onswiperchange" @transition="onswiperscroll"
+      @animationfinish="animationfinish" @onAnimationEnd="animationfinish">
+      <swiper-item class="swiper-item" v-for="(page, index) in tabList" :key="index">
+        <newsPage class="page-item" :nid="page.newsid" :ref="'page' + index"></newsPage>
+      </swiper-item>
+    </swiper>
+  </view>
+</template>
 
 <script>
-import Dynamic from '../../components/qizai-dynamic/Dynamic.vue'
-export default {
+  // #ifdef APP-PLUS
+  const dom = weex.requireModule('dom');
+  // #endif
+
+  import newsPage from './news-page.nvue';
+
+  // 缓存每页最多
+  const MAX_CACHE_DATA = 100;
+  // 缓存页签数量
+  const MAX_CACHE_PAGE = 3;
+  const TAB_PRELOAD_OFFSET = 1;
+
+  export default {
     components: {
-        Dynamic
+      newsPage
     },
     data() {
-        return {
-            title: 'Hello',
-            list:[
-                {
-                    id:1,
-                    avatar:'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1950846641,3729028697&fm=26&gp=0.jpg',
-                    name:'小新',
-                    publishTime:1617086756,
-                    content:'中国外交官这样讽加拿大总理，算不算骂？该不该骂？',
-                    imgList:[
-                        'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1976832114,2993359804&fm=26&gp=0.jpg',
-                        'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2369680151,826506100&fm=26&gp=0.jpg',
-                    ],
-                    isLike:true,
-                    isGiveReward:true,
-                    likeNumber:2,
-                    giveRewardNumber:2,
-                    chatNumber:2,
-                    isFocusOn:true,
-                },
-                
-                {
-                    id:2,
-                    avatar:'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2291332875,175289127&fm=26&gp=0.jpg',
-                    name:'小白',
-                    publishTime:1617036656,
-                    content:'  足不出户享国内核医学领域顶级专家云诊断，“中山-联影”分子影像远程互联融合创新中心揭牌 ',
-                    imgList:[
-                        'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2369680151,826506100&fm=26&gp=0.jpg',
-                    ],
-                    isLike:false,
-                    isGiveReward:false,
-                    likeNumber:0,
-                    giveRewardNumber:0,
-                    chatNumber:2,
-                    isFocusOn:false,
-                },
-                {
-                    id:3,
-                    avatar:'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1950846641,3729028697&fm=26&gp=0.jpg',
-                    name:'小新',
-                    publishTime:1617046556,
-                    content:'  外交部：一小撮国家和个人编造所谓新疆“强迫劳动”的故事，其心何其毒也！ ',
-                    imgList:[
-                        'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1976832114,2993359804&fm=26&gp=0.jpg',
-                        'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2369680151,826506100&fm=26&gp=0.jpg',
-                        'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1976832114,2993359804&fm=26&gp=0.jpg',
-                        'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1976832114,2993359804&fm=26&gp=0.jpg',
-                        'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1976832114,2993359804&fm=26&gp=0.jpg',
-                    ],
-                    isLike:true,
-                    isGiveReward:false,
-                    likeNumber:4,
-                    giveRewardNumber:22,
-                    chatNumber:52,
-                },
-                {
-                    id:4,
-                    avatar:'https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3717120934,3932520698&fm=26&gp=0.jpg',
-                    name:'小龙马',
-                    publishTime:1616086456,
-                    content:'DCloud有800万开发者,uni统计手机端月活12亿。是开发者数量和案例最丰富的多端开发框架。 欢迎知名开发商提交案例或接入uni统计。 新冠抗疫专区案例 uni-app助力',
-                    imgList:[
-                        'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2369680151,826506100&fm=26&gp=0.jpg',
-                        'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1976832114,2993359804&fm=26&gp=0.jpg',
-                        'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2369680151,826506100&fm=26&gp=0.jpg',
-                    ],
-                    isLike:true,
-                    isGiveReward:false,
-                    likeNumber:25,
-                    giveRewardNumber:0,
-                    chatNumber:7,
-                },
-                {
-                    id:5,
-                    avatar:'https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2590128318,632998727&fm=26&gp=0.jpg',
-                    name:'风清扬',
-                    publishTime:1607086356,
-                    content:'划个水',
-                    imgList:[
-                        'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2369680151,826506100&fm=26&gp=0.jpg',
-                        'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1976832114,2993359804&fm=26&gp=0.jpg',
-                        'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2369680151,826506100&fm=26&gp=0.jpg',
-                        'https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1976832114,2993359804&fm=26&gp=0.jpg',
-                    ],
-                    isLike:true,
-                    isGiveReward:true,
-                    likeNumber:3,
-                    giveRewardNumber:2,
-                    chatNumber:2,
-                }
-        ]
-        }
+      return {
+        tabList: [{
+          id: "tab01",
+          name: '最新',
+          newsid: 0
+        }, {
+          id: "tab02",
+          name: '大公司',
+          newsid: 23
+        }, {
+          id: "tab03",
+          name: '内容',
+          newsid: 223
+        }, {
+          id: "tab04",
+          name: '消费',
+          newsid: 221
+        }, {
+          id: "tab05",
+          name: '娱乐',
+          newsid: 225
+        }, {
+          id: "tab06",
+          name: '区块链',
+          newsid: 208
+        }],
+        tabIndex: 0,
+        cacheTab: [],
+        scrollInto: "",
+        navigateFlag: false,
+        indicatorLineLeft: 0,
+        indicatorLineWidth: 0,
+        isTap: false
+      }
     },
-    methods:{
-        clickDynamic(e){
-            console.log('childDynamic');
-        },
-        // 点击用户信息
-        clickUser(e){
-            console.log(e);
-            console.log('childUser');
-        },
-        // 点击关注
-        clickFocus(e){
-            this.list[e].isFocusOn = this.list[e].isFocusOn ? false : true;
-            console.log(e);
-            console.log('childUser');
-        },
-        // 点赞
-        clickThumbsup(e){
-            console.log(e);
-            console.log('childThumbsup');
-        },
-        // 点击打赏
-        clickGiveReward(e){
-            console.log(e);
-            console.log('clickGiveReward');
-        },
-        // 点击聊天
-        clickChat(e){
-            console.log(e);
-            console.log('clickChat');
+    onReady() {
+      this._lastTabIndex = 0;
+      this.swiperWidth = 0;
+      this.tabbarWidth = 0;
+      this.tabListSize = {};
+      this._touchTabIndex = 0;
+
+      this.pageList = [];
+      for (var i = 0; i < this.tabList.length; i++) {
+				let item = this.$refs['page' + i]
+				if (Array.isArray(item)) {
+					this.pageList.push(item[0])
+				} else {
+					this.pageList.push(item)
+				}
+      }
+      this.switchTab(this.tabIndex);
+
+      this.selectorQuery();
+    },
+    methods: {
+      ontabtap(e) {
+        let index = e.target.dataset.current || e.currentTarget.dataset.current;
+        //let offsetIndex = this._touchTabIndex = Math.abs(index - this._lastTabIndex) > 1;
+
+        // #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-QQ
+        this.isTap = true;
+        var currentSize = this.tabListSize[index];
+        this.updateIndicator(currentSize.left, currentSize.width);
+        this._touchTabIndex = index;
+        // #endif
+
+        this.switchTab(index);
+      },
+      onswiperchange(e) {
+        // 注意：百度小程序会触发2次
+
+        // #ifndef APP-PLUS || H5 || MP-WEIXIN || MP-QQ
+        let index = e.target.current || e.detail.current;
+        this.switchTab(index);
+        // #endif
+      },
+      onswiperscroll(e) {
+        if (this.isTap) {
+          return;
         }
+
+        var offsetX = e.detail.dx;
+        var preloadIndex = this._lastTabIndex;
+        if (offsetX > TAB_PRELOAD_OFFSET) {
+          preloadIndex++;
+        } else if (offsetX < -TAB_PRELOAD_OFFSET) {
+          preloadIndex--;
+        }
+        if (preloadIndex === this._lastTabIndex || preloadIndex < 0 || preloadIndex > this.pageList.length - 1) {
+          return;
+        }
+        if (this.pageList[preloadIndex].dataList.length === 0) {
+          this.loadTabData(preloadIndex);
+        }
+
+        // #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-QQ
+        var percentage = Math.abs(this.swiperWidth / offsetX);
+        var currentSize = this.tabListSize[this._lastTabIndex];
+        var preloadSize = this.tabListSize[preloadIndex];
+        var lineL = currentSize.left + (preloadSize.left - currentSize.left) / percentage;
+        var lineW = currentSize.width + (preloadSize.width - currentSize.width) / percentage;
+        this.updateIndicator(lineL, lineW);
+        // #endif
+      },
+      animationfinish(e) {
+        // #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-QQ
+        let index = e.detail.current;
+        if (this._touchTabIndex === index) {
+          this.isTap = false;
+        }
+        this._lastTabIndex = index;
+        this.switchTab(index);
+        this.updateIndicator(this.tabListSize[index].left, this.tabListSize[index].width);
+        // #endif
+      },
+      selectorQuery() {
+        // #ifdef APP-NVUE
+        dom.getComponentRect(this.$refs.tabbar1, res => {
+          this.tabbarWidth = res.size.width;
+        });
+        dom.getComponentRect(this.$refs['swiper1'], res => {
+          this.swiperWidth = res.size.width;
+        });
+        // for (var i = 0; i < this.tabList.length; i++) {
+        // 	this.getElementSize(dom, this.$refs['tabitem' + i][0], i);
+        // }
+        // 因 nvue 暂不支持 class 查询
+        var queryTabSize = uni.createSelectorQuery().in(this);
+        for (var i = 0; i < this.tabList.length; i++) {
+          queryTabSize.select('#' + this.tabList[i].id).boundingClientRect();
+        }
+        queryTabSize.exec(rects => {
+          rects.forEach((rect) => {
+            this.tabListSize[rect.dataset.id] = rect;
+          })
+          this.updateIndicator(this.tabListSize[this.tabIndex].left, this.tabListSize[this.tabIndex].width);
+          this.switchTab(this.tabIndex);
+        });
+        // #endif
+
+        // #ifdef MP-WEIXIN || H5 || MP-QQ
+        uni.createSelectorQuery().in(this).select('.tab-box').fields({
+          dataset: true,
+          size: true,
+        }, (res) => {
+          this.swiperWidth = res.width;
+        }).exec();
+        uni.createSelectorQuery().in(this).selectAll('.uni-tab-item').boundingClientRect((rects) => {
+          rects.forEach((rect) => {
+            this.tabListSize[rect.dataset.id] = rect;
+          })
+          this.updateIndicator(this.tabListSize[this.tabIndex].left, this.tabListSize[this.tabIndex].width);
+        }).exec();
+        // #endif
+      },
+      getElementSize(dom, ref, id) {
+        dom.getComponentRect(ref, res => {
+          this.tabListSize[id] = res.size;
+        });
+      },
+      updateIndicator(left, width) {
+        this.indicatorLineLeft = left;
+        this.indicatorLineWidth = width;
+      },
+      switchTab(index) {
+        if (this.pageList[index].dataList.length === 0) {
+          this.loadTabData(index);
+        }
+
+        if (this.tabIndex === index) {
+          return;
+        }
+
+        // 缓存 tabId
+        if (this.pageList[this.tabIndex].dataList.length > MAX_CACHE_DATA) {
+          let isExist = this.cacheTab.indexOf(this.tabIndex);
+          if (isExist < 0) {
+            this.cacheTab.push(this.tabIndex);
+          }
+        }
+
+        this.tabIndex = index;
+
+        // #ifdef APP-NVUE
+        this.scrollTabTo(index);
+        // #endif
+        // #ifndef APP-NVUE
+        this.scrollInto = this.tabList[index].id;
+        // #endif
+
+        // 释放 tabId
+        if (this.cacheTab.length > MAX_CACHE_PAGE) {
+          let cacheIndex = this.cacheTab[0];
+          this.clearTabData(cacheIndex);
+          this.cacheTab.splice(0, 1);
+        }
+      },
+      scrollTabTo(index) {
+        const el = this.$refs['tabitem' + index][0];
+        let offset = 0;
+        // TODO fix ios offset
+        if (index > 0) {
+          offset = this.tabbarWidth / 2 - this.tabListSize[index].width / 2;
+          if (this.tabListSize[index].right < this.tabbarWidth / 2) {
+            offset = this.tabListSize[0].width;
+          }
+        }
+        dom.scrollToElement(el, {
+          offset: -offset
+        });
+      },
+      loadTabData(index) {
+        this.pageList[index].loadData();
+      },
+      clearTabData(index) {
+        this.pageList[index].clear();
+      }
     }
-}
+  }
 </script>
+
+<style>
+  /* #ifndef APP-PLUS */
+  page {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+  }
+
+  /* #endif */
+
+  .tabs {
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #ffffff;
+    /* #ifdef MP-ALIPAY || MP-BAIDU */
+    height: 100vh;
+    /* #endif */
+  }
+
+  .tab-bar {
+    /* #ifdef APP-PLUS */
+    width: 750rpx;
+    /* #endif */
+    height: 42px;
+    flex-direction: row;
+    /* #ifndef APP-PLUS */
+    white-space: nowrap;
+    /* #endif */
+  }
+
+  /* #ifndef APP-NVUE */
+  .tab-bar ::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+    height: 0 !important;
+    -webkit-appearance: none;
+    background: transparent;
+  }
+
+  /* #endif */
+
+  .scroll-view-indicator {
+    position: relative;
+    height: 2px;
+    background-color: transparent;
+  }
+
+  .scroll-view-underline {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background-color: #007AFF;
+  }
+
+  .scroll-view-animation {
+    transition-duration: 0.2s;
+    transition-property: left;
+  }
+
+  .tab-bar-line {
+    height: 1px;
+    background-color: #cccccc;
+  }
+
+  .tab-box {
+    flex: 1;
+  }
+
+  .uni-tab-item {
+    /* #ifndef APP-PLUS */
+    display: inline-block;
+    /* #endif */
+    flex-wrap: nowrap;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .uni-tab-item-title {
+    color: #555;
+    font-size: 15px;
+    height: 40px;
+    line-height: 40px;
+    flex-wrap: nowrap;
+    /* #ifndef APP-PLUS */
+    white-space: nowrap;
+    /* #endif */
+  }
+
+  .uni-tab-item-title-active {
+    color: #007AFF;
+  }
+
+  .swiper-item {
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .page-item {
+    flex: 1;
+    flex-direction: row;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+</style>

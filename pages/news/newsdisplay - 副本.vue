@@ -1,26 +1,4 @@
-# 微头条动态卡片
-
-## 说明
-
-本组件仿写今日头条的微头条，适用于朋友圈，朋友圈动态，空间说说，微头条等。
-
-组件主要包含三部分
-1.头像，名称，发布时间
-2.文字内容，图片内容
-3.对微头条的操作样式，包含数字显示，高亮显示。
-
-图片说明：本组件根据可用屏幕高宽度自动排列布局，可适应各种屏幕，多张图片布局和。
-
-
-## 基本用法
-
-组件引用了uniapp部分组件，所以得先导入uniapp组件,如果用不到该功能可不导入
-[Grid 宫格](https://ext.dcloud.net.cn/plugin?id=27)
-[Icons 图标](https://ext.dcloud.net.cn/plugin?id=28)
-
-在template中使用组件
-```html
-    <Dynamic v-for="(item,index) in list" key="id" 
+<Dynamic v-for="(item,index) in list" key="id" 
         :imgList="item.imgList" 
         :avatar="item.avatar"
         :name="item.name"
@@ -37,12 +15,10 @@
         @clickThumbsup="clickThumbsup(item.id)"
         @clickGiveReward="clickGiveReward(item.id)"
         @clickChat="clickChat(item.id)">
-    </Dynamic>
-```  
+</Dynamic>
 
-
-```javascript
-import Dynamic from '../../components/Dynamic/Dynamic.vue'
+<script>
+import Dynamic from '../../components/qizai-dynamic/Dynamic.vue'
 export default {
     components: {
         Dynamic
@@ -174,39 +150,4 @@ export default {
         }
     }
 }
-```
-
-## API
-
-**属性说明**
-
-|属性名|类型|默认值|说明|
-:---:|:----:|:---:|:--:|
-|avatar|String|null|头像路径|
-| name | String |  null  |     名称     |
-| publishTime | Number |  null  | 发布时间 |
-| isFocusOn | Boolean |  null  | 是否已关注。 |
-| content | String |  null  | 内容 |
-| imgList | Array |  null  | 显示的图片路径列表 |
-| isLike | Boolean |  null  | 是否已点赞，已点赞会高亮显示 |
-| isGiveReward | Boolean |  null  | 是否已打赏，已打赏会高亮显示 |
-| likeNumber | Boolean |  null  | 点赞数 |
-| giveRewardNumber | Number |  null  | 打赏数 |
-| chatNumber | Number |  null  | 评论数 |
-| chatNumber | Number |  null  | 评论数 |
-| userNoShow | Boolean |  null  | 是否不显示用户信息。包括头像，名称，发布时间 |
-| operateNoShow | Boolean |  null  | 是否不显示操作信息。|
-
-**事件说明**  
-
-|   事件名   |  说明  |返回值 |
-| :--- : | :--: | :----: |
-|  @clickDynamic   | 点击动态触发 | 按传参原值返回 |
-| @clickUser | 点击用户信息触发。包括头像，名称|  按传参原值返回    |
-| @clickFocus | 点击关注触发 |  按传参原值返回  |
-| @clickThumbsup | 点赞触发 |   按传参原值返回 |
-| @clickGiveReward | 点击打赏触发 |  按传参原值返回 |
-| @clickChat | 点击评论触发 |  null  | 按传参原值返回 |
-
-
-补充：有任何问题联系wx：chwlzgz 。在线求打扰~
+</script>
