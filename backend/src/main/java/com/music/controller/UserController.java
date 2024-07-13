@@ -54,6 +54,22 @@ public class UserController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="（模糊查询）分页查询数据库中的用户 "+
+            "{\"pageSize\":2,\n" +
+            "\"pageNum\":1,\n}"
+    )
+    @GetMapping("/indexPage")
+    public Result indexPage(@RequestBody QueryPageParam query){
+
+        Page<User> page = new Page();
+        page.setCurrent(query.getPageNum());
+        page.setSize(query.getPageSize());
+
+        IPage result = userService.page(page);
+        return Result.succ(result.getRecords());
+    }
+
+    @RequiresAuthentication
     @ApiOperation(value ="通过名字（模糊查询）分页查询数据库中的用户 "+
             "{\"pageSize\":2,\n" +
             "\"pageNum\":1,\n" +
@@ -61,8 +77,8 @@ public class UserController {
             "    \"name\":\"te\"\n" +
             "}}"
     )
-    @PostMapping("/indexPage")
-    public Result indexPage(@RequestBody QueryPageParam query){
+    @PostMapping("/indexPageByName")
+    public Result indexPageByName(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
         String name = (String)param.get("name");
 
