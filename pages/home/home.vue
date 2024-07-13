@@ -42,7 +42,8 @@
 			</view>
 			
 			<view class="nav-image-wrapper" >
-				<view class="nav-image-item-view" v-for="(item,index) in ruk" :key="index" @click="itemClick(item)">
+				<!-- <view class="nav-image-item-view" v-for="(item,index) in ruk" :key="index" @click="itemClick(item)"> -->
+				<view class="nav-image-item-view" v-for="(item,index) in ruk" :key="index">
 					<image :src="item.albumCover" class="nav-image-item" mode="widthFix"></image>
 					<view class="nav-image-content-wrapper">
 						<view class="nav-image-content">
@@ -54,26 +55,6 @@
 			</view>
 			
 		</view>
-
-		<!-- <view class="line-bar">
-			<view class="line-bar-wrapper">
-				<view class="bar-title">
-					<view class="bar-title-left">咨讯广场</view>
-					<view class="bar-title-right" @tap="redirectToInput({class:'nav5-color'})">
-						查看更多
-					</view>
-				</view>
-				<view class="line-bar-item-wrapper">
-					<view class="line-bar-item" v-for="(item,index) in line" :key="index">
-						<image :src="item.image" class="line-bar-item-image" mode="aspectFill"></image>
-						<view>
-							<text class="text-title">{{item.textTitle}}</text>
-							<text class="text-sub-title">{{item.textSubTitle}}</text>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view> -->
 
 		<view class="qu-bar">
 			<view class="qu-bar-wrapper">
@@ -330,7 +311,7 @@
 					success: (response) => {
 						const res = response.data;
 						this.temperature=res["lives"][0]["temperature"];
-						console.log(this.temperature);
+						//console.log(this.temperature);
 						this.city=res["lives"][0]["city"];
 						
 					}

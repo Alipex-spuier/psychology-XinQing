@@ -91,3 +91,8 @@ export function initTime(startTime = '10:00:00', endTime = '21:00:00', timeInter
 	}
 	return time
 }
+//日期转时间戳
+export function dateToTimestamp(dateString) {
+    const date = new Date(dateString);
+    return date.getTime();
+}

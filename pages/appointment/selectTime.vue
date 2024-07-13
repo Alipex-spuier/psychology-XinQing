@@ -59,7 +59,8 @@
 		initData,
 		initTime,
 		timeStamp,
-		currentTime
+		currentTime,
+		dateToTimestamp
 	} from '@/utils/date.js'
 	export default {
 		name: 'times',
@@ -165,7 +166,7 @@
 				this.dateArr = initData() // 日期栏初始化
 				this.timeArr = initTime(this.beginTime, this.endTime, this.timeInterval, this.isQuantum) //时间选项初始化
 				this.timeQuanBegin = this.timeQuanEnd = ""
-				console.log(this.orderTimeArr)
+				//console.log(this.orderTimeArr)
 				let isFullTime = true
 				this.timeArr.forEach((item, index) => {
 					// 时间段
@@ -253,7 +254,6 @@
 			selectTimeEvent(index, item) {
 				if (this.isQuantum) {
 					return this.handleSelectQuantum(index, item)
-
 				}
 				if (item.disable) return
 				if (this.isMultiple) {
@@ -330,7 +330,7 @@
 						end: `${this.selectDate} ${item.end}:00`,
 					}
 				}
-				console.log(this.orderTimeArr)
+				//console.log(this.orderTimeArr)
 			},
 			handleChange() {
 				this.timeQuanBegin > this.timeQuanEnd && ([this.timeQuanBegin, this.timeQuanEnd] = [this.timeQuanEnd, this
@@ -345,8 +345,8 @@
 						endTime: `${this.selectDate} ${this.timeQuanEnd}`
 					})
 					return
-				}//alldata
-				console.log(this.orderTimeArr)
+				}
+				//console.log(this.orderTimeArr)
 				if (this.isMultiple) {
 					if (this.isQuantum) {
 						this.$emit('change', this.orderTimeArr)
@@ -361,6 +361,10 @@
 					this.$emit('change', time)
 				} else {
 					this.$emit('change', this.orderDateTime)
+					//all time
+					console.log(this.orderDateTime)
+					const timestamp = dateToTimestamp(this.orderDateTime);
+					console.log(timestamp); // 输出该日期对应的时间戳
 				}
 
 			}

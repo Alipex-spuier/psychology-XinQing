@@ -110,7 +110,7 @@
 				<text class="txtBtn" :class="{'txtBtnSel' :active==1}">资讯广场</text>
 			</view>
 			<view class="itmMain">
-				<navigator url="../pages/appointment/selectExport">
+				<!-- <navigator url="../pages/appointment/selectExport"> -->
 				<view class="fixTpm" @click="toselect">
 					<view class="imgseTsAnds" ref='leftWidth' :style="'left:'+leftWidth+'px'"></view>
 				</view>
@@ -269,7 +269,8 @@ export default{
 		            _this.windowHeight = res.windowHeight;
 		        }
 		    });
-		},toselect(){
+		},
+		toselect(){
 			let _this= this;
 			const res=uni.getStorageSync("res")
 			_this.authorization=res.header.authorization;
@@ -282,14 +283,12 @@ export default{
 				success: (response) => {
 					const res = response.data;
 					this.selectres=res;
-					
+					uni.navigateTo({
+						url: '../pages/appointment/selectExport?result=' + encodeURIComponent(JSON.stringify(this.selectres))
+					})
 					// console.log(res)
 				}
 			});
-			uni.navigateTo({
-				url: '../pages/appointment/selectExport?result=' + encodeURIComponent(JSON.stringify(this.selectres))
-			})
-
 		}
 	}
 }
