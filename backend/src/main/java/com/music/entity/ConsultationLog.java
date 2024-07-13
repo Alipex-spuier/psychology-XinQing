@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -19,7 +20,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("consultationlogs")
-public class ConsultationLog {
+public class ConsultationLog implements Serializable {
     @TableId(value = "log_id",type = IdType.AUTO)
     private Long logId;
     @NotNull(message = "aptId不能为空")

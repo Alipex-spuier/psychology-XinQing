@@ -11,4 +11,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ConsultationLogMapper extends BaseMapper<ConsultationLog> {
     IPage<ConsultationLog> pageCC(IPage<ConsultationLog> page ,@Param(Constants.WRAPPER)Wrapper wrapper);
+
+    ConsultationLog getByAptId(Integer aptId);
 }

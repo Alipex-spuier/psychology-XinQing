@@ -14,4 +14,7 @@ public interface AppointmentService extends IService<Appointment> {
     IPage<Appointment> pageCC(IPage<Appointment> page, Wrapper wrapper);
 
     Integer accountByDay(Wrapper wrapper);
+
+    Appointment getOneByExpertIdAndAptTime(Wrapper wrapper);
+
 }

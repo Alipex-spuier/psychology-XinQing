@@ -17,6 +17,8 @@ public interface AppointmentMapper extends BaseMapper<Appointment> {
 
     Appointment searchAllByExpertId(Long expertId);
 
+    Appointment getOneByExpertIdAndAptTime(@Param(Constants.WRAPPER) Wrapper wrapper);
+
     IPage<Appointment> pageCC(IPage<Appointment> page,@Param(Constants.WRAPPER) Wrapper wrapper);
 
     Integer accountByDay(@Param(Constants.WRAPPER) Wrapper wrapper);

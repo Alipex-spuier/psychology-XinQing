@@ -9,4 +9,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ConsultationLogService extends IService<ConsultationLog> {
     IPage<ConsultationLog> pageCC(IPage<ConsultationLog> page, @Param(Constants.WRAPPER) Wrapper wapper);
+
+    ConsultationLog getByAptId(Integer aptId);
 }

@@ -20,4 +20,9 @@ public class ConsultationLogServiceImpl extends ServiceImpl<ConsultationLogMappe
     public IPage<ConsultationLog> pageCC(IPage<ConsultationLog> page, @Param(Constants.WRAPPER)Wrapper wrapper){
         return consultationLogMapper.pageCC(page,wrapper);
     }
+
+    @Override
+    public ConsultationLog getByAptId(Integer aptId) {
+        return consultationLogMapper.getByAptId(aptId);
+    }
 }

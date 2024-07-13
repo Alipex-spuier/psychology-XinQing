@@ -31,4 +31,8 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
     public Integer accountByDay(Wrapper wrapper){
         return appointmentMapper.accountByDay(wrapper);
     }
+    @Override
+    public Appointment getOneByExpertIdAndAptTime(Wrapper wrapper){
+        return appointmentMapper.getOneByExpertIdAndAptTime(wrapper);
+    }
 }

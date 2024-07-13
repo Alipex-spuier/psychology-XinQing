@@ -4,4 +4,7 @@
     <select id = "pageCC" resultType = "com.music.entity.ConsultationLog">
         select * from consultationlogs ${ew.customSqlSegment}
     </select>
+    <select id="getByAptId" resultType="com.music.entity.ConsultationLog">
+        select * from consultationlogs
+    </select>
 </mapper>

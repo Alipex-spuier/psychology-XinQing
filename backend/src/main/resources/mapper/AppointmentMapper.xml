@@ -18,4 +18,7 @@
     <select id="accountByDay" resultType="java.lang.Integer">
         select count(*) from appointments ${ew.customSqlSegment}
     </select>
+    <select id="getOneByExpertIdAndAptTime" resultType="com.music.entity.Appointment">
+        select * from appointments ${ew.customSqlSegment}
+    </select>
 </mapper>

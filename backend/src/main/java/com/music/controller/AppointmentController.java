@@ -4,20 +4,28 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
 import com.music.entity.Appointment;
 import com.music.service.AppointmentService;
+import com.music.service.ConsultationLogService;
 import com.music.service.ExpertService;
 import com.music.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import lombok.ToString;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -33,6 +41,9 @@ public class AppointmentController {
 
     @Autowired
     ExpertService expertService;
+
+    @Autowired
+    ConsultationLogService consultationLogService;
 
     @ApiOperation(value = "用于搜索所有预约记录 "+
             "不需要传参数" )
@@ -90,42 +101,16 @@ public class AppointmentController {
 
         return Result.succ(result.getRecords());
     }//根据expertId分页模糊查询显示
-    @ApiOperation(value = "用于根据日期搜索所有预约记录（已分页） "+
-            "    \"pageSize\":2,\n" +
-            "    \"pageNum\":1,\n" +
-            "    \"param\":{\n" +
-            "        \"aptTime\":\"2024-07-10\"\n" +
-            "    }" )
-    @RequiresAuthentication
-    @PostMapping("/indexPageByDay")
-    public Result indexPageByDay(@RequestBody QueryPageParam query){
-        Page<Appointment> page = new Page<>();
-        page.setCurrent(query.getPageNum());
-        page.setSize(query.getPageSize());
-        String startTime = (String) query.getParam().get("aptTime");
-        String endTime = startTime + " 23:59:59";
-        SimpleDateFormat startTimeSdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat endTimeSdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date startDate = new Date();Date endDate = new Date();
-        try{
-            startDate = startTimeSdf.parse(startTime);
-            endDate = endTimeSdf.parse(endTime);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.between(Appointment::getAptTime,startDate,endDate);
-        IPage result = appointmentService.pageCC(page,lambdaQueryWrapper);
-
-        return Result.succ(result.getRecords());
-    }//根据expertId分页模糊查询显示
     @ApiOperation(value = "用于删除一条预约记录 "+
             "    \"aptId\":1" )
     @RequiresAuthentication
     @DeleteMapping("/delete/{aptId}")
     public Result Delete(@PathVariable Integer aptId){
-        return ObjectUtil.isNotEmpty(appointmentService.getById(aptId))?Result.succ(appointmentService.removeById(aptId)):Result.fail("不存在这个aptId");
+        if(ObjectUtil.isEmpty(appointmentService.getById(aptId)))
+            return Result.fail("没有该预约记录");
+        if(ObjectUtil.isNotEmpty(consultationLogService.getByAptId(aptId)))
+            consultationLogService.removeById(consultationLogService.getByAptId(aptId));
+        return appointmentService.removeById(aptId)?Result.succ("删除成功",true):Result.fail("删除失败");
     }//删除
     @ApiOperation(value = "用于更新一条预约记录 aptId必填"+
             "    \"aptId\":1,\n" +
@@ -141,6 +126,8 @@ public class AppointmentController {
             return Result.fail("不存在该用户");
         if(ObjectUtil.isNotEmpty(appointment.getExpertId())&&ObjectUtil.isEmpty(expertService.getById(appointment.getExpertId())))
             return  Result.fail("不存在该专家");
+        if(appointment.getAptTime().equals(appointmentService.searchAllByExpertId(appointment.getExpertId()).getAptTime())&&!appointment.getAptId().equals(appointmentService.searchAllByExpertId(appointment.getExpertId()).getAptId()))
+            return Result.fail("该专家该时间段有预约");
         appointmentService.updateById(appointment);
         Appointment newAppointment = appointmentService.getById(appointment.getAptId());
         return Result.succ(MapUtil.builder()
@@ -148,7 +135,6 @@ public class AppointmentController {
                 .put("userId",newAppointment.getUserId())
                 .put("expertId", newAppointment.getExpertId())
                 .put("aptTime",newAppointment.getAptTime())
-                .put("aptStatus", newAppointment.getAptStatus())
                 .map());
     }//修改
 
@@ -159,7 +145,6 @@ public class AppointmentController {
     @PostMapping("/save")
     public Result save(@Validated @RequestBody Appointment appointment){
         appointment.setUserId(null);
-        appointment.setAptStatus("N");
         return appointmentService.save(appointment)?Result.succ(appointment):Result.fail("保存失败！");
     }//放预约时间的时候需要把statue设置成N，即未被预约,userId设置为Null
     @ApiOperation(value = "用于用户预约一条记录 "+
@@ -167,15 +152,29 @@ public class AppointmentController {
             "    \"expertId\":4,\n" +
             "    \"aptTime\":\"2024-07-11T14:00:00\"")
     @RequiresAuthentication
-    @PostMapping("/appoint/{userId}")
-    public Result appoint(@Validated @RequestBody Appointment appointment,@PathVariable Long userId){
-        if (ObjectUtil.isEmpty(userService.getById(userId)))
-            return Result.fail("没有这个用户");
-        if("Y".equals(appointmentService.getById(appointment.getAptId()).getAptStatus()))
-            return Result.fail("该预约已被预约");
-        appointment.setUserId(userId);
-        appointment.setAptStatus("Y");
-        return appointmentService.updateById(appointment)?Result.succ(appointmentService.getById(appointment.getAptId())):Result.fail("预约失败");
+    @PostMapping("/appoint")
+    public Result appoint(@Validated @RequestBody Appointment appointment){
+        if (ObjectUtil.isEmpty(userService.getById(appointment.getUserId())))
+            return Result.fail("不存在该用户");
+        if(ObjectUtil.isEmpty(expertService.getById(appointment.getExpertId())))
+            return Result.fail("不存在该专家");
+        LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Appointment::getExpertId,appointment.getExpertId()).and((wrapper)->wrapper.eq(Appointment::getAptTime,appointment.getAptTime()));
+        if(ObjectUtil.isEmpty(appointmentService.getOneByExpertIdAndAptTime(lambdaQueryWrapper))) {
+            appointmentService.save(appointment);
+            return Result.succ("预约成功",true);
+        }
+        return Result.fail("时间段已被预约");
+    }
+    @RequiresAuthentication
+    @PostMapping("/searchOneByExpertIdAndAptTime")
+    public Result searchOneByExpertIdAndAptTime(@Validated @RequestBody Appointment appointment){
+        LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Appointment::getExpertId,appointment.getExpertId()).and((wrapper)->wrapper.eq(Appointment::getAptTime,appointment.getAptTime()));
+        if(ObjectUtil.isEmpty(appointmentService.getOneByExpertIdAndAptTime(lambdaQueryWrapper))) {
+            return Result.succ("该专家该时间段没有预约",true);
+        }
+            return Result.fail("该专家该时间段已被预约",false);
     }
 
     @ApiOperation(value = "用于用户预约一条记录 "+
@@ -183,22 +182,29 @@ public class AppointmentController {
     @RequiresAuthentication
     @PostMapping("/accountByDay")
     public Result appointmentAccountByDay(@RequestBody HashMap param){
-        if(ObjectUtil.isEmpty(param.get("aptTime"))||"".equals((String) param.get("aptTime")))
+        if(ObjectUtil.isEmpty(param.get("aptTime")))
             return Result.fail("请传正确的时间");
-        String aptTime = (String) param.get("aptTime");
-        String endDay = aptTime+" 23:59:59";
-        aptTime +=" 00:00:00";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date date = new Date();Date endDate = new Date();
-        try{
-            date = simpleDateFormat.parse(aptTime);
-            endDate = simpleDateFormat.parse(endDay);
+        Long aptTime = (Long)param.get("aptTime");
+        Date date = new Date(aptTime);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String formatTime = format.format(date);
+        String dayBegin = formatTime+" 00:00:00";
+        String dayEnd = formatTime +" 23:59:59";
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startOfDay = new Date(); Date endOfDay = new Date();
+        try {
+            startOfDay = format1.parse(dayBegin);
+            endOfDay = format1.parse(dayEnd);
         }
         catch (Exception e){
             e.printStackTrace();
         }
+        Long beginDay = startOfDay.getTime();
+        Long endDay = endOfDay.getTime();
+        System.out.println(beginDay);
+        System.out.println(endDay);
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.between(Appointment::getAptTime,date,endDate);
+        lambdaQueryWrapper.between(Appointment::getAptTime,beginDay,endDay);
         return Result.succ(appointmentService.accountByDay(lambdaQueryWrapper));
     }
 }

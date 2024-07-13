@@ -34,7 +34,5 @@ public class Appointment implements Serializable {
 
     @NotNull(message = "预约时间不能为空")
     @Valid
-    private Date aptTime;
-
-    private String aptStatus;
+    private Long aptTime;
 }
