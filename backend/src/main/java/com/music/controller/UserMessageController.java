@@ -22,6 +22,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/v1/userMessage")
 public class UserMessageController {
+
     @Autowired
     UserMessageService userMessageService;
     @Autowired
@@ -84,8 +85,7 @@ public class UserMessageController {
             "   \"pageSize\":2,\n" +
             "   \"pageNum\":1,\n" +
             "   \"param\":{\n" +
-            "       \"adminId\": *\n" +
-            "   }")
+            "       \"adminId\": *" )
     @RequiresAuthentication
     @PostMapping("/indexPage/admin/{adminId}")
     public Result indexPageByExpertId(@RequestBody QueryPageParam query,@PathVariable Integer adminId){
@@ -109,7 +109,10 @@ public class UserMessageController {
     }//删除
 
     @ApiOperation(value = "用于添加一条userMessage"+
-            "\"userId\": *")
+            "   \"userId\":1,\n" +
+            "   \"adminId\":2,\n" +
+            "    \"mesContent\":\"test123\",\n" +
+            "    \"mesTime\":1720748470001")
     @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@Validated @RequestBody UserMessage userMessage){
@@ -117,7 +120,8 @@ public class UserMessageController {
             return Result.fail("没有这个用户");
         if(ObjectUtil.isEmpty(adminService.getById(userMessage.getAdminId())))
             return Result.fail("没有这个管理员");
-        userMessage.setMesTime(new Date());
+        if(ObjectUtil.isEmpty(userMessage.getMesTime()))
+            userMessage.setMesTime(new Date().getTime());
         return userMessageService.save(userMessage)?Result.succ(userMessage):Result.fail("保存失败！");
     }//增加
     @ApiOperation(value = "用于根据mesId更新一条记录"+
@@ -133,7 +137,6 @@ public class UserMessageController {
             return Result.fail("没有这个用户");
         if(ObjectUtil.isEmpty(adminService.getById(userMessage.getAdminId())))
             return Result.fail("没有这个管理员");
-        userMessage.setMesTime(new Date());
         userMessageService.updateById(userMessage);
         UserMessage newUserMessage = userMessageService.getById(userMessage.getMesId());
         return Result.succ(MapUtil.builder()

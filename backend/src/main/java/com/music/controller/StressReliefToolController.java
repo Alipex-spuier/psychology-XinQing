@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/stressReliefTool")
 public class StressReliefToolController {
+
     @Autowired
     StressReliefToolService stressReliefToolService;
     @ApiOperation(value = "用于全查询（无分页） "+

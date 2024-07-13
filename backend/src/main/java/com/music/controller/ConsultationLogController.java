@@ -16,12 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.rmi.server.ExportException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/consultationLog")
 public class ConsultationLogController {
+
     @Autowired
     ConsultationLogService consultationLogService;
     @Autowired
@@ -52,12 +54,11 @@ public class ConsultationLogController {
         IPage<ConsultationLog> result = consultationLogService.page(page);
         return Result.succ(result.getRecords());
     }//分页查询
-    @ApiOperation(value = "用于根据起始时间查询记录（已做分页处理） "+
+    @ApiOperation(value = "用于从起始时间到当前时间的记录查询（已做分页处理） "+
             "   \"pageSize\":2,\n" +
             "   \"pageNum\":2,\n" +
             "   \"param\":{\n" +
-            "    \"startTime\":\"2024-07-10\"\n" +
-            "   }" + "日期传年月日\"yyyy-MM-dd\"格式")
+            "    \"logTime\":\"2024-07-10")
     @RequiresAuthentication
     @PostMapping("indexPageByStartTime")
     public Result indexPageByStartTime(@RequestBody QueryPageParam queryPageParam){
@@ -65,19 +66,12 @@ public class ConsultationLogController {
         page.setCurrent(queryPageParam.getPageNum());
         page.setSize(queryPageParam.getPageSize());
 
-        String startTime = (String) queryPageParam.getParam().get("startTime");
-        if("".equals(startTime))
+        Long logTime = (Long) queryPageParam.getParam().get("logTime");
+        if(ObjectUtil.isEmpty(logTime))
             return Result.fail("错误的时间");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        try {
-            date = sdf.parse(startTime);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
         LambdaQueryWrapper<ConsultationLog> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.between(ConsultationLog::getLogTime,date,new Date());
+        lambdaQueryWrapper.ge(ConsultationLog::getLogTime,logTime);
         IPage<ConsultationLog> result = consultationLogService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
     }//根据起始时间分页查询
@@ -85,9 +79,8 @@ public class ConsultationLogController {
             " \"pageSize\":2,\n" +
             "   \"pageNum\":2,\n" +
             "   \"param\":{\n" +
-            "        \"startTime\":\"2024-07-10\",\n" +
-            "        \"endTime\":\"2024-07-11\"\n" +
-            "   }" + "日期传年月日\"yyyy-MM-dd\"格式")
+            "        \"logTime\":1720748470000,\n" +
+            "        \"endTime\":1720748470001")
     @RequiresAuthentication
     @PostMapping("indexPageByRangeTime")
     public Result indexPageByRangeTime(@RequestBody QueryPageParam queryPageParam){
@@ -95,34 +88,26 @@ public class ConsultationLogController {
         page.setCurrent(queryPageParam.getPageNum());
         page.setSize(queryPageParam.getPageSize());
 
-        String startTime = (String) queryPageParam.getParam().get("startTime");
-        String endTime = (String) queryPageParam.getParam().get("endTime");
-        if("".equals(startTime)||"".equals(endTime))
+        Long startTime = (Long)queryPageParam.getParam().get("startTime");
+        Long endTime = (Long)queryPageParam.getParam().get("endTime");
+        if(ObjectUtil.isEmpty(startTime)||ObjectUtil.isEmpty(endTime))
             return Result.fail("错误的时间");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = new Date();
-        Date endDate = new Date();
-        try {
-            startDate = sdf.parse(startTime);
-            endDate = sdf.parse(endTime);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
         LambdaQueryWrapper<ConsultationLog> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.between(ConsultationLog::getLogTime,startDate,endDate);
+        lambdaQueryWrapper.between(ConsultationLog::getLogTime,startTime,endTime);
         IPage<ConsultationLog> result = consultationLogService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
     }//分页查询
-    @ApiOperation(value = "用于增加记录 "+
-            " \"aptId\":1,\n" +
+    @ApiOperation(value = "用于增加记录 logTime要是没传后端会自动赋当前时间"+
+            "    \"logTime\":1720748470000"+
             "    \"logContent\":\"test1\"")
     @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@Validated @RequestBody ConsultationLog consultationLog){
         if(ObjectUtil.isEmpty(appointmentService.getById(consultationLog.getAptId())))
             return Result.fail("没有这个预约记录");
-        consultationLog.setLogTime(new Date());
+        if(ObjectUtil.isEmpty(consultationLog.getLogTime()))
+            consultationLog.setLogTime(new Date().getTime());
         return consultationLogService.save(consultationLog)?Result.succ(consultationLog):Result.fail("保存失败！");
     }//增加
     @ApiOperation(value = "用于删除记录 "+
@@ -135,6 +120,7 @@ public class ConsultationLogController {
     @ApiOperation(value = "用于根据logId更新记录 logId必填"+
             "    \"logId\":1,\n" +
             "    \"aptId\":1,\n" +
+            "    \"logTime\":1720748470000"+
             "    \"logContent\":\"test1\"")
     @RequiresAuthentication
     @PutMapping("/update")
@@ -143,7 +129,6 @@ public class ConsultationLogController {
             return Result.fail("没有这个日志记录");
         if(ObjectUtil.isNotEmpty(consultationLog.getAptId())&&ObjectUtil.isEmpty(appointmentService.getById(consultationLog.getAptId())))
             return Result.fail("不存在该预约记录");
-        consultationLog.setLogTime(new Date());
         consultationLogService.updateById(consultationLog);
         ConsultationLog newConsultationLog = consultationLogService.getById(consultationLog.getLogId());
         return Result.succ(MapUtil.builder()

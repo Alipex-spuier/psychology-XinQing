@@ -26,5 +26,5 @@ public class ConsultationLog implements Serializable {
     @NotNull(message = "aptId不能为空")
     private Long aptId;
     private String logContent;
-    private Date logTime;
+    private Long logTime;
 }

@@ -22,5 +22,5 @@ public class UserMessage implements Serializable {
 
     private String mesContent;
 
-    private Date mesTime;
+    private Long mesTime;
 }

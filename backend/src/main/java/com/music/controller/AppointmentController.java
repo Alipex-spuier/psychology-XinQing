@@ -33,6 +33,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/api/v1/appointment")
 public class AppointmentController {
+
     @Autowired
     AppointmentService appointmentService;
 
@@ -139,7 +140,6 @@ public class AppointmentController {
     }//修改
 
     @ApiOperation(value = "用于添加一条预约记录 "+
-            "    \"expertId\":2,\n" +
             "    \"aptTime\":\"2024-07-11T14:00:00\"")
     @RequiresAuthentication
     @PostMapping("/save")
