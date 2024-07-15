@@ -35,6 +35,9 @@
   import newsItem from './news-item.nvue';
   import uniLoadMore from '@/components/uni-load-more.vue';
   import noData from '@/components/nodata.nvue';
+  import{
+	  dateToTimestamp
+  } from '@/utils/date.js';
 
   export default {
     components: {
@@ -101,7 +104,9 @@
         var startTime = new Date();
         uni.request({
           // url: this.$host + 'api/news',
-          url: 'https://unidemo.dcloud.net.cn/api/news',
+		  
+          url: this.$baseURL+'/api/v1/article/index',
+		  //'https://unidemo.dcloud.net.cn/api/news',
           data: this.requestParams,
           success: (result) => {
             var endTime = new Date();
@@ -110,8 +115,8 @@
 
             const data_list = data.map((news) => {
               return {
-                id: this.newGuid() + news.id,
-                newsid: news.id,
+                id: this.newGuid() + news.artId,
+                newsid: news.artId,
                 article_type: 1,
                 datetime: friendlyDate(new Date(news.published_at.replace(/\-/g, '/')).getTime()),
                 title: news.title,

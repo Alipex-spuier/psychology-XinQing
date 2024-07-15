@@ -12,7 +12,7 @@
         <view class="scroll-view-indicator">
           <view ref="underline" class="scroll-view-underline" :class="isTap ? 'scroll-view-animation':''" :style="{left: indicatorLineLeft + 'px', width: indicatorLineWidth + 'px'}"></view>
         </view>
-      </view>
+==      </view>
     </scroll-view>
     <view class="tab-bar-line"></view>
     <swiper class="tab-box" ref="swiper1" :current="tabIndex" :duration="300" @change="onswiperchange" @transition="onswiperscroll"
@@ -49,23 +49,23 @@
           newsid: 0
         }, {
           id: "tab02",
-          name: '大公司',
+          name: '失眠',
           newsid: 23
         }, {
           id: "tab03",
-          name: '内容',
+          name: '抑郁',
           newsid: 223
         }, {
           id: "tab04",
-          name: '消费',
+          name: '烦躁',
           newsid: 221
         }, {
           id: "tab05",
-          name: '娱乐',
+          name: '焦虑',
           newsid: 225
         }, {
           id: "tab06",
-          name: '区块链',
+          name: '亢奋',
           newsid: 208
         }],
         tabIndex: 0,
