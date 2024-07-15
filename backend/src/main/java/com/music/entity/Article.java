@@ -39,6 +39,6 @@ public class Article implements Serializable {
     @NotBlank(message = "封面图片不能为空")
     private String artPic;
 
-    private Date artTime;
+    private Long artTime;
 
 }

@@ -46,6 +46,21 @@ public class ArticleController {
         return Result.succ(article);
     }
 
+    @GetMapping("/indexPage")
+    @ApiOperation(value = "分页查询数据库中的资讯文章 "+
+            "\"pageSize\":2,\n" +
+            "\"pageNum\":1}")
+    public Result indexPage(@RequestBody QueryPageParam query){
+        HashMap param = query.getParam();
+
+        Page<Article> page = new Page();
+        page.setCurrent(query.getPageNum());
+        page.setSize(query.getPageSize());
+
+        IPage result = articleService.page(page);
+        return Result.succ(result.getRecords());
+    }
+
     @PostMapping("/indexPageByTitle")
     @ApiOperation(value = "通过artTitle分页查询数据库中的资讯文章 "+
             "\"pageSize\":2,\n" +
@@ -65,7 +80,7 @@ public class ArticleController {
         if(StringUtils.isNotEmpty(name)){
             lambdaQueryWrapper.like(Article::getArtTitle,name);
         }else{
-            return Result.fail("标题为空！");
+            return Result.fail("输入标题为空！");
         }
 
         IPage result = articleService.pageCC(page,lambdaQueryWrapper);
@@ -91,14 +106,14 @@ public class ArticleController {
         if(name!=null && !"null".equals(name.toString())){
             lambdaQueryWrapper.like(Article::getArtAuthor,name);
         }else{
-            return Result.fail("作者为空！");
+            return Result.fail("作者Id为空！");
         }
 
         IPage result = articleService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
     }
 
-    @ApiOperation(value ="更新资讯文章信息,artId必填，其他几个想改啥填啥 "+
+    @ApiOperation(value ="更新资讯文章信息,artId必填，根据artId来确定改哪个，其他几个想改啥填啥 "+
             "{\"artId\":5,\n" +
             "\"artAuthor\":4,\n" +
             "\"artTitle\":\"文章标题信息\"\n" +
@@ -108,7 +123,8 @@ public class ArticleController {
     )
     @PutMapping("/update")
     public Result update(@RequestBody Article article){
-        article.setArtTime(new Date());
+
+        article.setArtTime(new Date().getTime());
         articleService.updateById(article);
         Article newArticle = articleService.getById(article.getArtId());
         return Result.succ(MapUtil.builder()
@@ -122,16 +138,15 @@ public class ArticleController {
     }
 
     @PostMapping("/save")
-    @ApiOperation(value ="新建并保存一个文章，artId、artAuthor、artTitle、artPic必填，artContent选填 "+
-            "{\"artId\":5,\n" +
-            "\"artAuthor\":4,\n" +
+    @ApiOperation(value ="新建并保存一个文章，artAuthor、artTitle、artPic必填，artContent选填 "+
+            "{\"artAuthor\":4,\n" +
             "\"artTitle\":\"文章标题信息\"\n" +
             "\"artContent\":\"文章正文\"\n" +
             "\"artPic\":\"文章封面图片url\"\n"+
             "}"
     )
     public Result save(@RequestBody Article article){
-        article.setArtTime(new Date());
+        article.setArtTime(new Date().getTime());
         return articleService.save(article)?Result.succ(article):Result.fail("保存失败！");
     }
 
