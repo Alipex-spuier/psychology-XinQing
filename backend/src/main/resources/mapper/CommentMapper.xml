@@ -4,4 +4,7 @@
     <select id = "pageCC" resultType = "com.music.entity.Comment">
         select * from articlescomments ${ew.customSqlSegment}
     </select>
+    <select id = "searchByArtId" resultType = "com.music.entity.Comment">
+        select * from articlescomments where art_id = #{artId}
+    </select>
 </mapper>

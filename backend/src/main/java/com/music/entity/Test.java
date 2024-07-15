@@ -9,10 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -27,19 +25,29 @@ public class Test implements Serializable {
     @TableId(value = "test_id", type = IdType.AUTO)
     private Long testId;
 
-    @NotBlank(message = "名称不能为空")
-    private String testName;
-
+    @NotNull(message = "belongingId不为空")
     private Integer belongingId;
 
-    private String testChoA;
-    private String testChoB;
-    private String testChoC;
-    private String testChoD;
+    private String testName;
 
     private String testContent;
 
-    private String testAnswer;
-
     private Integer testScore;
+
+    private String testChoA;
+
+    private String testChoB;
+
+    private String testChoC;
+
+    private String testChoD;
+
+    private Integer testProportionA;
+
+    private Integer testProportionB;
+
+    private Integer testProportionC;
+
+    private Integer testProportionD;
+
 }

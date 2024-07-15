@@ -2,19 +2,22 @@ package com.music.controller;
 
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
 import com.music.entity.Article;
+import com.music.entity.Comment;
 import com.music.service.ArticleService;
+import com.music.service.CommentService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -23,10 +26,12 @@ import java.util.HashMap;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final CommentService commentService;
 
     @Autowired
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, CommentService commentService) {
         this.articleService = articleService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/index")
@@ -72,16 +77,16 @@ public class ArticleController {
         HashMap param = query.getParam();
         String name = (String)param.get("artTitle");
 
+        if(ObjectUtil.isEmpty(name.replace(" ",""))){
+            return Result.fail("输入标题为空！");
+        }
+
         Page<Article> page = new Page();
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
 
         LambdaQueryWrapper<Article> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if(StringUtils.isNotEmpty(name)){
-            lambdaQueryWrapper.like(Article::getArtTitle,name);
-        }else{
-            return Result.fail("输入标题为空！");
-        }
+        lambdaQueryWrapper.like(Article::getArtTitle,name);
 
         IPage result = articleService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
@@ -98,16 +103,16 @@ public class ArticleController {
         HashMap param = query.getParam();
         Integer name = (Integer) param.get("artAuthor");
 
+        if(ObjectUtil.isEmpty(name)){
+            return Result.fail("作者Id为空！");
+        }
+
         Page<Article> page = new Page();
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
 
         LambdaQueryWrapper<Article> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if(name!=null && !"null".equals(name.toString())){
-            lambdaQueryWrapper.like(Article::getArtAuthor,name);
-        }else{
-            return Result.fail("作者Id为空！");
-        }
+        lambdaQueryWrapper.like(Article::getArtAuthor,name);
 
         IPage result = articleService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
@@ -123,7 +128,18 @@ public class ArticleController {
     )
     @PutMapping("/update")
     public Result update(@RequestBody Article article){
-
+        if(article.getArtId()==null || ObjectUtil.isEmpty(articleService.getById(article.getArtId()))){
+            return Result.fail("找不到artId");
+        }
+        if(article.getArtAuthor()!=null && ObjectUtil.isEmpty(article.getArtAuthor())){
+            return Result.fail("artAuthor不能为空");
+        }
+        if(article.getArtTitle()!=null && ObjectUtil.isEmpty(article.getArtTitle().replace(" ",""))){
+            return Result.fail("artTitle不能为空");
+        }
+        if(article.getArtPic()!=null && ObjectUtil.isEmpty(article.getArtPic().replace(" ",""))){
+            return Result.fail("artPic不能为空");
+        }
         article.setArtTime(new Date().getTime());
         articleService.updateById(article);
         Article newArticle = articleService.getById(article.getArtId());
@@ -145,7 +161,7 @@ public class ArticleController {
             "\"artPic\":\"文章封面图片url\"\n"+
             "}"
     )
-    public Result save(@RequestBody Article article){
+    public Result save(@RequestBody @Valid Article article){
         article.setArtTime(new Date().getTime());
         return articleService.save(article)?Result.succ(article):Result.fail("保存失败！");
     }
@@ -156,6 +172,12 @@ public class ArticleController {
     )
     @DeleteMapping("/delete/{artId}")
     public Result delete(@PathVariable Integer artId) {
+        if(ObjectUtil.isEmpty(articleService.getById(artId))){
+            return Result.succ("该条记录已不存在");
+        }
+        LambdaQueryWrapper<Comment> lambdaQueryWrapper = new LambdaQueryWrapper<Comment>();
+        lambdaQueryWrapper.eq(Comment::getArtId,artId);
+        commentService.remove(lambdaQueryWrapper);
         return Result.succ(articleService.removeById(artId));
     }
 
