@@ -9,6 +9,8 @@ import com.music.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appointment> implements AppointmentService {
     @Autowired
@@ -20,7 +22,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
     }
 
     @Override
-    public Appointment searchAllByExpertId(Long expertId){
+    public List<Appointment> searchAllByExpertId(Long expertId){
         return appointmentMapper.searchAllByExpertId(expertId);
     }
     @Override

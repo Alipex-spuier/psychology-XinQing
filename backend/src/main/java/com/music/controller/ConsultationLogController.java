@@ -4,6 +4,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
@@ -99,6 +100,7 @@ public class ConsultationLogController {
         return Result.succ(result.getRecords());
     }//分页查询
     @ApiOperation(value = "用于增加记录 logTime要是没传后端会自动赋当前时间"+
+            "    \"aptId\":1   " +
             "    \"logTime\":1720748470000"+
             "    \"logContent\":\"test1\"")
     @RequiresAuthentication
@@ -106,6 +108,8 @@ public class ConsultationLogController {
     public Result save(@Validated @RequestBody ConsultationLog consultationLog){
         if(ObjectUtil.isEmpty(appointmentService.getById(consultationLog.getAptId())))
             return Result.fail("没有这个预约记录");
+        if(StringUtils.isEmpty(consultationLog.getLogContent()))
+            return Result.fail("内容不能为空");
         if(ObjectUtil.isEmpty(consultationLog.getLogTime()))
             consultationLog.setLogTime(new Date().getTime());
         return consultationLogService.save(consultationLog)?Result.succ(consultationLog):Result.fail("保存失败！");
@@ -129,6 +133,8 @@ public class ConsultationLogController {
             return Result.fail("没有这个日志记录");
         if(ObjectUtil.isNotEmpty(consultationLog.getAptId())&&ObjectUtil.isEmpty(appointmentService.getById(consultationLog.getAptId())))
             return Result.fail("不存在该预约记录");
+        if(ObjectUtil.isNotEmpty(consultationLog.getLogContent())&&consultationLog.getLogContent().trim().isEmpty())
+            return Result.fail("内容不能为空");
         consultationLogService.updateById(consultationLog);
         ConsultationLog newConsultationLog = consultationLogService.getById(consultationLog.getLogId());
         return Result.succ(MapUtil.builder()

@@ -5,6 +5,6 @@
         select * from consultationlogs ${ew.customSqlSegment}
     </select>
     <select id="getByAptId" resultType="com.music.entity.ConsultationLog">
-        select * from consultationlogs
+        select * from consultationlogs where apt_id = #{aptId}
     </select>
 </mapper>

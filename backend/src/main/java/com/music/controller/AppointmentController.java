@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
 import com.music.entity.Appointment;
+import com.music.entity.ConsultationLog;
 import com.music.service.AppointmentService;
 import com.music.service.ConsultationLogService;
 import com.music.service.ExpertService;
@@ -123,8 +124,11 @@ public class AppointmentController {
     public Result Delete(@PathVariable Integer aptId){
         if(ObjectUtil.isEmpty(appointmentService.getById(aptId)))
             return Result.fail("没有该预约记录");
-        if(ObjectUtil.isNotEmpty(consultationLogService.getByAptId(aptId)))
-            consultationLogService.removeById(consultationLogService.getByAptId(aptId));
+//        for(ConsultationLog consultationLog : consultationLogService.getByAptId(aptId))
+//            consultationLogService.removeById(consultationLog);
+        LambdaQueryWrapper<ConsultationLog> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ConsultationLog::getAptId,aptId);
+        consultationLogService.remove(lambdaQueryWrapper);
         return appointmentService.removeById(aptId)?Result.succ("删除成功",true):Result.fail("删除失败");
     }//删除
     @ApiOperation(value = "用于更新一条预约记录 aptId必填"+
@@ -137,12 +141,18 @@ public class AppointmentController {
     public Result update(@RequestBody Appointment appointment){
         if(ObjectUtil.isEmpty(appointmentService.getById(appointment.getAptId())))
             return Result.fail("没有这个预约记录");
-        if(ObjectUtil.isNotEmpty(appointment.getUserId())&&ObjectUtil.isEmpty(userService.getById(appointment.getUserId())))
+        if(ObjectUtil.isEmpty(userService.getById(appointment.getUserId())))
             return Result.fail("不存在该用户");
-        if(ObjectUtil.isNotEmpty(appointment.getExpertId())&&ObjectUtil.isEmpty(expertService.getById(appointment.getExpertId())))
+        if(ObjectUtil.isEmpty(userService.getById(appointment.getExpertId())))
             return  Result.fail("不存在该专家");
-        if(appointment.getAptTime().equals(appointmentService.searchAllByExpertId(appointment.getExpertId()).getAptTime())&&!appointment.getAptId().equals(appointmentService.searchAllByExpertId(appointment.getExpertId()).getAptId()))
+//        for(Appointment appointment1:appointmentService.searchAllByExpertId(appointment.getExpertId())){
+//            if(appointment.getAptTime().equals(appointment1.getAptTime())&&!appointment.getAptId().equals(appointment1.getAptId()))
+//                return Result.fail("该专家该时间段有预约");
+//        }
+        LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        if(ObjectUtil.isNotEmpty(lambdaQueryWrapper.eq(Appointment::getAptTime,appointment.getAptTime()).and((wrapper) -> wrapper.ne(Appointment::getAptId,appointment.getAptId()))))
             return Result.fail("该专家该时间段有预约");
+
         appointmentService.updateById(appointment);
         Appointment newAppointment = appointmentService.getById(appointment.getAptId());
         return Result.succ(MapUtil.builder()

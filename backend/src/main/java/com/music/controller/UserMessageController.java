@@ -137,7 +137,7 @@ public class UserMessageController {
     @ApiOperation(value = "用于根据mesId更新一条记录"+
             "\"userId\":1,\n" +
             "    \"adminId\":1,\n" +
-            "    \"mesConten\":\"test1\"")
+            "    \"mesContent\":\"test1\"")
     @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody UserMessage userMessage){

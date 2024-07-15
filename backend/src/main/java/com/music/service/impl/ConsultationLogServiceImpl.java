@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ConsultationLogServiceImpl extends ServiceImpl<ConsultationLogMapper, ConsultationLog> implements ConsultationLogService {
 
@@ -22,7 +24,7 @@ public class ConsultationLogServiceImpl extends ServiceImpl<ConsultationLogMappe
     }
 
     @Override
-    public ConsultationLog getByAptId(Integer aptId) {
+    public List<ConsultationLog> getByAptId(Integer aptId) {
         return consultationLogMapper.getByAptId(aptId);
     }
 }

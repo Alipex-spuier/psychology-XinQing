@@ -9,13 +9,15 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface AppointmentMapper extends BaseMapper<Appointment> {
 
     Appointment searchAllByUserId(Long userId);
 
-    Appointment searchAllByExpertId(Long expertId);
+    List<Appointment> searchAllByExpertId(Long expertId);
 
     Appointment getOneByExpertIdAndAptTime(@Param(Constants.WRAPPER) Wrapper wrapper);
 
