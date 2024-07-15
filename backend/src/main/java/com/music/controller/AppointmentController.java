@@ -70,12 +70,19 @@ public class AppointmentController {
     }//分页模糊查询显示
     @ApiOperation(value = "用于根据userId搜索所有预约记录（已分页） "+
             "    \"pageSize\":1,\n" +
-            "    \"pageNum\" :2" )
+            "    \"pageNum\" :2" +
+            "   \"param\":{\n" +
+            "    \"userId\":1\n"+
+            "   }")
     @RequiresAuthentication
-    @PostMapping("/indexPage/user/{userId}")
-    public Result indexPageByUserId(@RequestBody QueryPageParam query,@PathVariable Integer userId){
+    @PostMapping("/indexPageByUserId")
+    public Result indexPageByUserId(@RequestBody QueryPageParam query){
         Page<Appointment> page = new Page<>();
-
+        if(ObjectUtil.isEmpty(query.getParam().get("userId")))
+            return Result.fail("请传入userId");
+        if(ObjectUtil.isEmpty(userService.getById((Integer)query.getParam().get("userId"))))
+            return Result.fail("没有这个userId");
+        Integer userId = (Integer)query.getParam().get("userId");
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -87,16 +94,23 @@ public class AppointmentController {
     }//根据userId分页模糊查询显示
     @ApiOperation(value = "用于根据expertId搜索所有预约记录（已分页） "+
             "    \"pageSize\":1,\n" +
-            "    \"pageNum\" :2" )
+            "    \"pageNum\" :2"+
+            "   \"param\":{\n" +
+            "    \"expertId\":2\n" +
+            "   }")
     @RequiresAuthentication
-    @PostMapping("/indexPage/expert/{expertId}")
-    public Result indexPageByExpertId(@RequestBody QueryPageParam query,@PathVariable Integer expertId){
+    @PostMapping("/indexPageByExpertId")
+    public Result indexPageByExpertId(@RequestBody QueryPageParam query){
         Page<Appointment> page = new Page<>();
-
+        if(ObjectUtil.isEmpty(query.getParam().get("expertId")))
+            return Result.fail("请传入expertId");
+        if(ObjectUtil.isEmpty(userService.getById((Integer)query.getParam().get("expertId"))))
+            return Result.fail("没有这个expertId");
+        Integer expertId = (Integer)query.getParam().get("expertId");
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(Appointment::getUserId,expertId);
+        lambdaQueryWrapper.like(Appointment::getExpertId,expertId);
 
         IPage result = appointmentService.pageCC(page,lambdaQueryWrapper);
 

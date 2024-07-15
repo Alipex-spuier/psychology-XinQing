@@ -65,12 +65,17 @@ public class UserMessageController {
             "\"pageSize\":*,\n" +
             "   \"pageNum\":*,\n" +
             "   \"param\":{\n" +
-            "       \"userId\": *\n" +
+            "       \"userId\": *\n"+
             "   }")
     @RequiresAuthentication
-    @PostMapping("/indexPage/user/{userId}")
-    public Result indexPageByUserId(@RequestBody QueryPageParam query,@PathVariable Integer userId){
+    @PostMapping("/indexPageByUserId")
+    public Result indexPageByUserId(@RequestBody QueryPageParam query){
         Page<UserMessage> page = new Page<>();
+        if(ObjectUtil.isEmpty(query.getParam().get("userId")))
+            return Result.fail("请传入userId");
+        if(ObjectUtil.isEmpty(userService.getById((Integer)query.getParam().get("userId"))))
+            return Result.fail("没有这个userId");
+        Integer userId = (Integer)query.getParam().get("userId");
 
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
@@ -85,12 +90,17 @@ public class UserMessageController {
             "   \"pageSize\":2,\n" +
             "   \"pageNum\":1,\n" +
             "   \"param\":{\n" +
-            "       \"adminId\": *" )
+            "       \"adminId\": *\n"+
+            "   }")
     @RequiresAuthentication
-    @PostMapping("/indexPage/admin/{adminId}")
-    public Result indexPageByExpertId(@RequestBody QueryPageParam query,@PathVariable Integer adminId){
+    @PostMapping("/indexPageByAdminId")
+    public Result indexPageByExpertId(@RequestBody QueryPageParam query){
         Page<UserMessage> page = new Page<>();
-
+        if(ObjectUtil.isEmpty(query.getParam().get("adminId")))
+            return Result.fail("请传入adminId");
+        if(ObjectUtil.isEmpty(userService.getById((Integer)query.getParam().get("adminId"))))
+            return Result.fail("没有这个adminId");
+        Integer adminId = (Integer)query.getParam().get("adminId");
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
         LambdaQueryWrapper<UserMessage> lambdaQueryWrapper = new LambdaQueryWrapper<>();
