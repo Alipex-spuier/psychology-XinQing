@@ -3,6 +3,7 @@ package com.music.controller;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
@@ -55,6 +56,8 @@ public class StressReliefToolController {
     public Result update(@RequestBody StressReliefTool stressReliefTool){
         if(ObjectUtil.isEmpty(stressReliefToolService.getById(stressReliefTool.getId())))
             return Result.fail("没有这个解压工具");
+        if(ObjectUtil.isNotEmpty(stressReliefTool.getToolDescription())&&stressReliefTool.getToolDescription().trim().isEmpty())
+            return Result.fail("修改后的解压工具描述不能为空格");
 
         stressReliefToolService.updateById(stressReliefTool);
         StressReliefTool newStressReliefTool = stressReliefToolService.getById(stressReliefTool.getId());
