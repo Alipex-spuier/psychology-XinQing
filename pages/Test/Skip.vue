@@ -22,7 +22,7 @@
 						<view class="icon">{{v.icon}}</view>
 						<text class="name">{{v.name}}</text>
 					</view> -->
-					<view class="icon">{{v.icon}}</view>
+					<!-- <view class="icon">{{v.icon}}</view> -->
 					<text>{{v.name}}</text>
 					<image class="arrow" v-if="v.arrow" src="/static/center1/right.png"></image>
 				</view>
@@ -210,16 +210,16 @@
 						font-family: texticons;
 						flex-direction: column;
 						padding-top:37px;
-						padding-right: 20px;
+						// padding-right: 0rpx;
 						color: #03c500;
 						width: 50rpx;
-						height: 50rpx;
+						height: 125rpx;
 					}
 					
-					.arrow {
-						width: 26rpx;
-						height: 26rpx;
-					}
+					// .arrow {
+					// 	width: 500rpx;
+					// 	height: 500rpx;
+					// }
 				}
 				
 			}
