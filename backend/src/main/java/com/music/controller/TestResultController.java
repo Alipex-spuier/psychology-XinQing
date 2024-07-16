@@ -1,6 +1,7 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,11 +12,13 @@ import com.music.common.page.QueryPageParam;
 import com.music.entity.TestResult;
 import com.music.entity.User;
 import com.music.service.TestResultService;
+import com.music.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -24,10 +27,12 @@ import java.util.HashMap;
 public class TestResultController {
 
     private final TestResultService testResultService;
+    private final UserService userService;
 
     @Autowired
-    public TestResultController(TestResultService testResultService) {
+    public TestResultController(TestResultService testResultService, UserService userService) {
         this.testResultService = testResultService;
+        this.userService = userService;
     }
 
     //@RequiresAuthentication
@@ -46,7 +51,28 @@ public class TestResultController {
     @PostMapping("/index/{testResultId}")
     public Result index(@PathVariable Integer testResultId) {
         TestResult testResult = testResultService.getById(testResultId);
+        if (ObjectUtil.isEmpty(testResult)) {
+            return Result.fail("不存在该测试结果");
+        }
         return Result.succ(testResult);
+    }
+
+    //@RequiresAuthentication
+    @ApiOperation(value ="分页查询数据库中的测试结果 "+
+            "{\"pageSize\":2,\n" +
+            "\"pageNum\":1" +
+            "}"
+    )
+    @PostMapping("/indexPage")
+    public Result indexPage(@RequestBody QueryPageParam query){
+        HashMap param = query.getParam();
+
+        Page<TestResult> page = new Page();
+        page.setCurrent(query.getPageNum());
+        page.setSize(query.getPageSize());
+
+        IPage result = testResultService.page(page);
+        return Result.succ(result.getRecords());
     }
 
     //@RequiresAuthentication
@@ -57,21 +83,21 @@ public class TestResultController {
             "    \"userId\":2\n" +
             "}}"
     )
-    @PostMapping("/indexPage")
-    public Result indexPage(@RequestBody QueryPageParam query){
+    @PostMapping("/indexPageByUser")
+    public Result indexPageByUser(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
         Integer userId = (Integer)param.get("userId");
+
+        if (userId == null || ObjectUtil.isEmpty(userId)) {
+            return Result.fail("userId不存在");
+        }
 
         Page<TestResult> page = new Page();
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
 
         LambdaQueryWrapper<TestResult> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if(userId!=null && !"null".equals(userId)){
-            lambdaQueryWrapper.eq(TestResult::getUserId,userId);
-        }else{
-            return Result.fail("userId为空！");
-        }
+        lambdaQueryWrapper.eq(TestResult::getUserId,userId);
 
         IPage result = testResultService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
@@ -86,6 +112,15 @@ public class TestResultController {
     )
     @PutMapping("/update")
     public Result update(@RequestBody TestResult testResult){
+        if(testResult.getResId()==null || ObjectUtil.isEmpty(testResultService.getById(testResult.getResId()))){
+            return Result.fail("找不到resId");
+        }
+        if(testResult.getUserId()!=null && ObjectUtil.isEmpty(testResult.getUserId())){
+            return Result.fail("userId不能为空");
+        }
+        if(testResult.getBelongingId()!=null && ObjectUtil.isEmpty(testResult.getBelongingId())){
+            return Result.fail("belongingId不能为空");
+        }
         testResultService.updateById(testResult);
         TestResult newResult= testResultService.getById(testResult.getResId());
         return Result.succ(MapUtil.builder()
@@ -98,13 +133,15 @@ public class TestResultController {
 
     //@RequiresAuthentication
     @ApiOperation(value ="新建并保存一个测试结果，所有内容均必填 "+
-            "{\"resId\":5,\n" +
-            "\"userId\": 3,\n" +
+            "{\"userId\": 3,\n" +
             "\"resResult\": \"您的测试结果为………………\",\n" +
             "\"belongingId\":1}"
     )
     @PostMapping("/save")
-    public Result save(@RequestBody TestResult testResult){
+    public Result save(@RequestBody @Valid TestResult testResult){
+        if(testResult.getUserId()!=null && ObjectUtil.isEmpty(userService.getById(testResult.getUserId()))){
+            return Result.fail("不存在该用户");
+        }
         testResult.setResTime(new Date());
         return testResultService.save(testResult)?Result.succ(testResult):Result.fail("保存失败！");
     }
@@ -115,6 +152,9 @@ public class TestResultController {
     )
     @DeleteMapping("/delete/{resId}")
     public Result delete(@PathVariable Integer resId) {
+        if(ObjectUtil.isEmpty(testResultService.getById(resId))){
+            return Result.succ("该条记录已不存在");
+        }
         return Result.succ(testResultService.removeById(resId));
     }
 

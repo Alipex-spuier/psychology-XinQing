@@ -26,12 +26,12 @@ public class TestResult implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "res_id", type = IdType.AUTO)
+    @NotNull(message = "测试Id不能为空")
     private Long resId;
 
     @NotNull(message = "用户不能为空")
     private Integer userId;
 
-    @NotBlank(message = "测试结果不能为空")
     private String resResult;
 
     @NotNull(message = "所属题单不能为空")
