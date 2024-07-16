@@ -324,11 +324,15 @@
 					method: 'GET',
 					success: (response) => {
 						const res = response.data;
+						let articles = res.data;
+						// 获取随机的三个文章
+						let randomArticles = this.getRandomItems(articles, 3);
+						
 						//console.log(uni.getStorageSync("res"))
 						for(let i=0;i<3;i++){
-							this.qu[i].albumCover=res.data[i].artPic;
-							this.qu[i].title=res.data[i].artTitle;
-							this.qu[i].hotComment=res.data[i].artAuthor;
+							this.qu[i].albumCover = randomArticles[i].artPic;
+							this.qu[i].title = randomArticles[i].artTitle;
+							this.qu[i].hotComment = randomArticles[i].artAuthor;
 							uni.request({
 								url:this.$baseURL+'/api/v1/expert/index/'+this.qu[i].hotComment,
 								header:{Authorization:uni.getStorageSync("res").header.authorization},
@@ -344,6 +348,23 @@
 				});
 				// this.getArtcleAuthors(1);
 				//});
+			},
+			getRandomItems(array, num) {
+			    let result = [];
+			    let len = array.length;
+			    let taken = new Array(len);
+			
+			    if (num > len) {
+			        throw new RangeError("getRandomItems: more elements taken than available");
+			    }
+			
+			    while (num--) {
+			        let x = Math.floor(Math.random() * len);
+			        result[num] = array[x in taken ? taken[x] : x];
+			        taken[x] = --len in taken ? taken[len] : len;
+			    }
+			
+			    return result;
 			},
 			messageWindow(){
 				uni.request({
