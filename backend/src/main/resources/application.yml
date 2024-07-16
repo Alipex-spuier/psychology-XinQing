@@ -2,8 +2,8 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://db:3306/bangbangying
-    url: jdbc:mysql://8.217.178.86:3306/bangbangying
+    url: jdbc:mysql://db:3306/bangbangying
+#    url: jdbc:mysql://8.217.178.86:3306/bangbangying
     username: root
     password: 123456
   mvc:
@@ -14,8 +14,8 @@ mybatis-plus:
 shiro-redis:
   enabled: true
   redis-manager:
-#    host: redis:6379
-    host:127.0.0.1:6379
+    host: redis:6379
+#    host:127.0.0.1:6379
 server:
   port: 8080
 music:
