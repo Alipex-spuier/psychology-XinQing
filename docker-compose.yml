@@ -56,7 +56,7 @@ services:
         - "8081:8081"
     volumes:
       - ./psychology.conf:/etc/nginx/conf.d/psychology.conf
-        #  - ./music_files:/var/www
+      - ./www:/var/www
 
 networks:
   app-network:

@@ -4,6 +4,7 @@ HELP.md
 mysql/
 redis/
 music_files/
+www/
 # Build directories
 target/
 build/
