@@ -1,6 +1,7 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -32,6 +33,8 @@ public class SearchController {
     @PostMapping("")
     public Result Search(@RequestBody QueryPageParam queryPageParam){
         String dire = (String) queryPageParam.getParam().get("dire");
+        if(dire==null||ObjectUtil.isEmpty(dire.trim()))
+            return Result.fail("请输入dire");
         Page<Expert> pageExpert = new Page<>();
         pageExpert.setSize(queryPageParam.getPageSize());
         pageExpert.setCurrent(queryPageParam.getPageNum());
@@ -40,7 +43,8 @@ public class SearchController {
         lambdaQueryWrapperExpert.orderByDesc(Expert::getExName);
         IPage expertIpage = expertService.pageCC(pageExpert,lambdaQueryWrapperExpert);
         List<Expert> expertList = expertIpage.getRecords();//Expert的分页处理
-
+//        String apt = null;
+//        System.out.println(apt.trim());
         Page<Article> pageArticle = new Page<>();
         pageArticle.setCurrent(queryPageParam.getPageNum());
         pageArticle.setSize(queryPageParam.getPageSize());

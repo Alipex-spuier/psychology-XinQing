@@ -51,6 +51,7 @@ public class UserMessageController {
     @RequiresAuthentication
     @PostMapping("/indexPage")
     public Result indexPage(@RequestBody QueryPageParam query){
+
         Page<UserMessage> page = new Page<>();
 
         page.setCurrent(query.getPageNum());
@@ -70,20 +71,23 @@ public class UserMessageController {
     @RequiresAuthentication
     @PostMapping("/indexPageByUserId")
     public Result indexPageByUserId(@RequestBody QueryPageParam query){
+
         Page<UserMessage> page = new Page<>();
+
         if(ObjectUtil.isEmpty(query.getParam().get("userId")))
             return Result.fail("请传入userId");
         if(ObjectUtil.isEmpty(userService.getById((Integer)query.getParam().get("userId"))))
             return Result.fail("没有这个userId");
+
         Integer userId = (Integer)query.getParam().get("userId");
 
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
+
         LambdaQueryWrapper<UserMessage> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.like(UserMessage::getUserId,userId);
 
         IPage result = userMessageService.pageCC(page,lambdaQueryWrapper);
-
         return Result.succ(result.getRecords());
     }//根据userId分页模糊查询显示
     @ApiOperation(value = "用于根据adminId的分页查询（查询一个管理员的所有message）"+
@@ -95,14 +99,19 @@ public class UserMessageController {
     @RequiresAuthentication
     @PostMapping("/indexPageByAdminId")
     public Result indexPageByExpertId(@RequestBody QueryPageParam query){
+
         Page<UserMessage> page = new Page<>();
+
         if(ObjectUtil.isEmpty(query.getParam().get("adminId")))
             return Result.fail("请传入adminId");
         if(ObjectUtil.isEmpty(userService.getById((Integer)query.getParam().get("adminId"))))
             return Result.fail("没有这个adminId");
+
         Integer adminId = (Integer)query.getParam().get("adminId");
+
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
+
         LambdaQueryWrapper<UserMessage> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.like(UserMessage::getAdminId,adminId);
 
@@ -126,13 +135,17 @@ public class UserMessageController {
     @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@Validated @RequestBody UserMessage userMessage){
+
         if(ObjectUtil.isEmpty(userService.getById(userMessage.getUserId())))
             return Result.fail("没有这个用户");
         if(ObjectUtil.isEmpty(adminService.getById(userMessage.getAdminId())))
             return Result.fail("没有这个管理员");
         if(ObjectUtil.isEmpty(userMessage.getMesTime()))
             userMessage.setMesTime(new Date().getTime());
-        return userMessageService.save(userMessage)?Result.succ(userMessage):Result.fail("保存失败！");
+
+       if(!userMessageService.save(userMessage))
+           return Result.fail("保存失败");
+       return Result.succ(userMessageService.getById(userMessage.getMesId()));
     }//增加
     @ApiOperation(value = "用于根据mesId更新一条记录"+
             "\"userId\":1,\n" +
@@ -141,12 +154,14 @@ public class UserMessageController {
     @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody UserMessage userMessage){
+
         if(ObjectUtil.isEmpty(userMessageService.getById(userMessage.getMesId())))
             return Result.fail("没有这个消息");
         if(ObjectUtil.isEmpty(userService.getById(userMessage.getUserId())))
             return Result.fail("没有这个用户");
         if(ObjectUtil.isEmpty(adminService.getById(userMessage.getAdminId())))
             return Result.fail("没有这个管理员");
+
         userMessageService.updateById(userMessage);
         UserMessage newUserMessage = userMessageService.getById(userMessage.getMesId());
         return Result.succ(MapUtil.builder()

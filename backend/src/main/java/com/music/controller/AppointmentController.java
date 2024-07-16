@@ -60,6 +60,7 @@ public class AppointmentController {
     @RequiresAuthentication
     @PostMapping("/indexPage")
     public Result indexPage(@RequestBody QueryPageParam query){
+
         Page<Appointment> page = new Page<>();
 
         page.setCurrent(query.getPageNum());
@@ -78,14 +79,19 @@ public class AppointmentController {
     @RequiresAuthentication
     @PostMapping("/indexPageByUserId")
     public Result indexPageByUserId(@RequestBody QueryPageParam query){
+
         Page<Appointment> page = new Page<>();
+
         if(ObjectUtil.isEmpty(query.getParam().get("userId")))
             return Result.fail("请传入userId");
         if(ObjectUtil.isEmpty(userService.getById((Integer)query.getParam().get("userId"))))
             return Result.fail("没有这个userId");
+
         Integer userId = (Integer)query.getParam().get("userId");
+
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
+
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.like(Appointment::getUserId,userId);
 
@@ -102,14 +108,19 @@ public class AppointmentController {
     @RequiresAuthentication
     @PostMapping("/indexPageByExpertId")
     public Result indexPageByExpertId(@RequestBody QueryPageParam query){
+
         Page<Appointment> page = new Page<>();
+
         if(ObjectUtil.isEmpty(query.getParam().get("expertId")))
             return Result.fail("请传入expertId");
         if(ObjectUtil.isEmpty(userService.getById((Integer)query.getParam().get("expertId"))))
             return Result.fail("没有这个expertId");
+
         Integer expertId = (Integer)query.getParam().get("expertId");
+
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
+
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.like(Appointment::getExpertId,expertId);
 
@@ -122,6 +133,7 @@ public class AppointmentController {
     @RequiresAuthentication
     @DeleteMapping("/delete/{aptId}")
     public Result Delete(@PathVariable Integer aptId){
+
         if(ObjectUtil.isEmpty(appointmentService.getById(aptId)))
             return Result.fail("没有该预约记录");
 //        for(ConsultationLog consultationLog : consultationLogService.getByAptId(aptId))
@@ -139,6 +151,7 @@ public class AppointmentController {
     @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody Appointment appointment){
+
         if(ObjectUtil.isEmpty(appointmentService.getById(appointment.getAptId())))
             return Result.fail("没有这个预约记录");
         if(ObjectUtil.isEmpty(userService.getById(appointment.getUserId())))
@@ -163,13 +176,15 @@ public class AppointmentController {
                 .map());
     }//修改
 
-    @ApiOperation(value = "用于添加一条预约记录 "+
+    @ApiOperation(value = "用于管理员添加一条预约记录 此时用户id为空"+
             "    \"aptTime\":\"2024-07-11T14:00:00\"")
     @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@Validated @RequestBody Appointment appointment){
         appointment.setUserId(null);
-        return appointmentService.save(appointment)?Result.succ(appointment):Result.fail("保存失败！");
+       if(!appointmentService.save(appointment))
+           return Result.fail("保存失败");
+       return Result.succ(appointmentService.getById(appointment.getAptId()));
     }//放预约时间的时候需要把statue设置成N，即未被预约,userId设置为Null
     @ApiOperation(value = "用于用户预约一条记录 时间戳为数字(Long型)"+
             "    \"userId\":1,\n" +
@@ -178,15 +193,17 @@ public class AppointmentController {
     @RequiresAuthentication
     @PostMapping("/appoint")
     public Result appoint(@Validated @RequestBody Appointment appointment){
+
         if (ObjectUtil.isEmpty(userService.getById(appointment.getUserId())))
             return Result.fail("不存在该用户");
         if(ObjectUtil.isEmpty(expertService.getById(appointment.getExpertId())))
             return Result.fail("不存在该专家");
+
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Appointment::getExpertId,appointment.getExpertId()).and((wrapper)->wrapper.eq(Appointment::getAptTime,appointment.getAptTime()));
         if(ObjectUtil.isEmpty(appointmentService.getOneByExpertIdAndAptTime(lambdaQueryWrapper))) {
             appointmentService.save(appointment);
-            return Result.succ("预约成功",true);
+            return Result.succ("预约成功",appointmentService.getById(appointment.getAptId()));
         }
         return Result.fail("时间段已被预约");
     }
@@ -196,6 +213,7 @@ public class AppointmentController {
     @RequiresAuthentication
     @PostMapping("/searchOneByExpertIdAndAptTime")
     public Result searchOneByExpertIdAndAptTime(@Validated @RequestBody Appointment appointment){
+
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Appointment::getExpertId,appointment.getExpertId()).and((wrapper)->wrapper.eq(Appointment::getAptTime,appointment.getAptTime()));
         if(ObjectUtil.isEmpty(appointmentService.getOneByExpertIdAndAptTime(lambdaQueryWrapper))) {
@@ -209,6 +227,7 @@ public class AppointmentController {
     @RequiresAuthentication
     @PostMapping("/accountByDay")
     public Result appointmentAccountByDay(@RequestBody HashMap param){
+
         if(ObjectUtil.isEmpty(param.get("aptTime")))
             return Result.fail("请传正确的时间");
         Long aptTime = (Long)param.get("aptTime");
@@ -228,8 +247,8 @@ public class AppointmentController {
         }
         Long beginDay = startOfDay.getTime();
         Long endDay = endOfDay.getTime();
-        System.out.println(beginDay);
-        System.out.println(endDay);
+//        System.out.println(beginDay);
+//        System.out.println(endDay);
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.between(Appointment::getAptTime,beginDay,endDay);
         return Result.succ(appointmentService.accountByDay(lambdaQueryWrapper));

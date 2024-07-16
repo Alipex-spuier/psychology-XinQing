@@ -55,6 +55,7 @@ public class StressReliefToolController {
     public Result update(@RequestBody StressReliefTool stressReliefTool){
         if(ObjectUtil.isEmpty(stressReliefToolService.getById(stressReliefTool.getId())))
             return Result.fail("没有这个解压工具");
+
         stressReliefToolService.updateById(stressReliefTool);
         StressReliefTool newStressReliefTool = stressReliefToolService.getById(stressReliefTool.getId());
         return Result.succ(MapUtil.builder()
@@ -78,7 +79,9 @@ public class StressReliefToolController {
             "    \"toolLink\":\"url\"")
     @PostMapping("/save")
     public Result save(@Validated @RequestBody StressReliefTool stressReliefTool){
-        return stressReliefToolService.save(stressReliefTool)?Result.succ(stressReliefTool):Result.fail("保存失败！");
+        if(!stressReliefToolService.save(stressReliefTool))
+            return Result.fail("保存失败");
+        return Result.succ(stressReliefToolService.getById(stressReliefTool.getId()));
     }
 }
 

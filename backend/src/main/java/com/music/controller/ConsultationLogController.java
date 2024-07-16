@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
@@ -49,9 +50,12 @@ public class ConsultationLogController {
     @RequiresAuthentication
     @PostMapping("indexPage")
     public Result indexPage(@RequestBody QueryPageParam queryPageParam){
+
         Page<ConsultationLog> page = new Page<>();
+
         page.setCurrent(queryPageParam.getPageNum());
         page.setSize(queryPageParam.getPageSize());
+
         IPage<ConsultationLog> result = consultationLogService.page(page);
         return Result.succ(result.getRecords());
     }//分页查询
@@ -63,7 +67,9 @@ public class ConsultationLogController {
     @RequiresAuthentication
     @PostMapping("indexPageByStartTime")
     public Result indexPageByStartTime(@RequestBody QueryPageParam queryPageParam){
+
         Page<ConsultationLog> page = new Page<>();
+
         page.setCurrent(queryPageParam.getPageNum());
         page.setSize(queryPageParam.getPageSize());
 
@@ -73,6 +79,7 @@ public class ConsultationLogController {
 
         LambdaQueryWrapper<ConsultationLog> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.ge(ConsultationLog::getLogTime,logTime);
+
         IPage<ConsultationLog> result = consultationLogService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
     }//根据起始时间分页查询
@@ -85,7 +92,9 @@ public class ConsultationLogController {
     @RequiresAuthentication
     @PostMapping("indexPageByRangeTime")
     public Result indexPageByRangeTime(@RequestBody QueryPageParam queryPageParam){
+
         Page<ConsultationLog> page = new Page<>();
+
         page.setCurrent(queryPageParam.getPageNum());
         page.setSize(queryPageParam.getPageSize());
 
@@ -96,6 +105,7 @@ public class ConsultationLogController {
 
         LambdaQueryWrapper<ConsultationLog> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.between(ConsultationLog::getLogTime,startTime,endTime);
+
         IPage<ConsultationLog> result = consultationLogService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
     }//分页查询
@@ -106,13 +116,17 @@ public class ConsultationLogController {
     @RequiresAuthentication
     @PostMapping("/save")
     public Result save(@Validated @RequestBody ConsultationLog consultationLog){
+
         if(ObjectUtil.isEmpty(appointmentService.getById(consultationLog.getAptId())))
             return Result.fail("没有这个预约记录");
         if(StringUtils.isEmpty(consultationLog.getLogContent()))
             return Result.fail("内容不能为空");
         if(ObjectUtil.isEmpty(consultationLog.getLogTime()))
             consultationLog.setLogTime(new Date().getTime());
-        return consultationLogService.save(consultationLog)?Result.succ(consultationLog):Result.fail("保存失败！");
+
+        if(!consultationLogService.save(consultationLog))
+            return Result.fail("保存失败");
+        return Result.succ(consultationLogService.getById(consultationLog.getLogId()));
     }//增加
     @ApiOperation(value = "用于删除记录 "+
             "\"logId\":1")
@@ -129,12 +143,14 @@ public class ConsultationLogController {
     @RequiresAuthentication
     @PutMapping("/update")
     public Result update(@RequestBody ConsultationLog consultationLog){
+
         if(ObjectUtil.isEmpty(consultationLogService.getById(consultationLog.getLogId())))
             return Result.fail("没有这个日志记录");
         if(ObjectUtil.isNotEmpty(consultationLog.getAptId())&&ObjectUtil.isEmpty(appointmentService.getById(consultationLog.getAptId())))
             return Result.fail("不存在该预约记录");
         if(ObjectUtil.isNotEmpty(consultationLog.getLogContent())&&consultationLog.getLogContent().trim().isEmpty())
             return Result.fail("内容不能为空");
+
         consultationLogService.updateById(consultationLog);
         ConsultationLog newConsultationLog = consultationLogService.getById(consultationLog.getLogId());
         return Result.succ(MapUtil.builder()
