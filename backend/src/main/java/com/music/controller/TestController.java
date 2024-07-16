@@ -216,7 +216,7 @@ public class TestController {
 
     //@RequiresAuthentication
     @ApiOperation(value ="设置题目所述题单 "+
-            "{\"param\":{\"testId\":1,\"belongingId\":1}}(其中testId为要处理的题目的testId，belongingId为要设置为的belongingId)"
+            "{\"testId\":1,\"belongingId\":1}(其中testId为要处理的题目的testId，belongingId为要设置为的belongingId)"
     )
     @PutMapping("/setBelongingId")
     public Result setBelongingId(@RequestBody HashMap param){
@@ -250,7 +250,7 @@ public class TestController {
     //@RequiresAuthentication
     @PostMapping("/getBelongingId")
     @ApiOperation(value ="得到题目所属题单 "+
-            "{\"param\":{\"testId\":1}} (testId为要处理的题目的testId)"
+            "{\"testId\":1} (testId为要处理的题目的testId)"
     )
     public Result getBelongingId(@RequestBody HashMap param){
         if(param.get("testId")==null || ObjectUtil.isEmpty(param.get("testId"))){
