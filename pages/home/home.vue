@@ -84,19 +84,22 @@
 			const res = uni.getStorageSync("res");
 			this.userId = res.data.data.userId;
 			this.authorization = res.header.authorization;
-			this.getMusic(this.ruk);
+			//this.getMusic(this.ruk);
 			this.getArtcles();
 			//this.getMusic(this.qu);
-			this.getLocation()
+			this.getLocation();
+			//this.getArtcleAuthors();
 		},
 		mounted() {
-			this.getAllMusic();
+			//this.getAllMusic();
 			const res = uni.getStorageSync("res");
 			this.userId = res.data.data.userId;
 			this.authorization = res.header.authorization;
 			this.getMusic(this.ruk);
 			//this.getMusic(this.qu);
 			this.getArtcles();
+			//this.getArtcleAuthors();
+			
 		},
 		data() {
 			return {
@@ -118,7 +121,7 @@
 				adcode:"",
 				city:" ",
 				temperature:null,
-				
+				usermessage:"您有新的消息",
 				activeColor: ['#ffe3cb', '#ffe3cb', '#ffe3cb', '#ffe3cb', '#1d1b1b'],
 				banner: [
 					"/static/banner/banner1.jpg",
@@ -312,24 +315,72 @@
 						this.temperature=res["lives"][0]["temperature"]+"°C";
 						//console.log(this.temperature);
 						this.city=res["lives"][0]["city"];
-						
 					}
 				});
 			},
 			getArtcles() {
-				uni.request({
+				  //return new Promise((resolve, reject) => {
+				    uni.request({
 					url: this.$baseURL + '/api/v1/article/index',
 					method: 'GET',
 					success: (response) => {
 						const res = response.data;
+						//console.log(uni.getStorageSync("res"))
 						for(let i=0;i<3;i++){
 							this.qu[i].albumCover=res.data[i].artPic;
 							this.qu[i].title=res.data[i].artTitle;
 							this.qu[i].hotComment=res.data[i].artAuthor;
-							
-						}
+						}		
+						//setTimeout(1000)
 					}
 				});
+				//});
+			},
+			 getArtcleAuthors(){
+				//await this.getArtcles();
+				for(let i=0;i<3;i++){
+					console.log(this.qu[i].hotComment)
+					uni.request({
+						url:this.$baseURL+'/api/v1/expert/index/'+this.qu[i].hotComment,
+						header:uni.getStorageSync("res").header.authorization,
+						method:'POST',
+						success:(response)=>{
+							console.log(this.qu[i].hotComment)
+							const res=response.data;
+							this.qu[i].hotComment=res[i].exName;
+						}
+					})
+				}
+			},
+			messageWindow(){
+				uni.request({
+					url: this.$baseURL + '/api/v1/userMessage/indexPage/user/'+this.userId,
+					method: 'POST',
+					data:{
+						  "pageNum": 1,
+						  "pageSize": 1
+					},
+					success: (response) => {
+						responseData.sort((a, b) => a.mesTime - b.mesTime);
+						const res = response.data;
+						this.usermessage=res[0].mesContent;
+							uni.showModal({
+							title: '用户消息通知',
+							content:this.usermessage,
+							//content: '您的预约已成功',
+							success: function(res) {
+							if (res.confirm) {
+								console.log('祝您预约顺利(●·◡·●)')
+							} else {
+								console.log('预约失败┭┮﹏┭┮')
+									}
+								}
+							})
+						}
+					})
+				
+			
+
 			}
 			
 		}

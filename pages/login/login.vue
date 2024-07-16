@@ -11,6 +11,9 @@
 		</view>
 		<view class="login-form">
 			<view class="form-item">
+				<select-lay class="seclectlogintype" :value="logintype" slabel="type" svalue="typeid" 	placeholder="您的身份是" :options="loginmode" @selectitem="selectitem"></select-lay>
+			</view>
+			<view class="form-item">
 				<input class="input account" v-model="account" type="text" placeholder="输入登录账号" placeholder-style="color:#c9c9c9;"/>
 			</view>
 			<view class="form-item">
@@ -31,11 +34,22 @@
 				title: "心 · 晴",
 				slogan: "让心情遇见下一个晴天",
 				account: '',
-				password: ''
+				password: '',
+				logintype:"user",
+				loginTypeid:1,
+				loginmode: [{
+				    type: '用户',
+				    typeid: 1
+				}, {
+				    type: '专家',
+				    typeid: 2
+				}], //支付方式
+
 			}
 		},
 		methods: {
-			login() {
+			
+			userLogin() {
 				// 发送 POST 请求到服务器登录账户
 				uni.request({
 					url: this.$baseURL+'/api/v1/account/login',
@@ -43,6 +57,51 @@
 					data: {
 						username: this.account,
 						password: this.password
+					},
+					success: res => {
+						if (res.data.code === 200) {
+							console.log(res)
+							this.getAllMusic()
+							// 登录成功处理
+							uni.showToast({
+								title: '登录成功',
+								success: function() {
+									if(res.header.authorization===undefined&&res.header.Authorization !== undefined){
+										res.header.authorization=res.header.Authorization;
+									}
+									uni.setStorageSync("res",res)
+									setTimeout(function() {
+										uni.navigateTo({
+											url: '/pages/index'
+										})
+									}, 2000)
+								}
+							});
+						} else {
+							// 登录失败处理
+							uni.showToast({
+								title: '登录失败：' + res.data.msg,
+								icon: 'none'
+							});
+							console.log(res);
+						}
+					},
+					fail: () => {
+						uni.showToast({
+							title: '网络请求失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+			exportLogin() {
+				// 发送 POST 请求到服务器登录账户
+				uni.request({
+					url: this.$baseURL+'/api/v1/account/expertLogin',
+					method: 'POST',
+					data: {
+						exName:this.account ,
+						exPassword:this.password
 					},
 					success: res => {
 						if (res.data.code === 200) {
@@ -95,6 +154,22 @@
 					}
 				});
 			},
+			selectitem(index, item) {
+			        this.loginTypeid = item.typeid;
+			        
+			        if (index >= 0) {
+			            this.logintype = this.loginmode[index].typeid;
+			        } else {
+			            this.logintype = ""
+			        }
+			},
+			login(){
+				if(this.loginTypeid===2){
+					this.exportLogin();
+				}else{
+					this.userLogin();
+				}
+			}
 		}
 	}
 </script>

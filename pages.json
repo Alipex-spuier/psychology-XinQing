@@ -38,12 +38,7 @@
 				"enablePullDownRefresh" : false
 			}
 		},
-		{
-			"path": "pages/news/newsdisplay",
-			"style": {
-				"navigationBarTitleText": "资讯广场"
-			}
-		},
+
 		{
 			"path" : "pages/userCent/logout",
 			"style" : 
@@ -56,6 +51,12 @@
 			"path": "pages/index",
 			"style": {
 				"navigationBarTitleText": "心晴"
+			}
+		},
+		{
+			"path": "pages/news/newsdisplay",
+			"style": {
+				"navigationBarTitleText": "资讯广场"
 			}
 		},
 		{
