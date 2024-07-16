@@ -25,6 +25,7 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "comments_id", type = IdType.AUTO)
+    @NotNull(message = "评论Id不能为空")
     private Long commentsId;
 
     @NotNull(message = "用户不能为空")
@@ -35,5 +36,5 @@ public class Comment implements Serializable {
 
     private String commentsContent;
 
-    private Date commentsTime;
+    private Long commentsTime;
 }

@@ -1,18 +1,22 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
 import com.music.entity.Comment;
+import com.music.service.ArticleService;
 import com.music.service.CommentService;
+import com.music.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -21,10 +25,14 @@ import java.util.HashMap;
 public class CommentController {
 
     private final CommentService commentService;
+    private final UserService userService;
+    private final ArticleService articleService;
 
     @Autowired
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, UserService userService, ArticleService articleService) {
         this.commentService = commentService;
+        this.userService = userService;
+        this.articleService = articleService;
     }
 
     @RequiresAuthentication
@@ -47,6 +55,23 @@ public class CommentController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="(模糊查询)分页查询数据库中的评论 "+
+            "{\"pageSize\":2,\n" +
+            "\"pageNum\":1" +
+            "}"
+    )
+    @PostMapping("/indexPage")
+    public Result indexPage(@RequestBody QueryPageParam query){
+
+        Page<Comment> page = new Page<>();
+        page.setCurrent(query.getPageNum());
+        page.setSize(query.getPageSize());
+
+        IPage result = commentService.page(page);
+        return Result.succ(result.getRecords());
+    }
+
+    @RequiresAuthentication
     @ApiOperation(value ="通过userId(用户id)(模糊查询)分页查询数据库中的评论 "+
             "{\"pageSize\":2,\n" +
             "\"pageNum\":1,\n" +
@@ -59,16 +84,16 @@ public class CommentController {
         HashMap param = query.getParam();
         Integer id = (Integer) param.get("userId");
 
+        if(id == null || ObjectUtil.isEmpty(id)){
+            return Result.fail("id为空！");
+        }
+
         Page<Comment> page = new Page();
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
 
-        LambdaQueryWrapper<Comment> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if(id!=null && !"null".equals(id)){
-            lambdaQueryWrapper.eq(Comment::getUserId,id);
-        }else{
-            return Result.fail("id为空！");
-        }
+        LambdaQueryWrapper<Comment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Comment::getUserId,id);
 
         IPage result = commentService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
@@ -87,23 +112,23 @@ public class CommentController {
         HashMap param = query.getParam();
         Integer id = (Integer) param.get("artId");
 
+        if (id == null || ObjectUtil.isEmpty(id)){
+            return Result.fail("id为空！");
+        }
+
         Page<Comment> page = new Page();
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
 
-        LambdaQueryWrapper<Comment> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if(id!=null && !"null".equals(id)){
-            lambdaQueryWrapper.eq(Comment::getArtId,id);
-        }else{
-            return Result.fail("id为空！");
-        }
+        LambdaQueryWrapper<Comment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Comment::getArtId,id);
 
         IPage result = commentService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
     }
 
     @RequiresAuthentication
-    @ApiOperation(value ="更新评论信息,三个Id必填 "+
+    @ApiOperation(value ="更新评论信息,commentsId必填 "+
             "{\"commentsId\":1,\n" +
             "\"userId\":3,\n" +
             "\"artId\":2,\n" +
@@ -111,7 +136,19 @@ public class CommentController {
     )
     @PutMapping("/update")
     public Result update(@RequestBody Comment comment){
-        comment.setCommentsTime(new Date());
+        if(comment.getCommentsId()==null || ObjectUtil.isEmpty(commentService.getById(comment.getArtId()))){
+            return Result.fail("找不到commentsId");
+        }
+        if(comment.getUserId()!=null && ObjectUtil.isEmpty(comment.getUserId())){
+            return Result.fail("userId不能为空");
+        }
+        if(comment.getArtId()!=null && ObjectUtil.isEmpty(comment.getArtId())){
+            return Result.fail("artId不能为空");
+        }
+        if(comment.getCommentsContent()!=null && ObjectUtil.isEmpty(comment.getCommentsContent().replace(" ",""))){
+            return Result.fail("commentsContent不能为空");
+        }
+        comment.setCommentsTime(new Date().getTime());
         commentService.updateById(comment);
         Comment newComment = commentService.getById(comment.getCommentsId());
         return Result.succ(MapUtil.builder()
@@ -124,16 +161,21 @@ public class CommentController {
     }
 
     @RequiresAuthentication
-    @ApiOperation(value ="新建并保存一个评论，三个Id必填 "+
-            "{\"commentsId\":1,\n" +
-            "\"userId\":3,\n" +
+    @ApiOperation(value ="新建并保存一个评论，两个Id必填 "+
+            "{\"userId\":3,\n" +
             "\"artId\":2,\n" +
             "\"commentsContent\":\"评论内容1,更新修改\"}"
     )
     @PostMapping("/save")
-    public Result save(@RequestBody Comment comment){
-        comment.setCommentsTime(new Date());
-        return commentService.save(comment)?Result.succ(comment):Result.fail("保存失败！");
+    public Result save(@RequestBody @Valid Comment comment){
+        if(comment.getUserId()!=null && ObjectUtil.isEmpty(userService.getById(comment.getUserId()))){
+            return Result.fail("此userId并不存在");
+        }
+        if(comment.getArtId()!=null && ObjectUtil.isEmpty(articleService.getById(comment.getArtId()))){
+            return Result.fail("此artId并不存在");
+        }
+        comment.setCommentsTime(new Date().getTime());
+        return commentService.save(comment)?Result.succ(commentService.getById(comment.getCommentsId())):Result.fail("保存失败！");
     }
 
     @RequiresAuthentication
@@ -142,6 +184,9 @@ public class CommentController {
     )
     @DeleteMapping("/delete/{commentsId}")
     public Result delete(@PathVariable Integer commentsId) {
+        if(ObjectUtil.isEmpty(commentService.getById(commentsId))){
+            return Result.succ("该条记录已不存在");
+        }
         return Result.succ(commentService.removeById(commentsId));
     }
 }

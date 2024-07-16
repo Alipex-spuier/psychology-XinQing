@@ -12,6 +12,8 @@ import com.music.entity.Article;
 import com.music.entity.Comment;
 import com.music.service.ArticleService;
 import com.music.service.CommentService;
+import com.music.service.ExpertService;
+import com.music.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,13 @@ public class ArticleController {
 
     private final ArticleService articleService;
     private final CommentService commentService;
+    private final ExpertService expertService;
 
     @Autowired
-    public ArticleController(ArticleService articleService, CommentService commentService) {
+    public ArticleController(ArticleService articleService, CommentService commentService, ExpertService expertService) {
         this.articleService = articleService;
         this.commentService = commentService;
+        this.expertService = expertService;
     }
 
     @GetMapping("/index")
@@ -53,7 +57,7 @@ public class ArticleController {
 
     @GetMapping("/indexPage")
     @ApiOperation(value = "分页查询数据库中的资讯文章 "+
-            "\"pageSize\":2,\n" +
+            "{\"pageSize\":2,\n" +
             "\"pageNum\":1}")
     public Result indexPage(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
@@ -68,16 +72,16 @@ public class ArticleController {
 
     @PostMapping("/indexPageByTitle")
     @ApiOperation(value = "通过artTitle分页查询数据库中的资讯文章 "+
-            "\"pageSize\":2,\n" +
+            "{\"pageSize\":2,\n" +
             "\"pageNum\":1,\n" +
             "\"param\":{\n" +
             "    \"artTitle\":\"文章标题关键字\"\n" +
-            "}")
+            "}}")
     public Result indexPageByTitle(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
         String name = (String)param.get("artTitle");
 
-        if(ObjectUtil.isEmpty(name.replace(" ",""))){
+        if(name == null || ObjectUtil.isEmpty(name.replace(" ",""))){
             return Result.fail("输入标题为空！");
         }
 
@@ -103,7 +107,7 @@ public class ArticleController {
         HashMap param = query.getParam();
         Integer name = (Integer) param.get("artAuthor");
 
-        if(ObjectUtil.isEmpty(name)){
+        if(name == null || ObjectUtil.isEmpty(name)){
             return Result.fail("作者Id为空！");
         }
 
@@ -162,8 +166,11 @@ public class ArticleController {
             "}"
     )
     public Result save(@RequestBody @Valid Article article){
+        if(article.getArtAuthor()!=null && ObjectUtil.isEmpty(expertService.getById(article.getArtAuthor()))){
+            return Result.fail("此artAuthor并不存在");
+        }
         article.setArtTime(new Date().getTime());
-        return articleService.save(article)?Result.succ(article):Result.fail("保存失败！");
+        return articleService.save(article)?Result.succ(articleService.getById(article.getArtId())):Result.fail("保存失败！");
     }
 
     //@RequiresAuthentication
@@ -175,8 +182,10 @@ public class ArticleController {
         if(ObjectUtil.isEmpty(articleService.getById(artId))){
             return Result.succ("该条记录已不存在");
         }
+
         LambdaQueryWrapper<Comment> lambdaQueryWrapper = new LambdaQueryWrapper<Comment>();
         lambdaQueryWrapper.eq(Comment::getArtId,artId);
+
         commentService.remove(lambdaQueryWrapper);
         return Result.succ(articleService.removeById(artId));
     }

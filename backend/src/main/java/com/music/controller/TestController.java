@@ -74,7 +74,7 @@ public class TestController {
         HashMap param = query.getParam();
         String word = (String)param.get("word");
 
-        if(ObjectUtil.isEmpty(word.replace(" ",""))){
+        if(word==null || ObjectUtil.isEmpty(word.replace(" ",""))){
             return Result.fail("输入关键词为空！");
         }
 
@@ -101,7 +101,7 @@ public class TestController {
         HashMap param = query.getParam();
         Integer belongingId = (Integer)param.get("belongingId");
 
-        if(ObjectUtil.isEmpty(belongingId)){
+        if(belongingId==null || ObjectUtil.isEmpty(belongingId)){
             return Result.fail("belongingId为空！");
         }
 
@@ -128,7 +128,7 @@ public class TestController {
         HashMap param = query.getParam();
         String name = (String)param.get("name");
 
-        if(ObjectUtil.isEmpty(name.replace(" ",""))){
+        if(name==null || ObjectUtil.isEmpty(name.replace(" ",""))){
             return Result.fail("name为空！");
         }
 
@@ -155,7 +155,7 @@ public class TestController {
         HashMap param = query.getParam();
         String content = (String)param.get("content");
 
-        if(ObjectUtil.isEmpty(content.replace(" ",""))){
+        if(content==null || ObjectUtil.isEmpty(content.replace(" ",""))){
             return Result.fail("关键字为空！");
         }
 
@@ -216,15 +216,20 @@ public class TestController {
 
     //@RequiresAuthentication
     @ApiOperation(value ="设置题目所述题单 "+
-            "[a,b](其中a为要处理的题目的testId，b为要设置为的belongingId,不用大括号)"
+            "{\"param\":{\"testId\":1,\"belongingId\":1}}(其中testId为要处理的题目的testId，belongingId为要设置为的belongingId)"
     )
     @PutMapping("/setBelongingId")
-    public Result setBelongingId(@RequestBody Integer[] ids){
-        if(ObjectUtil.isEmpty(testService.getById(ids[0]))){
+    public Result setBelongingId(@RequestBody HashMap param){
+        if(param.get("testId")==null || ObjectUtil.isEmpty(param.get("testId"))){
             return Result.fail("找不到testId");
         }
-        Test test = testService.getById(ids[0]);
-        test.setBelongingId(ids[1]);
+        if(param.get("belongingId")==null || ObjectUtil.isEmpty(param.get("belongingId"))){
+            return Result.fail("找不到belongingId");
+        }
+        Integer testId = (Integer)param.get("testId");
+        Integer belongingId = (Integer)param.get("belongingId");
+        Test test = testService.getById(testId);
+        test.setBelongingId(belongingId);
         return Result.succ(MapUtil.builder()
                 .put("testId", test.getTestId())
                 .put("belongingId", test.getBelongingId())
@@ -243,14 +248,17 @@ public class TestController {
     }
 
     //@RequiresAuthentication
-
     @PostMapping("/getBelongingId")
     @ApiOperation(value ="得到题目所属题单 "+
-            "a (a为要处理的题目的testId,不用大括号)"
+            "{\"param\":{\"testId\":1}} (testId为要处理的题目的testId)"
     )
-    public Result getBelongingId(@RequestBody Integer testId){
-        if(ObjectUtil.isEmpty(testService.getById(testId))){
+    public Result getBelongingId(@RequestBody HashMap param){
+        if(param.get("testId")==null || ObjectUtil.isEmpty(param.get("testId"))){
             return Result.fail("找不到testId");
+        }
+        Integer testId = (Integer)param.get("testId");
+        if (ObjectUtil.isEmpty(testService.getById(testId))){
+            return Result.fail("该testId没有对应测试题");
         }
         Test test = testService.getById(testId);
         return Result.succ(test.getBelongingId());
@@ -267,15 +275,15 @@ public class TestController {
             "\"testChoB\":\"选项B\",\n" +
             "\"testChoC\":\"选项C\",\n" +
             "\"testChoD\":\"选项D\",\n" +
-            "\"testproportionA\":\"A占比系数\",\n" +
-            "\"testproportionB\":\"B占比系数\",\n" +
-            "\"testproportionC\":\"C占比系数\",\n" +
-            "\"testproportionD\":\"D占比系数\",\n" +
+            "\"testProportionA\":\"A占比系数\",\n" +
+            "\"testProportionB\":\"B占比系数\",\n" +
+            "\"testProportionC\":\"C占比系数\",\n" +
+            "\"testProportionD\":\"D占比系数\",\n" +
             "}"
     )
     @PostMapping("/save")
     public Result save(@RequestBody @Valid Test test){
-        return testService.save(test)?Result.succ(test):Result.fail("保存失败！");
+        return testService.save(test)?Result.succ(testService.getById(test.getTestId())):Result.fail("保存失败！");
     }
 
     //@RequiresAuthentication
