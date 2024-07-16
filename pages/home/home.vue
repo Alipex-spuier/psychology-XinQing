@@ -466,7 +466,7 @@
 		position: absolute;
 		z-index: 10;
 		left: 65rpx;
-		top: 141rpx;
+		padding-top: 139rpx;
 		font-size: 40rpx;
 		font-weight: normal;
 		font-family: texticons;
@@ -640,7 +640,7 @@
 		color: #fff;
 		height: 100rpx;
 		text-align: center;
-		padding-top: 15rpx;
+		padding-top: 60rpx;
 	}
 
 	.nav-image-text {
@@ -654,6 +654,7 @@
 
 	.qu-bar-wrapper {
 		margin: 10rpx $margin 10rpx;
+		padding-top: 100rpx;
 	}
 
 	.qu-bar-item {

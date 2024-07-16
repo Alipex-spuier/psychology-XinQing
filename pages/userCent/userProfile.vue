@@ -54,7 +54,7 @@
 			this.authorization = user.header.authorization;
 			this.userId = user.data.data.userId;
 			this.lastLogin = user.data.data.lastLogin;
-			this.createdTime = user.data.data.created;
+			this.createdTime = user.data.data.createdTime;
 			this.avatar = user.data.data.avatar;
 			this.work = user.data.data.work;
 			this.email = user.data.data.email;
