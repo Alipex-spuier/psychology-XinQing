@@ -44,7 +44,7 @@
 			<view class="nav-image-wrapper" >
 				<!-- <view class="nav-image-item-view" v-for="(item,index) in ruk" :key="index" @click="itemClick(item)"> -->
 				<view class="nav-image-item-view" v-for="(item,index) in ruk" :key="index">
-					<image :src="item.albumCover" class="nav-image-item" mode="widthFix"></image>
+					<!-- <image :src="item.albumCover" class="nav-image-item" mode="widthFix"></image> -->
 					<view class="nav-image-content-wrapper">
 						<view class="nav-image-content">
 							<text class="nav-image-text">{{city}}</text>
@@ -148,9 +148,6 @@
 					},
 				],
 				ruk: [{
-						albumCover: this.$basePhotoURL+"/photo/134.jpg",
-						title: "Skyline Mirage",
-						city:this.city,
 						temperature:this.temperature
 					}//,
 					// {
