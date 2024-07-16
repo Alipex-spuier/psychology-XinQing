@@ -232,6 +232,9 @@
 			},
 			redirectToInput(item) {
 				if (item.class == "nav1-color") {//解压工具
+				uni.navigateTo({
+					url: '@/../scan/camera' 
+				})
 					this.Focus = true;
 				} else if (item.class == "nav2-color") {//咨询日志
 					uni.navigateTo({
