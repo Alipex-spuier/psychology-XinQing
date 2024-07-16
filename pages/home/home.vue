@@ -88,7 +88,6 @@
 			this.getArtcles();
 			//this.getMusic(this.qu);
 			this.getLocation();
-			//this.getArtcleAuthors();
 		},
 		mounted() {
 			//this.getAllMusic();
@@ -98,7 +97,6 @@
 			this.getMusic(this.ruk);
 			//this.getMusic(this.qu);
 			this.getArtcles();
-			//this.getArtcleAuthors();
 			
 		},
 		data() {
@@ -112,6 +110,7 @@
 				userId: null,
 				searchQuery: '',
 				searchResults: [],
+				indexAuthor:null,
 				indicatorColor: '#e9e9e9',
 				indicatorActiveColor: 'red',
 				leftRightMargin: '0rpx',
@@ -330,27 +329,21 @@
 							this.qu[i].albumCover=res.data[i].artPic;
 							this.qu[i].title=res.data[i].artTitle;
 							this.qu[i].hotComment=res.data[i].artAuthor;
+							uni.request({
+								url:this.$baseURL+'/api/v1/expert/index/'+this.qu[i].hotComment,
+								header:{Authorization:uni.getStorageSync("res").header.authorization},
+								method:'POST',
+								success:(response)=>{
+									const res=response.data;
+									this.qu[i].hotComment=res.data.exName;
+								}
+							})
 						}		
 						//setTimeout(1000)
 					}
 				});
+				// this.getArtcleAuthors(1);
 				//});
-			},
-			 getArtcleAuthors(){
-				//await this.getArtcles();
-				for(let i=0;i<3;i++){
-					console.log(this.qu[i].hotComment)
-					uni.request({
-						url:this.$baseURL+'/api/v1/expert/index/'+this.qu[i].hotComment,
-						header:uni.getStorageSync("res").header.authorization,
-						method:'POST',
-						success:(response)=>{
-							console.log(this.qu[i].hotComment)
-							const res=response.data;
-							this.qu[i].hotComment=res[i].exName;
-						}
-					})
-				}
 			},
 			messageWindow(){
 				uni.request({
