@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashMap;
 
 @RestController
@@ -96,6 +97,9 @@ public class ExpertController {
         if(expert.getExId() == null || ObjectUtil.isEmpty(expertService.getById(expert.getExId()))){
             return Result.fail("找不到expert");
         }
+        if(expertService.getById(expert.getExId())==null){
+            return Result.fail("该专家不存在！");
+        }
         if(expert.getExName()!=null){
             if(ObjectUtil.isEmpty(expert.getExName().replace(" ",""))){
                 return Result.fail("exName不能为空");
@@ -134,6 +138,8 @@ public class ExpertController {
     public Result save(@RequestBody @Valid Expert expert){
         String password = SecureUtil.md5(expert.getExPassword());
         expert.setExPassword(password);
+        Date date = new Date();
+        expert.setCreatedTime(date);
         return expertService.save(expert)?Result.succ(expert):Result.fail("保存失败！");
     }
 
@@ -145,7 +151,11 @@ public class ExpertController {
     public Result delete(@PathVariable Integer exId) {
         if(ObjectUtil.isEmpty(expertService.getById(exId))){
             return Result.fail("该条测试已不存在");
+        }try{
+            expertService.removeById(exId);
+        }catch (Exception e){
+            return Result.fail("对不起，有外键，请别删！");
         }
-        return expertService.removeById(exId)?Result.succ(expertService.removeById(exId)):Result.fail("对不起，有外键，请别删！");
+        return Result.succ("删除成功！");
     }
 }

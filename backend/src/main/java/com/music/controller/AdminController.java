@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashMap;
 
 @RestController
@@ -97,6 +98,9 @@ public class AdminController {
         if(admin.getAdminId() == null || ObjectUtil.isEmpty(adminService.getById(admin.getAdminId()))){
             return Result.fail("找不到admin");
         }
+        if(adminService.getById(admin.getAdminId())==null){
+            return Result.fail("该用户不存在！");
+        }
         if(admin.getAdminName()!=null){
             if(ObjectUtil.isEmpty(admin.getAdminName().replace(" ",""))){
                 return Result.fail("adminName不能为空");
@@ -132,6 +136,8 @@ public class AdminController {
     public Result save(@RequestBody @Valid Admin admin){
         String password = SecureUtil.md5(admin.getAdminPassword());
         admin.setAdminPassword(password);
+        Date date = new Date();
+        admin.setCreatedTime(date);
         return adminService.save(admin)?Result.succ(adminService.getById(admin.getAdminId())):Result.fail("保存失败！");
     }
 
@@ -148,8 +154,12 @@ public class AdminController {
         lambdaQueryWrapper.eq(UserMessage::getAdminId,adminId);
 
         userMessageService.remove(lambdaQueryWrapper);
-
-        return adminService.removeById(adminId)?Result.succ(adminService.removeById(adminId)):Result.fail("对不起，有外键，请别删！");
+        try{
+            adminService.removeById(adminId);
+        }catch (Exception e){
+            return Result.fail("对不起，有外键，请别删！");
+        }
+        return Result.succ("删除成功！");
     }
 
 }

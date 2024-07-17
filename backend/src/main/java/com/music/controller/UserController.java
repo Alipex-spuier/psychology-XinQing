@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -116,6 +117,9 @@ public class UserController {
         if(user.getUserId()==null || ObjectUtil.isEmpty(user.getUserId())){
             return Result.fail("userId不能为空！");
         }
+        if(userService.getById(user.getUserId())==null){
+            return Result.fail("该用户不存在！");
+        }
         if(user.getUsername()!=null){
             if(ObjectUtil.isEmpty(user.getUsername().replace(" ",""))){
                 return Result.fail("userName不能为空！");
@@ -171,6 +175,9 @@ public class UserController {
         }
         String password = SecureUtil.md5(user.getPassword());
         user.setPassword(password);
+        Date date = new Date();
+        user.setCreated(date);
+        user.setLastLogin(date);
         return userService.save(user)?Result.succ(user):Result.fail("保存失败！");
     }
 
@@ -183,7 +190,12 @@ public class UserController {
         if(ObjectUtil.isEmpty(userService.getById(userId))){
             return Result.fail("该条测试已不存在");
         }
-        return userService.removeById(userId)?Result.succ(userService.removeById(userId)):Result.fail("对不起，有外键，请别删！");
+        try{
+            userService.removeById(userId);
+        }catch (Exception e){
+            return Result.fail("对不起，有外键，请别删！");
+        }
+        return Result.succ("删除成功！");
     }
 
 }
