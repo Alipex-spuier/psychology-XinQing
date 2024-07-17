@@ -29,6 +29,12 @@ public class UserMessageController {
     AdminService adminService;
     @Autowired
     UserService userService;
+    @Autowired
+    public UserMessageController(UserMessageService userMessageService,AdminService adminService,UserService userService){
+        this.userService = userService;
+        this.userMessageService = userMessageService;
+        this.adminService = adminService;
+    }
     @ApiOperation(value = "用于userService的全查询 "+
             "不需要传参数")
     @RequiresAuthentication

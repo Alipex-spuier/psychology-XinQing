@@ -22,7 +22,6 @@ import java.util.Date;
 @TableName("consultationlogs")
 public class ConsultationLog implements Serializable {
     @TableId(value = "log_id",type = IdType.AUTO)
-    @NotNull(message = "logId不能为空")
     private Long logId;
 
     @NotNull(message = "aptId不能为空")

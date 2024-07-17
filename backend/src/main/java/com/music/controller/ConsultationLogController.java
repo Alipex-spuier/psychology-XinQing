@@ -12,6 +12,7 @@ import com.music.common.page.QueryPageParam;
 import com.music.entity.ConsultationLog;
 import com.music.service.AppointmentService;
 import com.music.service.ConsultationLogService;
+import com.music.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,16 @@ import java.util.Date;
 @RequestMapping("/api/v1/consultationLog")
 public class ConsultationLogController {
 
+
+    private final ConsultationLogService consultationLogService;
+
+    private final AppointmentService appointmentService;
+
     @Autowired
-    ConsultationLogService consultationLogService;
-    @Autowired
-    AppointmentService appointmentService;
+    public ConsultationLogController(ConsultationLogService consultationLogService,AppointmentService appointmentService){
+        this.consultationLogService = consultationLogService;
+        this.appointmentService = appointmentService;
+    }
     @ApiOperation(value = "用于查找所有记录 "+
             "不传参数")
     @RequiresAuthentication
@@ -88,7 +95,8 @@ public class ConsultationLogController {
             "   \"pageNum\":2,\n" +
             "   \"param\":{\n" +
             "        \"logTime\":1720748470000,\n" +
-            "        \"endTime\":1720748470001")
+            "        \"endTime\":1720748470001,\n"+
+            "}")
     @RequiresAuthentication
     @PostMapping("indexPageByRangeTime")
     public Result indexPageByRangeTime(@RequestBody QueryPageParam queryPageParam){
@@ -109,6 +117,7 @@ public class ConsultationLogController {
         IPage<ConsultationLog> result = consultationLogService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
     }//分页查询
+
     @ApiOperation(value = "用于增加记录 logTime要是没传后端会自动赋当前时间"+
             "    \"aptId\":1   " +
             "    \"logTime\":1720748470000"+
@@ -119,8 +128,6 @@ public class ConsultationLogController {
 
         if(ObjectUtil.isEmpty(appointmentService.getById(consultationLog.getAptId())))
             return Result.fail("没有这个预约记录");
-        if(StringUtils.isEmpty(consultationLog.getLogContent()))
-            return Result.fail("内容不能为空");
         if(ObjectUtil.isEmpty(consultationLog.getLogTime()))
             consultationLog.setLogTime(new Date().getTime());
 
@@ -128,6 +135,7 @@ public class ConsultationLogController {
             return Result.fail("保存失败");
         return Result.succ(consultationLogService.getById(consultationLog.getLogId()));
     }//增加
+
     @ApiOperation(value = "用于删除记录 "+
             "\"logId\":1")
     @RequiresAuthentication
@@ -135,6 +143,7 @@ public class ConsultationLogController {
     public Result delete(@PathVariable Integer logId){
         return ObjectUtil.isNotEmpty(consultationLogService.getById(logId))?Result.succ(consultationLogService.removeById(logId)):Result.fail("没有这个日志记录");
     }//删除
+
     @ApiOperation(value = "用于根据logId更新记录 logId必填"+
             "    \"logId\":1,\n" +
             "    \"aptId\":1,\n" +

@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/stressReliefTool")
 public class StressReliefToolController {
 
+    private final StressReliefToolService stressReliefToolService;
+
     @Autowired
-    StressReliefToolService stressReliefToolService;
+    public StressReliefToolController(StressReliefToolService stressReliefToolService){
+        this.stressReliefToolService = stressReliefToolService;
+    }
     @ApiOperation(value = "用于全查询（无分页） "+
             "不用传参数")
     @GetMapping("/index")

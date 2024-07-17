@@ -35,17 +35,22 @@ import java.util.HashMap;
 @RequestMapping("/api/v1/appointment")
 public class AppointmentController {
 
-    @Autowired
-    AppointmentService appointmentService;
+    private final AppointmentService appointmentService;
+
+    private final UserService userService;
+
+
+    private final ExpertService expertService;
+
+    private final ConsultationLogService consultationLogService;
 
     @Autowired
-    UserService userService;
-
-    @Autowired
-    ExpertService expertService;
-
-    @Autowired
-    ConsultationLogService consultationLogService;
+    public AppointmentController(AppointmentService appointmentService,UserService userService,ExpertService expertService,ConsultationLogService consultationLogService){
+        this.appointmentService = appointmentService;
+        this.userService = userService;
+        this.expertService = expertService;
+        this.consultationLogService = consultationLogService;
+    }
 
     @ApiOperation(value = "用于搜索所有预约记录 "+
             "不需要传参数" )
@@ -225,6 +230,7 @@ public class AppointmentController {
 
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Appointment::getExpertId,appointment.getExpertId()).and((wrapper)->wrapper.eq(Appointment::getAptTime,appointment.getAptTime()));
+
         if(ObjectUtil.isEmpty(appointmentService.getOneByExpertIdAndAptTime(lambdaQueryWrapper))) {
             return Result.succ("该专家该时间段没有预约",true);
         }
