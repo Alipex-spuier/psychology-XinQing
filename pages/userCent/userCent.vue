@@ -115,7 +115,11 @@
 					uni.navigateTo({
 						url: '/pages/userCent/logout'
 					})
-				} else if (item.id == 2 || item.id == 3 || item.id == 4 || item.id == 5) {
+				}else if(item.id == 5) {
+					uni.navigateTo({
+						url: '/pages/chat/chat'
+					})
+				}else if (item.id == 2 || item.id == 3 || item.id == 4) {
 					this.showUnfinish();
 				} else if (item.id == 1) {
 					this.jumpToProfile()

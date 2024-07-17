@@ -14,12 +14,12 @@
 		// 	}
 		// },
 		{
-					"path" : "pages/editor/editor",
-					"style" : 
-					{
-						"navigationBarTitleText" : "文章编辑"
-					}
-				},
+			"path" : "pages/editor/editor",
+			"style" : 
+			{
+				"navigationBarTitleText" : "文章编辑"
+			}
+		},
 		{
 			"path" : "pages/login/index",
 			"style" : 
@@ -140,8 +140,15 @@
 			{
 				"navigationBarTitleText" : ""
 			}
-		}
+		},
 		
+		{
+			"path" : "pages/chat/chat",
+			"style" : 
+			{
+				"navigationBarTitleText" : "客服咨询"
+			}
+		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
