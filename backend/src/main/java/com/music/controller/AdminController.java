@@ -11,12 +11,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
 import com.music.entity.Admin;
+import com.music.entity.UserMessage;
 import com.music.service.AdminService;
+import com.music.service.UserMessageService;
+import com.music.service.impl.UserMessageServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 
 @RestController
@@ -24,10 +28,12 @@ import java.util.HashMap;
 public class AdminController {
 
     private final AdminService adminService;
+    private final UserMessageService userMessageService;
 
     @Autowired
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, UserMessageService userMessageService) {
         this.adminService = adminService;
+        this.userMessageService = userMessageService;
     }
 
     @RequiresAuthentication
@@ -88,8 +94,25 @@ public class AdminController {
     )
     @PutMapping("/update")
     public Result update(@RequestBody Admin admin){
-        String password = SecureUtil.md5(admin.getAdminPassword());
-        admin.setAdminPassword(password);
+        if(admin.getAdminId() == null || ObjectUtil.isEmpty(adminService.getById(admin.getAdminId()))){
+            return Result.fail("找不到admin");
+        }
+        if(admin.getAdminName()!=null){
+            if(ObjectUtil.isEmpty(admin.getAdminName().replace(" ",""))){
+                return Result.fail("adminName不能为空");
+            }else {
+                if(ObjectUtil.isNotEmpty(adminService.searchByAdminName(admin.getAdminName()))
+                        &&!admin.getAdminId().equals(adminService.searchByAdminName(admin.getAdminName()).getAdminId()))
+                    return Result.fail("昵称已存在");
+            }
+        }
+        if(ObjectUtil.isNotEmpty(admin.getAdminPassword())) {
+            String password = SecureUtil.md5(admin.getAdminPassword());
+            admin.setAdminPassword(password);
+        }
+        if(admin.getAdminEmail()!=null && ObjectUtil.isEmpty(admin.getAdminEmail().replace(" ",""))){
+            return Result.fail("adminEmail不能为空");
+        }
         adminService.updateById(admin);
         Admin newAdmin = adminService.getById(admin.getAdminId());
         return Result.succ(MapUtil.builder()
@@ -106,10 +129,10 @@ public class AdminController {
             "\"adminPassword\":\"123\"}"
     )
     @PostMapping("/save")
-    public Result save(@RequestBody Admin admin){
+    public Result save(@RequestBody @Valid Admin admin){
         String password = SecureUtil.md5(admin.getAdminPassword());
         admin.setAdminPassword(password);
-        return adminService.save(admin)?Result.succ(admin):Result.fail("保存失败！");
+        return adminService.save(admin)?Result.succ(adminService.getById(admin.getAdminId())):Result.fail("保存失败！");
     }
 
     @RequiresAuthentication
@@ -118,7 +141,15 @@ public class AdminController {
     )
     @DeleteMapping("/delete/{adminId}")
     public Result delete(@PathVariable Integer adminId) {
-        return Result.succ(adminService.removeById(adminId));
+        if(ObjectUtil.isEmpty(adminService.getById(adminId))){
+            return Result.fail("该条测试已不存在");
+        }
+        LambdaQueryWrapper<UserMessage> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(UserMessage::getAdminId,adminId);
+
+        userMessageService.remove(lambdaQueryWrapper);
+
+        return adminService.removeById(adminId)?Result.succ(adminService.removeById(adminId)):Result.fail("对不起，有外键，请别删！");
     }
 
 }

@@ -13,4 +13,6 @@ public interface ExpertService extends IService<Expert> {
     IPage pageCC(IPage<Expert> page, Wrapper wrapper);
 
     List<Expert> searchAllByExDire(String exDire);
+
+    Expert searchByExName(String exName);
 }

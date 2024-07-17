@@ -41,4 +41,9 @@ public class ExpertServiceImpl extends ServiceImpl<ExpertMapper, Expert> impleme
     public List<Expert> searchAllByExDire(String exDire){
         return expertMapper.searchAllByExDire(exDire);
     }
+
+    @Override
+    public Expert searchByExName(String exName) {
+        return expertMapper.searchByExName(exName);
+    }
 }

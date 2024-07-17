@@ -34,4 +34,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public IPage pageCC(IPage<Admin> page, Wrapper wrapper) {
         return adminMapper.pageCC(page,wrapper);
     }
+
+    @Override
+    public Admin searchByAdminName(String adminName) {
+        return adminMapper.searchByAdminName(adminName);
+    }
 }

@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,11 +113,31 @@ public class UserController {
     )
     @PutMapping("/update")
     public Result update(@RequestBody User user){
-        if(ObjectUtil.isNotEmpty(userService.searchByUsername(user.getUsername()))&&!user.getUserId().equals(userService.searchByUsername(user.getUsername()).getUserId()))
-            return Result.fail("昵称已存在");
+        if(user.getUserId()==null || ObjectUtil.isEmpty(user.getUserId())){
+            return Result.fail("userId不能为空！");
+        }
+        if(user.getUsername()!=null){
+            if(ObjectUtil.isEmpty(user.getUsername().replace(" ",""))){
+                return Result.fail("userName不能为空！");
+            }else {
+                if(ObjectUtil.isNotEmpty(userService.searchByUsername(user.getUsername()))
+                        &&!user.getUserId().equals(userService.searchByUsername(user.getUsername()).getUserId()))
+                    return Result.fail("昵称已存在");
+            }
+        }
         if(ObjectUtil.isNotEmpty(user.getPassword())) {
             String password = SecureUtil.md5(user.getPassword());
             user.setPassword(password);
+        }
+        if(user.getEmail()!=null && ObjectUtil.isEmpty(user.getEmail())){
+            return Result.fail("email不能为空！");
+        }
+        if(user.getAge()!=null){
+            if(user.getAge()>150){
+                return Result.fail("年龄不大于150！");
+            } else if (user.getAge()<0) {
+                return Result.fail("年龄不小于0！");
+            }
         }
         userService.updateById(user);
         User newUser = userService.getById(user.getUserId());
@@ -140,7 +161,14 @@ public class UserController {
             "\"password\":\"123\"}"
     )
     @PostMapping("/save")
-    public Result save(@RequestBody User user){
+    public Result save(@RequestBody @Valid User user){
+        if(user.getAge()!=null){
+            if(user.getAge()>150){
+                return Result.fail("年龄不大于150！");
+            } else if (user.getAge()<0) {
+                return Result.fail("年龄不小于0！");
+            }
+        }
         String password = SecureUtil.md5(user.getPassword());
         user.setPassword(password);
         return userService.save(user)?Result.succ(user):Result.fail("保存失败！");
@@ -152,7 +180,10 @@ public class UserController {
     )
     @DeleteMapping("/delete/{userId}")
     public Result delete(@PathVariable Integer userId) {
-        return Result.succ(userService.removeById(userId));
+        if(ObjectUtil.isEmpty(userService.getById(userId))){
+            return Result.fail("该条测试已不存在");
+        }
+        return userService.removeById(userId)?Result.succ(userService.removeById(userId)):Result.fail("对不起，有外键，请别删！");
     }
 
 }

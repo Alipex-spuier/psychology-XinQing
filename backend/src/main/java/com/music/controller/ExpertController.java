@@ -17,6 +17,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 
 @RestController
@@ -64,16 +65,16 @@ public class ExpertController {
         HashMap param = query.getParam();
         String name = (String)param.get("name");
 
+        if(name==null || ObjectUtil.isEmpty(name.replace(" ",""))){
+            return Result.fail("name不存在");
+        }
+
         Page<Expert> page = new Page();
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
 
         LambdaQueryWrapper<Expert> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if(StringUtils.isNotEmpty(name) && !"null".equals(name)){
-            lambdaQueryWrapper.like(Expert::getExName,name);
-        }else{
-            return Result.fail("name为空！");
-        }
+        lambdaQueryWrapper.like(Expert::getExName,name);
 
         IPage result = expertService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());
@@ -92,8 +93,25 @@ public class ExpertController {
     )
     @PutMapping("/update")
     public Result update(@RequestBody Expert expert){
-        String password = SecureUtil.md5(expert.getExPassword());
-        expert.setExPassword(password);
+        if(expert.getExId() == null || ObjectUtil.isEmpty(expertService.getById(expert.getExId()))){
+            return Result.fail("找不到expert");
+        }
+        if(expert.getExName()!=null){
+            if(ObjectUtil.isEmpty(expert.getExName().replace(" ",""))){
+                return Result.fail("exName不能为空");
+            }else {
+                if(ObjectUtil.isNotEmpty(expertService.searchByExName(expert.getExName()))
+                        &&!expert.getExId().equals(expertService.searchByExName(expert.getExName()).getExId()))
+                    return Result.fail("昵称已存在");
+            }
+        }
+        if(ObjectUtil.isNotEmpty(expert.getExPassword())) {
+            String password = SecureUtil.md5(expert.getExPassword());
+            expert.setExPassword(password);
+        }
+        if(expert.getExEmail()!=null && ObjectUtil.isEmpty(expert.getExEmail().replace(" ",""))){
+            return Result.fail("exEmail不能为空");
+        }
         expertService.updateById(expert);
         Expert newExpert = expertService.getById(expert.getExId());
         return Result.succ(MapUtil.builder()
@@ -113,7 +131,7 @@ public class ExpertController {
             "{\"exName\":\"test6\",\n" +
             "\"exPassword\":\"123\"}"
     )
-    public Result save(@RequestBody Expert expert){
+    public Result save(@RequestBody @Valid Expert expert){
         String password = SecureUtil.md5(expert.getExPassword());
         expert.setExPassword(password);
         return expertService.save(expert)?Result.succ(expert):Result.fail("保存失败！");
@@ -125,6 +143,9 @@ public class ExpertController {
     )
     @DeleteMapping("/delete/{exId}")
     public Result delete(@PathVariable Integer exId) {
-        return Result.succ(expertService.removeById(exId));
+        if(ObjectUtil.isEmpty(expertService.getById(exId))){
+            return Result.fail("该条测试已不存在");
+        }
+        return expertService.removeById(exId)?Result.succ(expertService.removeById(exId)):Result.fail("对不起，有外键，请别删！");
     }
 }

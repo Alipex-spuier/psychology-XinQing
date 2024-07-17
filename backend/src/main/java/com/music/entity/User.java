@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -42,6 +44,8 @@ public class User implements Serializable {
 
     private String country;
 
+    @Min(0)
+    @Max(150)
     private Integer age;
 
     private Date created;
