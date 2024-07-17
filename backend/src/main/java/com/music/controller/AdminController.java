@@ -1,10 +1,12 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
@@ -44,6 +46,8 @@ public class AdminController {
     @PostMapping("/index/{adminId}")
     public Result index(@PathVariable Integer adminId) {
         Admin admin = adminService.getById(adminId);
+        if(ObjectUtil.isEmpty(admin))
+            return Result.fail("没有这个管理员");
         return Result.succ(admin);
     }
 

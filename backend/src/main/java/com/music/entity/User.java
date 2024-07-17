@@ -47,4 +47,5 @@ public class User implements Serializable {
     private Date created;
 
     private Date lastLogin;
+
 }

@@ -14,6 +14,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.Date;
 @Data
@@ -26,6 +27,7 @@ public class Appointment implements Serializable {
     @TableId(value = "apt_id", type = IdType.AUTO)
     private Long aptId;
 
+    @NotNull(message = "userId不能为空")
     private Long userId;
 
     @NotNull(message = "预约的专家id不能为空")

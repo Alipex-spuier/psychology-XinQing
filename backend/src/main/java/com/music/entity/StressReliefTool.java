@@ -17,10 +17,14 @@ import java.util.PrimitiveIterator;
 @Accessors(chain = true)
 @TableName("stressrelieftools")
 public class StressReliefTool implements Serializable {
+
     @TableId(value = "id",type = IdType.AUTO)
     private Long id;
+
     @NotBlank(message = "工具名字不能为空")
     private String toolName;
+
     private String toolDescription;
+
     private String toolLink;
 }

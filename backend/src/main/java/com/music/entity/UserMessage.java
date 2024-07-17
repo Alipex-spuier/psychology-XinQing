@@ -15,8 +15,10 @@ import java.util.Date;
 public class UserMessage implements Serializable {
     @TableId(value = "mes_id", type = IdType.AUTO)
     private Long mesId;
+
     @NotNull(message = "userId不能为空")
     private Long userId;
+
     @NotNull(message = "adminId不能为空")
     private Long adminId;
 

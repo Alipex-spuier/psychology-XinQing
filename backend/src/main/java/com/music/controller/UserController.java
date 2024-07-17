@@ -50,6 +50,8 @@ public class UserController {
     @PostMapping("/index/{userId}")
     public Result index(@PathVariable Integer userId) {
         User user = userService.getById(userId);
+        if(ObjectUtil.isEmpty(user))
+            return Result.fail("没有这个用户");
         return Result.succ(user);
     }
 

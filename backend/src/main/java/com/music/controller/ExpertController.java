@@ -1,6 +1,7 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -45,6 +46,8 @@ public class ExpertController {
     @PostMapping("/index/{exId}")
     public Result index(@PathVariable Integer exId) {
         Expert expert = expertService.getById(exId);
+        if(ObjectUtil.isEmpty(expert))
+            return Result.fail("没有这个专家");
         return Result.succ(expert);
     }
 

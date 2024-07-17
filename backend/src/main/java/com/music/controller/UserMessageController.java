@@ -42,7 +42,7 @@ public class UserMessageController {
     @RequiresAuthentication
     @GetMapping("/index/{mesId}")
     public Result getOneByMesId(@PathVariable Integer mesId){
-        return Result.succ(userMessageService.getById(mesId));
+        return ObjectUtil.isNotEmpty(userMessageService.getById(mesId))?Result.succ(userMessageService.getById(mesId)):Result.fail("没有这个用户消息");
     }//根据mesId查询
 
     @ApiOperation(value = "用于分页查询 "+

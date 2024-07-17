@@ -54,6 +54,14 @@ public class AppointmentController {
     public Result index(){
         return Result.succ(appointmentService.list());
     }//全查找
+    @ApiOperation(value = "用于搜索所有预约记录 "+
+            "不需要传参数" )
+    @RequiresAuthentication
+    @PostMapping("/index/{aptId}")
+    public Result indexByAptId(@PathVariable Integer aptId){
+        return ObjectUtil.isNotEmpty(appointmentService.getById(aptId))?Result.succ(appointmentService.getById(aptId)):Result.fail("没有这个预约");
+    }//全查找
+
     @ApiOperation(value = "用于搜索所有预约记录（已分页） "+
             "    \"pageSize\":1,\n" +
             "    \"pageNum\" :2" )
@@ -176,16 +184,17 @@ public class AppointmentController {
                 .map());
     }//修改
 
-    @ApiOperation(value = "用于管理员添加一条预约记录 此时用户id为空"+
-            "    \"aptTime\":\"2024-07-11T14:00:00\"")
-    @RequiresAuthentication
-    @PostMapping("/save")
-    public Result save(@Validated @RequestBody Appointment appointment){
-        appointment.setUserId(null);
-       if(!appointmentService.save(appointment))
-           return Result.fail("保存失败");
-       return Result.succ(appointmentService.getById(appointment.getAptId()));
-    }//放预约时间的时候需要把statue设置成N，即未被预约,userId设置为Null
+//    @ApiOperation(value = "用于管理员添加一条预约记录 此时用户id为空"+
+//            "    \"aptTime\":\"2024-07-11T14:00:00\"")
+//    @RequiresAuthentication
+//    @PostMapping("/save")
+//    public Result save(@Validated @RequestBody Appointment appointment){
+//        appointment.setUserId(null);
+//       if(!appointmentService.save(appointment))
+//           return Result.fail("保存失败");
+//       return Result.succ(appointmentService.getById(appointment.getAptId()));
+//    }//放预约时间的时候需要把statue设置成N，即未被预约,userId设置为Null
+
     @ApiOperation(value = "用于用户预约一条记录 时间戳为数字(Long型)"+
             "    \"userId\":1,\n" +
             "    \"expertId\":4,\n" +

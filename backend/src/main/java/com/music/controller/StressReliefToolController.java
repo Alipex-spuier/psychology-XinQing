@@ -31,7 +31,7 @@ public class StressReliefToolController {
             " \"id\":* ")
     @PostMapping("/index/{id}")
     public Result indexById(@PathVariable Integer id){
-        return Result.succ(stressReliefToolService.getById(id));
+        return ObjectUtil.isNotEmpty(stressReliefToolService.getById(id))?Result.succ(stressReliefToolService.getById(id)):Result.fail("没有这个解压工具");
     }
 
     @ApiOperation(value = "用于分页查询"+
