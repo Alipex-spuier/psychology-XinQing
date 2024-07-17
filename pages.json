@@ -13,7 +13,13 @@
 		// 		"navigationBarTitleText": "心晴"
 		// 	}
 		// },
-		
+		{
+					"path" : "pages/editor/editor",
+					"style" : 
+					{
+						"navigationBarTitleText" : "文章编辑"
+					}
+				},
 		{
 			"path" : "pages/login/index",
 			"style" : 
@@ -127,7 +133,15 @@
 			{
 				"navigationBarTitleText" : ""
 			}
+		},
+		{
+			"path" : "pages/result/articleResult",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
+		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

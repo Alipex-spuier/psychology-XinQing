@@ -227,7 +227,7 @@
 			itemClick(e) {
 				let clickedMusic = [e];
 				uni.navigateTo({
-					url: './player/player?result=' + encodeURIComponent(JSON.stringify(clickedMusic))
+					url: './result/articleResult?article=' + encodeURIComponent(JSON.stringify(clickedMusic))
 				})
 			},
 			redirectToInput(item) {
@@ -333,6 +333,7 @@
 							this.qu[i].albumCover = randomArticles[i].artPic;
 							this.qu[i].title = randomArticles[i].artTitle;
 							this.qu[i].hotComment = randomArticles[i].artAuthor;
+							this.qu[i].Content = randomArticles[i].artContent;
 							uni.request({
 								url:this.$baseURL+'/api/v1/expert/index/'+this.qu[i].hotComment,
 								header:{Authorization:uni.getStorageSync("res").header.authorization},
