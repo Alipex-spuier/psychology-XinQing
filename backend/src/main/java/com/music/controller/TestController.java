@@ -43,6 +43,9 @@ public class TestController {
     )
     public Result index(@PathVariable Integer testId) {
         Test test = testService.getById(testId);
+        if(ObjectUtil.isEmpty(test)){
+            return Result.fail("不存在该测试结果");
+        }
         return Result.succ(test);
     }
 

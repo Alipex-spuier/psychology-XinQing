@@ -64,16 +64,16 @@ public class AdminController {
         HashMap param = query.getParam();
         String name = (String)param.get("name");
 
+        if(name == null || ObjectUtil.isEmpty(name.replace(" ",""))){
+            return Result.fail("输入name为空！");
+        }
+
         Page<Admin> page = new Page();
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
 
         LambdaQueryWrapper<Admin> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if(StringUtils.isNotEmpty(name) && !"null".equals(name)){
-            lambdaQueryWrapper.like(Admin::getAdminName,name);
-        }else{
-            return Result.fail("name为空！");
-        }
+        lambdaQueryWrapper.like(Admin::getAdminName,name);
 
         IPage result = adminService.pageCC(page,lambdaQueryWrapper);
         return Result.succ(result.getRecords());

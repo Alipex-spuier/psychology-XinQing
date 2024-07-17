@@ -52,6 +52,9 @@ public class ArticleController {
     )
     public Result index(@PathVariable Integer artId) {
         Article article = articleService.getById(artId);
+        if (ObjectUtil.isEmpty(article)) {
+            return Result.fail("不存在该测试结果");
+        }
         return Result.succ(article);
     }
 
