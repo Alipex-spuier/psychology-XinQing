@@ -51,6 +51,9 @@ public class CommentController {
     @PostMapping("/index/{commentsId}")
     public Result index(@PathVariable Integer commentsId) {
         Comment comment = commentService.getById(commentsId);
+        if(ObjectUtil.isEmpty(comment)){
+            return Result.fail("不存在该测试结果");
+        }
         return Result.succ(comment);
     }
 

@@ -23,7 +23,7 @@ public class Test implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "test_id", type = IdType.AUTO)
-    @NotNull(message = "testId不为空")
+    //@NotNull(message = "testId不为空")
     private Long testId;
 
     @NotNull(message = "belongingId不为空")
