@@ -6,7 +6,7 @@
 		// 		"navigationBarTitleText": "心理测试"
 		// 	}
 		// },
-		
+
 		// {
 		// 	"path": "pages/index",
 		// 	"style": {
@@ -14,43 +14,32 @@
 		// 	}
 		// },
 		{
-			"path" : "pages/editor/editor",
-			"style" : 
-			{
-				"navigationBarTitleText" : "文章编辑"
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "欢迎来到心晴",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path" : "pages/login/index",
-			"style" : 
-			{
-				"navigationBarTitleText" : "欢迎来到心晴",
-				"enablePullDownRefresh" : false
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "心晴登录",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path" : "pages/login/login",
-			"style" : 
-			{
-				"navigationBarTitleText" : "心晴登录",
-				"enablePullDownRefresh" : false
-			}
-		},
-		{
-			"path" : "pages/login/register",
-			"style" : 
-			{
-				"navigationBarTitleText" : "心晴注册",
-				"enablePullDownRefresh" : false
+			"path": "pages/login/register",
+			"style": {
+				"navigationBarTitleText": "心晴注册",
+				"enablePullDownRefresh": false
 			}
 		},
 
 		{
-			"path" : "pages/userCent/logout",
-			"style" : 
-			{
-				"navigationBarTitleText" : "账号设置",
-				"enablePullDownRefresh" : false
+			"path": "pages/userCent/logout",
+			"style": {
+				"navigationBarTitleText": "账号设置",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -66,87 +55,82 @@
 			}
 		},
 		{
-			"path" : "pages/player/player",
-			"style" : 
-			{
-				"navigationBarTitleText" : "音乐播放",
-				"enablePullDownRefresh" : false
+			"path": "pages/player/player",
+			"style": {
+				"navigationBarTitleText": "音乐播放",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
-            "path" : "pages/scan/camera",
-            "style" :                                                                                    
-            {
-                "navigationStyle":"custom",
-                "backgroundColor":"#000000"
-            }
-            
-        },
-        {
-        	"path" : "pages/result/result",
-        	"style" : 
-        	{
-        		"navigationBarTitleText" : "",
-        		"enablePullDownRefresh" : false
-        	}
-        },
-        {
-        	"path" : "pages/userCent/userProfile",
-        	"style" : 
-        	{
-        		"navigationBarTitleText" : "个人资料",
-        		"enablePullDownRefresh" : false
-        	}
-        },
-        {
-        	"path" : "pages/userCent/avatar",
-        	"style" : 
-        	{
-        		"navigationBarTitleText" : "头像选择",
-        		"enablePullDownRefresh" : false
-        	}
-        },
-		{
-			"path" : "pages/Test/Skip",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/scan/camera",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor": "#000000"
 			}
+
 		},
-        {
-        	"path" : "pages/Test/Test",
-        	"style" : 
-        	{
-        		"navigationBarTitleText" : ""
-        	}
-        },
 		{
-			"path" : "pages/appointment/selectExport",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/result/result",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path" : "pages/appointment/selectTime",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/userCent/userProfile",
+			"style": {
+				"navigationBarTitleText": "个人资料",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path" : "pages/result/articleResult",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/userCent/avatar",
+			"style": {
+				"navigationBarTitleText": "头像选择",
+				"enablePullDownRefresh": false
 			}
 		},
-		
 		{
-			"path" : "pages/chat/chat",
-			"style" : 
-			{
-				"navigationBarTitleText" : "客服咨询"
+			"path": "pages/Test/Skip",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/Test/Test",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/appointment/selectExport",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/appointment/selectTime",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/result/articleResult",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+
+		{
+			"path": "pages/chat/chat",
+			"style": {
+				"navigationBarTitleText": "客服咨询"
+			}
+		},
+		{
+			"path": "pages/editor/editor",
+			"style": {
+				"navigationBarTitleText": "文章编辑"
 			}
 		}
 	],
