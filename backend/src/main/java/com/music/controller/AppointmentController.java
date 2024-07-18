@@ -227,7 +227,14 @@ public class AppointmentController {
             "    \"aptTime\":1720748470000")
     @RequiresAuthentication
     @PostMapping("/searchOneByExpertIdAndAptTime")
-    public Result searchOneByExpertIdAndAptTime(@Validated @RequestBody Appointment appointment){
+    public Result searchOneByExpertIdAndAptTime(@RequestBody Appointment appointment){
+
+        if(ObjectUtil.isEmpty(appointment.getExpertId()))
+            return Result.fail("请输入expertId");
+        if(ObjectUtil.isEmpty(appointment.getAptTime()))
+            return Result.fail("请输入aptTime");
+        if(ObjectUtil.isEmpty(expertService.getById(appointment.getExpertId())))
+            return Result.fail("没有这个专家");
 
         LambdaQueryWrapper<Appointment> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Appointment::getExpertId,appointment.getExpertId()).and((wrapper)->wrapper.eq(Appointment::getAptTime,appointment.getAptTime()));
@@ -246,6 +253,7 @@ public class AppointmentController {
 
         if(ObjectUtil.isEmpty(param.get("aptTime")))
             return Result.fail("请传正确的时间");
+
         Long aptTime = (Long)param.get("aptTime");
         Date date = new Date(aptTime);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

@@ -62,6 +62,8 @@ public class StressReliefToolController {
             return Result.fail("没有这个解压工具");
         if(ObjectUtil.isNotEmpty(stressReliefTool.getToolDescription())&&stressReliefTool.getToolDescription().trim().isEmpty())
             return Result.fail("修改后的解压工具描述不能为空格");
+        if(stressReliefTool.getToolName()!=null&&StringUtils.isEmpty(stressReliefTool.getToolName()))
+            return Result.fail("解压工具名字不能为空");
 
         stressReliefToolService.updateById(stressReliefTool);
         StressReliefTool newStressReliefTool = stressReliefToolService.getById(stressReliefTool.getId());

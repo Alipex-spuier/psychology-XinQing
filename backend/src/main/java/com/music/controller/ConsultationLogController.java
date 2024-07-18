@@ -66,6 +66,7 @@ public class ConsultationLogController {
         IPage<ConsultationLog> result = consultationLogService.page(page);
         return Result.succ(result.getRecords());
     }//分页查询
+
     @ApiOperation(value = "用于从起始时间到当前时间的记录查询（已做分页处理） "+
             "   \"pageSize\":2,\n" +
             "   \"pageNum\":2,\n" +
@@ -130,6 +131,8 @@ public class ConsultationLogController {
             return Result.fail("没有这个预约记录");
         if(ObjectUtil.isEmpty(consultationLog.getLogTime()))
             consultationLog.setLogTime(new Date().getTime());
+        if(ObjectUtil.isEmpty(consultationLog.getLogContent()))
+            return  Result.fail("请输入内容");
 
         if(!consultationLogService.save(consultationLog))
             return Result.fail("保存失败");
@@ -157,8 +160,6 @@ public class ConsultationLogController {
             return Result.fail("没有这个日志记录");
         if(ObjectUtil.isNotEmpty(consultationLog.getAptId())&&ObjectUtil.isEmpty(appointmentService.getById(consultationLog.getAptId())))
             return Result.fail("不存在该预约记录");
-        if(ObjectUtil.isNotEmpty(consultationLog.getLogContent())&&consultationLog.getLogContent().trim().isEmpty())
-            return Result.fail("内容不能为空");
 
         consultationLogService.updateById(consultationLog);
         ConsultationLog newConsultationLog = consultationLogService.getById(consultationLog.getLogId());
