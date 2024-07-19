@@ -166,7 +166,6 @@
 				this.dateArr = initData() // 日期栏初始化
 				this.timeArr = initTime(this.beginTime, this.endTime, this.timeInterval, this.isQuantum) //时间选项初始化
 				this.timeQuanBegin = this.timeQuanEnd = ""
-				//console.log(this.orderTimeArr)
 				let isFullTime = true
 				this.timeArr.forEach((item, index) => {
 					// 时间段
@@ -362,9 +361,7 @@
 				} else {
 					this.$emit('change', this.orderDateTime)
 					//all time
-					console.log(this.orderDateTime)
 					const timestamp = dateToTimestamp(this.orderDateTime);
-					console.log(timestamp); // 输出该日期对应的时间戳
 				}
 
 			}

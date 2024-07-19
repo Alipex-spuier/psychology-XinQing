@@ -136,7 +136,6 @@
 				query.select('#okk').boundingClientRect(data => {
 					// 若消息体没有超过2倍的键盘则向下移动差值,防止遮住消息体
 					var up=res.height*2-data.height-l*110
-					console.log(up)
 				  if(up>0){
 					  // 动态改变空盒子高度
 					 this.msgMove(up,300)
@@ -225,7 +224,6 @@
 			// 回答问题的业务逻辑
 			answer(id){
 				// 这里应该传入问题的id,模拟就用index代替了
-				console.log(id)
 				
 			},
 			sendMsg(){

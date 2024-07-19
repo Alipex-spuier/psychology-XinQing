@@ -17,8 +17,8 @@
 		},
 		onLoad(options) {//反序列化
 			this.resultsArr = JSON.parse(decodeURIComponent(options.result)).data;//解码
+			console.log(options.result)
 			
-			console.log(this.resultsArr)
 			uni.setNavigationBarTitle({
 				title: "专家列表"
 			})

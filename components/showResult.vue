@@ -6,7 +6,7 @@
 				<view class="item--cover" :style="{backgroundImage: 'url(' + item.avatar + ')'}" />
 				<view class="item--content">
 					<view class="author">{{item.exName || 'unknownexport'}}</view>
-					<view class="title">———{{item.exEmail|| 'unknowntitle'}}</view>
+					<view class="title">{{item.exEmail|| 'unknowntitle'}}</view>
 					<!-- <view class="author"> —— {{item.exName || 'unknownexport'}}</view> -->
 				</view>
 			</view>

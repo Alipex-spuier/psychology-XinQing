@@ -7,9 +7,10 @@
 					<view class="header-title">心 · 晴</view>
 					<view class="header-sub-title">心晴心理咨询，让心灵与晴天同行</view>
 				</view>
-				<svg t="1721113443883" class="icon search-input-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1543" width="21" height="21"><path d="M953.474215 908.234504l-152.576516-163.241391c61.92508-74.48211 95.81186-167.36973 95.81186-265.073744 0-229.294809-186.63531-415.930119-416.102133-415.930119-229.294809 0-415.930119 186.63531-415.930119 415.930119s186.63531 415.930119 415.930119 415.930119c60.032925 0 118.00168-12.55703 172.186125-37.327062 16.169326-7.396607 23.221905-26.318159 15.825298-42.315471-7.396607-16.169326-26.318159-23.221905-42.315471-15.825298-45.927768 20.813707-94.951789 31.478582-145.695952 31.478582-194.031917 0-351.94087-157.908953-351.94087-351.94087 0-194.031917 157.908953-351.94087 351.94087-351.94087 194.031917 0 351.94087 157.908953 351.94087 351.94087 0 91.339493-34.918864 177.86259-98.048043 243.743995-12.213002 12.729044-11.868974 33.026709 0.860071 45.239711 1.032085 0.860071 2.236183 1.204099 3.268268 2.064169 0.860071 1.204099 1.376113 2.752226 2.408198 3.956325l165.477574 177.00252c6.192508 6.70855 14.793214 10.148833 23.393919 10.148833 7.912649 0 15.653284-2.92424 21.845792-8.600706C964.827146 941.433227 965.515202 921.135562 953.474215 908.234504z" fill="#2c2c2c" p-id="1544"></path></svg>
-				<input class="uni-input search-input" placeholder="搜索你关心的心理方向 ~" @input="onInput"
+				<svg t="1721113443883" class="icon search-input-icon" v-if="loginType=='user'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1543" width="21" height="21"><path d="M953.474215 908.234504l-152.576516-163.241391c61.92508-74.48211 95.81186-167.36973 95.81186-265.073744 0-229.294809-186.63531-415.930119-416.102133-415.930119-229.294809 0-415.930119 186.63531-415.930119 415.930119s186.63531 415.930119 415.930119 415.930119c60.032925 0 118.00168-12.55703 172.186125-37.327062 16.169326-7.396607 23.221905-26.318159 15.825298-42.315471-7.396607-16.169326-26.318159-23.221905-42.315471-15.825298-45.927768 20.813707-94.951789 31.478582-145.695952 31.478582-194.031917 0-351.94087-157.908953-351.94087-351.94087 0-194.031917 157.908953-351.94087 351.94087-351.94087 194.031917 0 351.94087 157.908953 351.94087 351.94087 0 91.339493-34.918864 177.86259-98.048043 243.743995-12.213002 12.729044-11.868974 33.026709 0.860071 45.239711 1.032085 0.860071 2.236183 1.204099 3.268268 2.064169 0.860071 1.204099 1.376113 2.752226 2.408198 3.956325l165.477574 177.00252c6.192508 6.70855 14.793214 10.148833 23.393919 10.148833 7.912649 0 15.653284-2.92424 21.845792-8.600706C964.827146 941.433227 965.515202 921.135562 953.474215 908.234504z" fill="#2c2c2c" p-id="1544"></path></svg>
+				<input class="uni-input search-input" v-if="loginType=='user'" placeholder="搜索你关心的心理方向 ~" @input="onInput"
 					@confirm="getSearchMusic()" :focus="Focus" />
+				<view class="header-title" v-if="loginType=='expert'" style="margin-left: 70rpx;margin-top: 90rpx;color: #fff;font-weight: 100;">{{username}}专家，欢迎来到心·晴</view>
 			</view>
 		</view>
 		<swiper class="swiper" :circular="circular" :indicator-dots="indicatorDots" :autoplay="autoplay"
@@ -82,7 +83,15 @@
 		created() {
 			this.getAllMusic();
 			const res = uni.getStorageSync("res");
-			this.userId = res.data.data.userId;
+			console.log(res)
+			this.loginType=uni.getStorageSync("loginType")
+			if(this.loginType==="user"){
+				this.username=res.data.data.username
+				this.userId = res.data.data.userId;
+			}else if(this.loginType==="expert"){
+				this.username=res.data.data.exName
+				this.userId = res.data.data.exId;
+			}
 			this.authorization = res.header.authorization;
 			//this.getMusic(this.ruk);
 			this.getArtcles();
@@ -92,8 +101,15 @@
 		mounted() {
 			//this.getAllMusic();
 			const res = uni.getStorageSync("res");
-			this.userId = res.data.data.userId;
+			this.loginType=uni.getStorageSync("loginType")
 			this.authorization = res.header.authorization;
+			if(this.loginType==="user"){
+				this.username=res.data.data.username
+				this.userId = res.data.data.userId;
+			}else if(this.loginType==="expert"){
+				this.username===res.data.data.exName
+				this.userId = res.data.data.exId;
+			}
 			this.getMusic(this.ruk);
 			//this.getMusic(this.qu);
 			this.getArtcles();
@@ -103,6 +119,7 @@
 			return {
 				circular: false,
 				indicatorDots: true,
+				username:null,
 				autoplay: false,
 				interval: 2000,
 				duration: 500,
@@ -118,6 +135,7 @@
 				authorization: null,
 				navLevel: 'nav1',
 				adcode:"",
+				loginType:null,
 				city:" ",
 				temperature:null,
 				usermessage:"您有新的消息",
@@ -279,16 +297,26 @@
 				this.searchQuery = event.target.value;
 			},
 			getSearchMusic() {
+				let _this=this;
 				const encodedQuery = encodeURIComponent(this.searchQuery);
-				const url = this.$baseURL+'/music/search?pattern='+encodedQuery;
+				const url = this.$baseURL+'/api/v1/expert/indexPage';
 				uni.request({
 					url: url,
-					method: 'GET',
+					method: 'POST',
+					data:{
+						pageSize:100,
+						pageNum:1,
+						param:{
+							name:_this.searchQuery
+						}
+					},
+					header:{
+						Authorization:_this.authorization
+					},
 					success: (response) => {
 						const res = response.data;
 						uni.navigateTo({
-							url: './result/result?result=' + encodeURIComponent(JSON.stringify(res.data
-								.records))
+							url: './appointment/selectExport?result=' + encodeURIComponent(JSON.stringify(res))
 						})
 					}
 				});
@@ -301,7 +329,6 @@
 					success: (response) => {
 						const res = response.data;
 						this.adcode=res.adcode;
-						//console.log(res)
 						this.getWeather();
 					}
 				});
@@ -330,7 +357,7 @@
 						let articles = res.data;
 						// 获取随机的三个文章
 						let randomArticles = this.getRandomItems(articles, 3);
-						console.log(randomArticles)
+						// console.log(randomArticles)
 						//console.log(uni.getStorageSync("res"))
 						for(let i=0;i<3;i++){
 							this.qu[i].albumCover = randomArticles[i].artPic;

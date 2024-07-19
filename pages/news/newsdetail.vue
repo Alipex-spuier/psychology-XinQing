@@ -262,7 +262,6 @@
 							tmp.hotComment = randomArticles[i].artAuthor;
 							tmp.Content = randomArticles[i].artContent;
 							this.qu.push(tmp)
-							console.log(this.qu)
 							uni.request({
 								url:this.$baseURL+'/api/v1/expert/index/'+this.qu[i].hotComment,
 								header:{Authorization:uni.getStorageSync("res").header.authorization},

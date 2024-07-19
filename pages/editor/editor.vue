@@ -5,6 +5,10 @@
 				<edit-btns :edit="data.edit" @click="onTabClick" @submit="save"></edit-btns>
 			</template>
 		</lsj-edit>
+		<view class="title">
+			<p class="text">文章标题</p>
+			<input type="text" class="input" v-model="title" placeholder="请输入文章标题" placeholder-style="color:#c9c9c9;"/>
+		</view>
 	</view>
 </template>
 
@@ -24,7 +28,9 @@
 			return {
 				edit: null,
 				authorization: null,
-				userId: null
+				userId: null,
+				title:null,
+				artPic:null
 			}
 		},
 		methods: {
@@ -54,13 +60,22 @@
 			// 演示发布
 			// 演示发布
 			async save() {
+				if (this.title === null || this.title.trim() === '') {
+					uni.showToast({
+						title: '文章标题不能为空',
+						icon: 'none'
+					});
+				return;
+				}
+				
 				let _this = this
 				// 获取插入的图片列表
 				let imgs = await this.edit.getImages();
 				// 判断是否允许提交
 				if (!this.edit.textCount && !imgs.length) {
 					uni.showToast({
-						title: '请录入内容'
+						title: '请录入内容',
+						icon: 'none'
 					});
 					return;
 				}
@@ -86,10 +101,10 @@
 									'user': this.userId
 								},
 								success: (res) => {
-									resolve(this.$basePhotoURL + "/" + JSON.parse(res.data).data + ".jpg");
-									if (JSON.parse(res.data).code === 200) {
-										
-									} else {
+									uni.removeStorageSync("artPic")
+									resolve(this.$basePhotoURL + "/file/" + JSON.parse(res.data).data + ".jpg");
+									uni.setStorageSync("artPic",this.$basePhotoURL + "/file/" + JSON.parse(res.data).data + ".jpg")
+									if (JSON.parse(res.data).code !== 200) {
 										uni.showToast({
 											title: '发布失败：' + JSON.parse(res.data).msg,
 											icon: 'none'
@@ -110,9 +125,16 @@
 				// 替换图片
 				try {
 					const res = await this.edit.replaceImage(replaceImage);
-					// uni.navigateTo({
-					//     url: '/pages/result/articleResult?article=' + encodeURIComponent(res.html)
-					// });
+					if (!this.artPic || this.artPic.trim() === '') {
+						this.artPic = uni.getStorageSync("artPic");
+						if (!this.artPic || this.artPic.trim() === '') {
+							uni.showToast({
+								title: '文章图片不能为空',
+								icon: 'none'
+							});
+							return;
+						}
+					}
 					this.saveArticle(res.html)
 				} catch (error) {
 					console.error('Image replacement failed:', error);
@@ -136,20 +158,21 @@
 					method: "post",
 					data: {
 						artAuthor: this.userId,
-						artTitle: "文章标题信息",
+						artTitle: this.title,
 						artContent: content,
-						artPic: "123123",
+						artPic: this.artPic,
 					},
 					success: (res) => {
+						uni.showToast({
+							title: '发布成功',
+							icon:"success"
+						});
 						setTimeout(function() {
-							uni.showToast({
-								title: '发布成功',
-								icon:"success"
-							});
+							uni.navigateTo({
+								url: '/pages/index'
+							})
 						}, 2000)
-						uni.navigateTo({
-							url: '/pages/index'
-						})
+						
 					}
 				})
 			},
@@ -168,5 +191,29 @@
 </script>
 
 <style>
-
+	.title{
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-top: double 2px #828282;
+	}
+	.text{
+		position: absolute;
+		font-size: 50rpx;
+		font-style: italic;
+		font-weight: 100;
+		margin-top: 150rpx;
+	}
+	.input{
+		height: 65rpx;
+		/* line-height: 65rpx; */
+		/* padding-top: 200rpx; */
+		margin-top: 350rpx;
+		border-bottom: dashed 1px #3b3b3b;
+		position: absolute;
+		box-sizing: border-box;
+		font-size: 36rpx;
+		color: #5b5b5b;
+	}
 </style>

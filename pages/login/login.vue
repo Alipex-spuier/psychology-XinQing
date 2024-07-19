@@ -281,7 +281,7 @@
 		align-items: center;
 	}
 	.form-item{
-		margin:45rpx 0 25rpx ;
+		margin:45rpx 0 25rpx;
 	}
 	.input{
 		height: 65rpx;
