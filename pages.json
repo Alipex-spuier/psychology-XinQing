@@ -84,6 +84,13 @@
 			}
 		},
 		{
+			"path": "pages/userCent/exportProfile",
+			"style": {
+				"navigationBarTitleText": "专家资料",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/userCent/avatar",
 			"style": {
 				"navigationBarTitleText": "头像选择",

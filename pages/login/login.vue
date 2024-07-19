@@ -158,6 +158,7 @@
 			        
 			        if (index >= 0) {
 			            this.logintype = this.loginmode[index].typeid;
+						uni.setStorageSync("loginTypeid",this.loginTypeid)
 			        } else {
 			            this.logintype = ""
 			        }

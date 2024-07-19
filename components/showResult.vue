@@ -3,7 +3,7 @@
 		<view class="results--box">
 			<view class="results--item" v-for="(item, index) in lists" :key="index" @click="$emit('onResults', item)">
 				<!-- <view class="item--cover" :style="{backgroundImage: 'url(' + item.albumCover + ')'}" /> -->
-				<view class="item--cover" :style="{backgroundImage: 'url(' + item.albumCover + ')'}" />
+				<view class="item--cover" :style="{backgroundImage: 'url(' + item.avatar + ')'}" />
 				<view class="item--content">
 					<view class="author">{{item.exName || 'unknownexport'}}</view>
 					<view class="title">———{{item.exEmail|| 'unknowntitle'}}</view>

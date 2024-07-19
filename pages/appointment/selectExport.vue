@@ -28,7 +28,7 @@
 		},
 		methods: {
 			handleResultClick(item) {
-				console.log("111")
+				//console.log("111")
 				uni.navigateTo({
 					url: '../appointment/selectTime?result=' + encodeURIComponent(JSON.stringify(this.resultsArr))
 				})
