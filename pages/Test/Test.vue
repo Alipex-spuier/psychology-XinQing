@@ -94,7 +94,7 @@
 					data:{
 						pageNum: 1,
 						pageSize: 20,
-						param: {
+						param: {  
 						    belongingId:this.testNumber
 						  }
 					},
@@ -109,10 +109,10 @@
 							 this.dataObj.questions[i].score=res.data[i].testScore;
 							 this.dataObj.questions[i].children[0].content=res.data[i].testChoA;
 							 this.dataObj.questions[i].children[1].content=res.data[i].testChoB;
-							 if(res.data[i].testChoD!=='N'){ this.questions[i].children[3].content=res.data[i].testChoD;}
-							 if(res.data[i].testChoC!=='N'){this.questions[i].children[2].content=res.data[i].testChoC;}
+							 if(res.data[i].testChoD!=='N'){this.dataObj.questions[i].children[3].content=res.data[i].testChoD;}
+							 if(res.data[i].testChoC!=='N'){this.dataObj.questions[i].children[2].content=res.data[i].testChoC;}
 							 this.questions[i].score=res.data[i].testScore;
-							 this.questions[i].answer=res.data[i].testAnswer;
+							 //this.questions[i].answer=res.data[i].testAnswer;
 						}
 					},
 					fail : (response) => {

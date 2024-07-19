@@ -56,6 +56,7 @@
 	export default {
 		data() {
 			return {
+				loginTypeid:0,
 				menus1: [{
 						id: 1,
 						name: '个人资料',
@@ -103,11 +104,7 @@
 		},
 		created() {
 			const res = uni.getStorageSync("res")
-			this.username = res.data.data.username;
-			this.email = res.data.data.email;
-			this.userId = res.data.data.userId;
-			this.authorization = res.header.authorization;
-			this.avatar=res.data.data.avatar;
+			this.init(res)
 		},
 		methods: {
 			config(item) {
@@ -126,9 +123,15 @@
 				}
 			},
 			jumpToProfile() {
-				uni.navigateTo({
-					url: "/pages/userCent/userProfile"
-				})
+				if(this.loginTypeid==2){
+					uni.navigateTo({
+						url: "/pages/userCent/exportProfile"
+					})
+				}else{
+					uni.navigateTo({
+						url: "/pages/userCent/userProfile"
+					})
+				}
 			},
 			showUnfinish() {
 				uni.showToast({
@@ -189,6 +192,22 @@
 						})
 					}
 				})
+			},
+			init(res){
+				this.loginTypeid=uni.getStorageSync("loginTypeid")
+				if(this.loginTypeid==2){
+					this.username = res.data.data.exName;
+					this.email = res.data.data.exEmail;
+					this.userId = res.data.data.exId;
+					this.authorization = res.header.authorization;
+					this.avatar=res.data.data.avatar;
+				}else{
+					this.username = res.data.data.username;
+					this.email = res.data.data.email;
+					this.userId = res.data.data.userId;
+					this.authorization = res.header.authorization;
+					this.avatar=res.data.data.avatar;
+				}
 			}
 		}
 	}
