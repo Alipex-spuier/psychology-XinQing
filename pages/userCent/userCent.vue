@@ -200,7 +200,9 @@
 					this.email = res.data.data.exEmail;
 					this.userId = res.data.data.exId;
 					this.authorization = res.header.authorization;
-					this.avatar=res.data.data.avatar;
+					if(res.data.data.avatar!==undefined){
+						this.avatar=res.data.data.avatar;
+					}
 				}else{
 					this.username = res.data.data.username;
 					this.email = res.data.data.email;
