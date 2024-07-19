@@ -14,7 +14,7 @@ services:
       - db
       - redis
     volumes:
-      - ./backend/file:/file
+      - ./www/file:/file
     networks:
       - app-network
 
@@ -56,6 +56,8 @@ services:
     restart: always
     ports:
         - "8081:8081"
+    depends_on:
+      - backend-api
     volumes:
       - ./psychology.conf:/etc/nginx/conf.d/psychology.conf
       - ./www:/var/www
