@@ -164,8 +164,10 @@
 			},
 			login(){
 				if(this.loginTypeid===2){
+					uni.setStorageSync("loginType","expert")
 					this.exportLogin();
 				}else if(this.loginTypeid===1){
+					uni.setStorageSync("loginType","user")
 					this.userLogin();
 				}else{
 					uni.showToast({

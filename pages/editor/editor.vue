@@ -54,6 +54,7 @@
 			// 演示发布
 			// 演示发布
 			async save() {
+				let _this=this
 				// 获取插入的图片列表
 				let imgs = await this.edit.getImages();
 				// 判断是否允许提交
@@ -75,7 +76,7 @@
 					try {
 						const data = await new Promise((resolve, reject) => {
 							uni.uploadFile({
-								url: 'http://8.217.178.86:8080/api/v1/file/upload',
+								url: _this.$baseURL+'/api/v1/file/upload',
 								filePath: img, // 本地图片
 								name: 'file',
 								header: {
@@ -111,8 +112,11 @@
 				// 替换图片
 				try {
 					const res = await this.edit.replaceImage(replaceImage);
+					// uni.navigateTo({
+					//     url: '/pages/result/articleResult?article=' + encodeURIComponent(res.html)
+					// });
 					uni.navigateTo({
-					    url: '/pages/result/articleResult?article=' + encodeURIComponent(res.html)
+					    url: '/pages/index'
 					});
 				} catch (error) {
 					console.error('Image replacement failed:', error);

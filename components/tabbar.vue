@@ -116,7 +116,7 @@
 				</view>
 				</navigator>
 			</view>
-			<view class="itmMain" @click.stop="switchTabFunc(3, '/pages/guide')">
+			<view class="itmMain" @click.stop="switchTabFunc(3, '/pages/chat')">
 				<image class="imgse" :fade-show='false' v-if="active!=3" src="/static/tabbar/guide.png"></image>
 				<image class="imgse" :fade-show='false' v-if="active===3" src="/static/tabbar/guide_active.png"></image>
 				<text class="txtBtn" :class="{'txtBtnSel' :active==3}">实时咨询</text>
@@ -272,24 +272,31 @@ export default{
 		    });
 		},
 		toselect(){
-			let _this= this;
-			const res=uni.getStorageSync("res")
-			_this.authorization=res.header.authorization;
-			uni.request({
-				url: this.$baseURL + '/api/v1/expert/index',
-				method: 'GET',
-				header: {
-					Authorization: _this.authorization
-				},
-				success: (response) => {
-					const res = response.data;
-					this.selectres=res;
-					uni.navigateTo({
-						url: '../pages/appointment/selectExport?result=' + encodeURIComponent(JSON.stringify(this.selectres))
-					})
-					// console.log(res)
-				}
-			});
+			let userType=uni.getStorageSync("loginType")
+			if(userType==="user"){
+				let _this= this;
+				const res=uni.getStorageSync("res")
+				_this.authorization=res.header.authorization;
+				uni.request({
+					url: this.$baseURL + '/api/v1/expert/index',
+					method: 'GET',
+					header: {
+						Authorization: _this.authorization
+					},
+					success: (response) => {
+						const res = response.data;
+						this.selectres=res;
+						uni.navigateTo({
+							url: '../pages/appointment/selectExport?result=' + encodeURIComponent(JSON.stringify(this.selectres))
+						})
+						// console.log(res)
+					}
+				});
+			}else{
+				uni.navigateTo({
+					url: "../pages/editor/editor"
+				})
+			}
 		}
 	}
 }
