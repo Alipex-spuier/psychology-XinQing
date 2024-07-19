@@ -36,6 +36,8 @@ public class Expert implements Serializable {
     @Email(message = "邮箱格式不正确")
     private String exEmail;
 
+    private String avatar;
+
     private String exBio;
 
     private String exDire;

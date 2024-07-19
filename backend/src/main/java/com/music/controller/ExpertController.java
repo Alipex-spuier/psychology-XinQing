@@ -87,6 +87,7 @@ public class ExpertController {
             "\"exName\": \"test5,更新测试\",\n" +
             "\"exPassword\": \"123\",\n" +
             "\"exEmail\":\"123@qq.com\",\n" +
+            "\"avatar\": \"头像\",\n" +
             "\"exBio\":\"exBio测试\",\n" +
             "\"exDire\":\"exDire测试\",\n" +
             "\"exQualification\":\"exQualification测试\"\n" +
@@ -122,6 +123,7 @@ public class ExpertController {
                 .put("exId", newExpert.getExId())
                 .put("exName", newExpert.getExName())
                 .put("exEmail", newExpert.getExEmail())
+                .put("avatar", newExpert.getAvatar())
                 .put("exBio", newExpert.getExBio())
                 .put("exDire", newExpert.getExDire())
                 .put("exQualification", newExpert.getExQualification())

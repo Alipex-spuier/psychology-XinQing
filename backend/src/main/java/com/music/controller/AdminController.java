@@ -87,10 +87,11 @@ public class AdminController {
     }
 
     @RequiresAuthentication
-    @ApiOperation(value ="更新管理员信息,adminId必填，其他三个想改啥填啥 "+
+    @ApiOperation(value ="更新管理员信息,adminId必填，其他几个想改啥填啥 "+
             "{\"adminId\":1\n" +
             "\"adminName\":\"test6\",\n" +
             "\"adminPassword\":\"123\",\n" +
+            "\"avatar\": \"头像\",\n" +
             "\"adminEmail\":\"123@qq.com\"}"
     )
     @PutMapping("/update")
@@ -123,6 +124,7 @@ public class AdminController {
                 .put("adminId", newAdmin.getAdminId())
                 .put("adminName", newAdmin.getAdminName())
                 .put("adminEmail", newAdmin.getAdminEmail())
+                .put("avatar", newAdmin.getAvatar())
                 .put("createdTime", newAdmin.getCreatedTime())
                 .map());
     }

@@ -35,6 +35,8 @@ public class Admin implements Serializable{
     @Email(message = "邮箱格式不正确")
     private String adminEmail;
 
+    private String avatar;
+
     private Date createdTime;
 }
 
