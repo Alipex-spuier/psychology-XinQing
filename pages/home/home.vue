@@ -178,15 +178,18 @@
 				qu: [{
 					albumCover:"res[i].artPic;",
 					title:"res[i].artTitle;",
-					hotComment:"res[i].artAuthor;"
+					hotComment:"res[i].artAuthor;",
+					artId:"res[i].artId"
 				},{
 					albumCover:"res[i].artPic;",
 					title:"res[i].artTitle;",
-					hotComment:"res[i].artAuthor;"
+					hotComment:"res[i].artAuthor;",
+					artId:"res[i].artId"
 				},{
 					albumCover:"res[i].artPic;",
 					title:"res[i].artTitle;",
-					hotComment:"res[i].artAuthor;"
+					hotComment:"res[i].artAuthor;",
+					artId:"res[i].artId"
 				}]
 			}
 		},
@@ -227,7 +230,7 @@
 			itemClick(e) {
 				let clickedMusic = [e];
 				uni.navigateTo({
-					url: './result/articleResult?article=' + encodeURIComponent(JSON.stringify(clickedMusic))
+					url: './result/articleResult?article=' + encodeURIComponent(clickedMusic[0].Content)
 				})
 			},
 			redirectToInput(item) {
@@ -327,13 +330,14 @@
 						let articles = res.data;
 						// 获取随机的三个文章
 						let randomArticles = this.getRandomItems(articles, 3);
-						
+						console.log(randomArticles)
 						//console.log(uni.getStorageSync("res"))
 						for(let i=0;i<3;i++){
 							this.qu[i].albumCover = randomArticles[i].artPic;
 							this.qu[i].title = randomArticles[i].artTitle;
 							this.qu[i].hotComment = randomArticles[i].artAuthor;
 							this.qu[i].Content = randomArticles[i].artContent;
+							this.qu[i].artId=randomArticles[i].artId;
 							uni.request({
 								url:this.$baseURL+'/api/v1/expert/index/'+this.qu[i].hotComment,
 								header:{Authorization:uni.getStorageSync("res").header.authorization},

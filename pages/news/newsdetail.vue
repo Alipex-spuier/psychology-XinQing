@@ -156,7 +156,7 @@
 			itemClick(e) {
 				let clickedMusic = [e];
 				uni.navigateTo({
-					url: './result/articleResult?article=' + encodeURIComponent(JSON.stringify(clickedMusic))
+					url: './result/articleResult?article=' + encodeURIComponent(clickedMusic[0].Content)
 				})
 			},
 			redirectToInput(item) {

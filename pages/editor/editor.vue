@@ -18,7 +18,7 @@
 		created() {
 			const res = uni.getStorageSync("res")
 			this.authorization = res.header.authorization;
-			this.userId = res.data.data.userId;
+			this.userId = res.data.data.exId;
 		},
 		data() {
 			return {
@@ -54,7 +54,7 @@
 			// 演示发布
 			// 演示发布
 			async save() {
-				let _this=this
+				let _this = this
 				// 获取插入的图片列表
 				let imgs = await this.edit.getImages();
 				// 判断是否允许提交
@@ -76,7 +76,7 @@
 					try {
 						const data = await new Promise((resolve, reject) => {
 							uni.uploadFile({
-								url: _this.$baseURL+'/api/v1/file/upload',
+								url: _this.$baseURL + '/api/v1/file/upload',
 								filePath: img, // 本地图片
 								name: 'file',
 								header: {
@@ -88,9 +88,7 @@
 								success: (res) => {
 									resolve(this.$basePhotoURL + "/" + JSON.parse(res.data).data + ".jpg");
 									if (JSON.parse(res.data).code === 200) {
-										uni.showToast({
-											title: '发布成功'
-										});
+										
 									} else {
 										uni.showToast({
 											title: '发布失败：' + JSON.parse(res.data).msg,
@@ -115,9 +113,7 @@
 					// uni.navigateTo({
 					//     url: '/pages/result/articleResult?article=' + encodeURIComponent(res.html)
 					// });
-					uni.navigateTo({
-					    url: '/pages/index'
-					});
+					this.saveArticle(res.html)
 				} catch (error) {
 					console.error('Image replacement failed:', error);
 				}
@@ -131,6 +127,29 @@
 					data: {
 						name: '标签名',
 						qqGroupChatID: '标签数字',
+					}
+				})
+			},
+			saveArticle(content) {
+				uni.request({
+					url: this.$baseURL + '/api/v1/article/save',
+					method: "post",
+					data: {
+						artAuthor: this.userId,
+						artTitle: "文章标题信息",
+						artContent: content,
+						artPic: "123123",
+					},
+					success: (res) => {
+						setTimeout(function() {
+							uni.showToast({
+								title: '发布成功',
+								icon:"success"
+							});
+						}, 2000)
+						uni.navigateTo({
+							url: '/pages/index'
+						})
 					}
 				})
 			},
