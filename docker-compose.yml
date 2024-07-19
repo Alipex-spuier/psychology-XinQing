@@ -13,6 +13,8 @@ services:
     depends_on:
       - db
       - redis
+    volumes:
+      - ./backend/file:/file
     networks:
       - app-network
 
