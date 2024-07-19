@@ -8,3 +8,4 @@ sudo curl -o- https://gitee.com/boliang2190/psychology-backend/raw/main/install.
 ```
 cd psychology-backend
 sudo sh ./restart.sh
+```
