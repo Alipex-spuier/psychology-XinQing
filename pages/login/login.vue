@@ -11,7 +11,7 @@
 		</view>
 		<view class="login-form">
 			<view class="form-item">
-				<select-lay class="seclectlogintype" :value="logintype" slabel="type" svalue="typeid" 	placeholder="您的身份是" :options="loginmode" @selectitem="selectitem"></select-lay>
+				<select-lay class="seclectlogintype" :value="logintype.toString()" slabel="type" svalue="typeid" 	placeholder="您的身份是" :options="loginmode" @selectitem="selectitem"></select-lay>
 			</view>
 			<view class="form-item">
 				<input class="input account" v-model="account" type="text" placeholder="输入登录账号" placeholder-style="color:#c9c9c9;"/>
@@ -19,7 +19,7 @@
 			<view class="form-item">
 				<input class="input password" v-model="password" password type="text" placeholder="输入登录密码" placeholder-style="color:#c9c9c9;"/>
 			</view>
-			<text class="forget-pass" @click="jumpToReg">暂无账号？去注册</text>
+			<text class="forget-pass" @click="jumpToReg" v-if="loginTypeid!=2">暂无账号？去注册</text>
 			<view class="login-btns">
 				<view class="btn-view login" @click="login"><text class="btn-text">登录</text></view>
 			</view>
@@ -36,7 +36,7 @@
 				account: '',
 				password: '',
 				logintype:"user",
-				loginTypeid:1,
+				loginTypeid:0,
 				loginmode: [{
 				    type: '用户',
 				    typeid: 1
@@ -128,7 +128,6 @@
 								title: '登录失败：' + res.data.msg,
 								icon: 'none'
 							});
-							console.log(res);
 						}
 					},
 					fail: () => {
@@ -166,8 +165,13 @@
 			login(){
 				if(this.loginTypeid===2){
 					this.exportLogin();
-				}else{
+				}else if(this.loginTypeid===1){
 					this.userLogin();
+				}else{
+					uni.showToast({
+						title: '未选择身份',
+						icon: 'none'
+					});
 				}
 			}
 		}

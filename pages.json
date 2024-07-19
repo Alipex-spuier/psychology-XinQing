@@ -34,7 +34,6 @@
 				"enablePullDownRefresh": false
 			}
 		},
-
 		{
 			"path": "pages/userCent/logout",
 			"style": {

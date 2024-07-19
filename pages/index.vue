@@ -11,7 +11,7 @@
 </template>
 <script>
 	import HOMES from './home/home.vue'
-	import LIST from './list/list.vue'
+	import LIST from './news/newsdetail.vue'
 	import GUIDE from './guide/guide.vue'
 	import USERCENTER from './userCent/userCent.vue'
 	import tabBar from '../components/tabbar.vue'
