@@ -62,7 +62,7 @@ public class UserController {
             "{\"pageSize\":2,\n" +
             "\"pageNum\":1,\n}"
     )
-    @GetMapping("/indexPage")
+    @PostMapping("/indexPage")
     public Result indexPage(@RequestBody QueryPageParam query){
 
         Page<User> page = new Page();
