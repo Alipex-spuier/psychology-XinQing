@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="ui-all">
-			<view class="avatar"  @click="chooseAvatar">
+			<view class="avatar"  @click="chooseImage">
 				<view class="imgAvatar">
 					<view class="iavatar" :style="'background: url('+avatar+') no-repeat center/cover #eeeeee;'"></view>
 				</view>
@@ -48,14 +48,15 @@
 </template>
 
 <script>
+	import editBtns from '@/uni_modules/lsj-edit/components/lsj-edit/edit-btns/edit-btns.vue'
 	export default {
 		created() {
 			let expert = uni.getStorageSync("res")
-			console.log("aft")
-			this.authorization = expert.header.authorization;
-			
+			if(expert.header.authorization){
+				uni.setStorageSync("authorization",expert.header.authorization)
+			}
+			this.authorization = uni.getStorageSync("authorization");
 			this.exId = expert.data.data.exId;
-			//this.lastLogin = export.data.data.lastLogin;
 			this.createdTime = expert.data.data.createdTime;
 			if(expert.data.data.avatar!==undefined){
 				this.avatar = expert.data.data.avatar;
@@ -73,6 +74,7 @@
 				avatar: '/static/userCent/avatar.png',
 				exId: null,
 				exname: null,
+				edit: null,
 				email: null,
 				exbio: null,
 				exdire: null,
@@ -83,6 +85,10 @@
 			}
 		},
 		methods: {
+			editReady(edit) {
+				// 将富文本对象存放到当前页面，便于后续直接操作
+				this.edit = edit;
+			},
 			bindExname(e) {
 				this.exname = e.detail.value;
 			},
@@ -175,19 +181,99 @@
 					},
 					success: res => {
 						if (res.data.code == 200) {
-							uni.clearStorageSync("res")
+							uni.removeStorageSync("res")
 							res.header.authorization = _this.authorization
 							uni.setStorageSync("res", res)
 						}
 					}
 				})
 			},
-			chooseAvatar(){
-				uni.navigateTo({
-					url:"/pages/userCent/avatar"
-				})
+			chooseImage() {
+			    uni.chooseImage({
+			        success: (res) => {
+			            this.chooseAvatar(res.tempFilePaths[0]);
+			        }
+			    });
+			},
+			async chooseAvatar(img) {
+			    let _this = this;
+			    // 将所有未上传的本地图片上传到服务器并替换到编辑器
+			    const replaceImage = async (img) => {
+			        // 已上传的无需再上传
+			        if (img.indexOf('http') === 0) {
+			            return img;
+			        }
+			        // 上传并替换图片
+			        try {
+			            const data = await new Promise((resolve, reject) => {
+			                uni.uploadFile({
+			                    url: _this.$baseURL + '/api/v1/file/upload',
+			                    filePath: img, // 本地图片
+			                    name: 'file',
+			                    header: {
+			                        Authorization: _this.authorization
+			                    },
+			                    success: (res) => {
+			                        if (JSON.parse(res.data).code !== 200) {
+			                            uni.showToast({
+			                                title: '头像上传失败：' + JSON.parse(res.data).msg,
+			                                icon: 'none'
+			                            });
+			                            return reject(new Error(JSON.parse(res.data).msg));
+			                        }
+			                        const url = _this.$basePhotoURL + "/file/" + JSON.parse(res.data).data + ".jpg";
+			                        uni.removeStorageSync("exAvatar");
+			                        uni.setStorageSync("exAvatar", url);
+			                        resolve(url);
+			                    },
+			                    fail: (err) => {
+			                        reject(err);
+			                    }
+			                });
+			            });
+			            return data;
+			        } catch (error) {
+			            return img;
+			        }
+			    };
+			
+			    // 替换图片
+			    try {
+			        const newAvatar = await replaceImage(img);
+			        this.avatar = newAvatar;
+			        this.saveImg(newAvatar);
+			    } catch (error) {
+			        console.error('Image upload failed:', error);
+			    }
+			},
+			saveImg(img) {
+			    uni.request({
+			        url: this.$baseURL + '/api/v1/expert/update',
+			        method: "PUT",
+			        data: {
+			            exId: this.exId,
+			            avatar: img
+			        },
+			        header: {
+			            Authorization: this.authorization
+			        },
+			        success: (res) => {
+			            uni.showToast({
+			                title: '头像保存成功',
+			                icon: "success"
+			            });
+						console.log(res)
+						uni.removeStorageSync("res")
+						uni.setStorageSync("res",res)
+			            setTimeout(function() {
+			                uni.navigateTo({
+			                    url: '/pages/index'
+			                });
+			            }, 2000);
+			        }
+			    });
 			}
-		},
+		}
 	}
 </script>
 

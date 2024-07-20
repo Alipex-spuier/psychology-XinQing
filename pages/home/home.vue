@@ -83,7 +83,6 @@
 		created() {
 			this.getAllMusic();
 			const res = uni.getStorageSync("res");
-			console.log(res)
 			this.loginType=uni.getStorageSync("loginType")
 			if(this.loginType==="user"){
 				this.username=res.data.data.username
