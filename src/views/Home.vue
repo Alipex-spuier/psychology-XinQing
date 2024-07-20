@@ -90,7 +90,7 @@
 export default {
   data () {
     return {
-      sysName: 'VUEADMIN',
+      sysName: '心·晴 ADMIN',
       collapsed: false,
       sysUserName: '',
       form: {

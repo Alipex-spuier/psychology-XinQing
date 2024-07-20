@@ -21,7 +21,7 @@ export default new Router({
       path: '/',
       component: () => import('./views/Home.vue'),
       name: '账号管理',
-      iconCls: 'el-icon-message', // 图标样式class
+      iconCls: 'fa fa-id-card-o', // 图标样式class
       children: [
         { path: '/main', component: () => import('./views/Main.vue'), name: '主页', hidden: true },
         { path: '/table', component: () => import('./views/nav1/Table.vue'), name: '用户管理' },
@@ -32,32 +32,52 @@ export default new Router({
     {
       path: '/',
       component: () => import('./views/Home.vue'),
-      name: '导航二',
-      iconCls: 'fa fa-id-card-o',
+      name: '文章管理',
+      iconCls: 'el-icon-message', // 图标样式class
       children: [
-        { path: '/page4', component: () => import('./views/nav2/Page4.vue'), name: '页面4' },
-        { path: '/page5', component: () => import('./views/nav2/Page5.vue'), name: '页面5' }
+        { path: '/table', component: () => import('./views/nav1/Table.vue'), name: '首页资讯管理' },
+        { path: '/form', component: () => import('./views/nav1/Form.vue'), name: '专家文章管理' }
       ]
     },
     {
       path: '/',
       component: () => import('./views/Home.vue'),
-      name: '',
-      iconCls: 'fa fa-address-card',
-      leaf: true,
+      name: '工具管理',
+      iconCls: 'fa fa-bar-chart', // 图标样式class
       children: [
-        { path: '/page6', component: () => import('./views/nav3/Page6.vue'), name: '导航三' }
+        { path: '/table', component: () => import('./views/nav1/Table.vue'), name: '音乐管理' },
+        { path: '/form', component: () => import('./views/nav1/Form.vue'), name: '问卷管理' }
       ]
     },
-    {
-      path: '/',
-      component: () => import('./views/Home.vue'),
-      name: 'Charts',
-      iconCls: 'fa fa-bar-chart',
-      children: [
-        { path: '/echarts', component: () => import('./views/charts/echarts.vue'), name: 'echarts' }
-      ]
-    },
+    // {
+    //   path: '/',
+    //   component: () => import('./views/Home.vue'),
+    //   name: '导航二',
+    //   iconCls: 'fa fa-id-card-o',
+    //   children: [
+    //     { path: '/page4', component: () => import('./views/nav2/Page4.vue'), name: '页面4' },
+    //     { path: '/page5', component: () => import('./views/nav2/Page5.vue'), name: '页面5' }
+    //   ]
+    // },
+    // {
+    //   path: '/',
+    //   component: () => import('./views/Home.vue'),
+    //   name: '',
+    //   iconCls: 'fa fa-address-card',
+    //   leaf: true,
+    //   children: [
+    //     { path: '/page6', component: () => import('./views/nav3/Page6.vue'), name: '导航三' }
+    //   ]
+    // },
+    // {
+    //   path: '/',
+    //   component: () => import('./views/Home.vue'),
+    //   name: 'Charts',
+    //   iconCls: 'fa fa-bar-chart',
+    //   children: [
+    //     { path: '/echarts', component: () => import('./views/charts/echarts.vue'), name: 'echarts' }
+    //   ]
+    // },
     {
       path: '*',
       hidden: true,

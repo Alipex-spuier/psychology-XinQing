@@ -20,17 +20,23 @@
               style="width: 100%;">
       <el-table-column type="selection" width="55">
       </el-table-column>
-      <el-table-column type="index" width="60">
+      <el-table-column type="index" prop="userId" label="ID" width="60">
       </el-table-column>
-      <el-table-column prop="name" label="姓名" width="120" sortable>
+      <el-table-column prop="username" label="用户名" width="120" sortable>
       </el-table-column>
-      <el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+      <el-table-column prop="email" label="邮箱" width="100" sortable>
       </el-table-column>
-      <el-table-column prop="age" label="年龄" width="100" sortable>
+      <el-table-column prop="age" label="年龄" width="80" sortable>
       </el-table-column>
-      <el-table-column prop="birth" label="生日" width="120" sortable>
+      <el-table-column prop="avatar" label="头像地址" width="120" sortable>
       </el-table-column>
-      <el-table-column prop="addr" label="地址" min-width="180" sortable>
+      <el-table-column prop="country" label="国籍" min-width="180" sortable width="100">
+      </el-table-column>
+      <el-table-column prop="work" label="职业" min-width="180" sortable width="100">
+      </el-table-column>
+      <el-table-column prop="created" label="账号创建时间" min-width="180" sortable>
+      </el-table-column>
+      <el-table-column prop="lastLogin" label="上次登录时间" min-width="180" sortable>
       </el-table-column>
       <el-table-column label="操作" width="150">
         <template scope="scope">
@@ -175,10 +181,10 @@ export default {
       }
       this.listLoading = true
       let auth = sessionStorage.getItem('auth').replace('"', '').replace('"', '')
-      console.log(auth)
       getUserListPage(para, auth).then((res) => {
-        this.total = res.data.total
-        this.users = res.data.users
+        console.log(res)
+        this.total = res.data.data.length
+        this.users = res.data.data
         this.listLoading = false
       })
     },
