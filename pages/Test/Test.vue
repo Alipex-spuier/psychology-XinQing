@@ -41,7 +41,120 @@
                             //serial: 'C', //选项序号
                             content: '单选第四个选项' //选项内容
                         }]
-                    }]
+                    },
+					{
+					    questionId: 11,
+					    questionType: 'SINGLE',
+					    title: '这是一个单选题？',
+						score:10,
+						answer:'A',
+					    children: [{
+					        id: 'A',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'A', //选项序号
+					        content: '单选第一个选项' //选项内容
+					    }, {
+					        id: 'B',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'B', //选项序号
+					        content: '单选第二个选项' //选项内容
+					    }, {
+					        id: 'C',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'C', //选项序号
+					        content: '单选第三个选项' //选项内容
+					    },{
+					        id: 'D',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'C', //选项序号
+					        content: '单选第四个选项' //选项内容
+					    }]
+					},
+					{
+					    questionId: 11,
+					    questionType: 'SINGLE',
+					    title: '这是一个单选题？',
+						score:10,
+						answer:'A',
+					    children: [{
+					        id: 'A',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'A', //选项序号
+					        content: '单选第一个选项' //选项内容
+					    }, {
+					        id: 'B',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'B', //选项序号
+					        content: '单选第二个选项' //选项内容
+					    }, {
+					        id: 'C',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'C', //选项序号
+					        content: '单选第三个选项' //选项内容
+					    },{
+					        id: 'D',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'C', //选项序号
+					        content: '单选第四个选项' //选项内容
+					    }]
+					},
+					{
+					    questionId: 11,
+					    questionType: 'SINGLE',
+					    title: '这是一个单选题？',
+						score:10,
+						answer:'A',
+					    children: [{
+					        id: 'A',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'A', //选项序号
+					        content: '单选第一个选项' //选项内容
+					    }, {
+					        id: 'B',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'B', //选项序号
+					        content: '单选第二个选项' //选项内容
+					    }, {
+					        id: 'C',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'C', //选项序号
+					        content: '单选第三个选项' //选项内容
+					    },{
+					        id: 'D',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'C', //选项序号
+					        content: '单选第四个选项' //选项内容
+					    }]
+					},
+					{
+					    questionId: 11,
+					    questionType: 'SINGLE',
+					    title: '这是一个单选题？',
+						score:10,
+						answer:'A',
+					    children: [{
+					        id: 'A',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'A', //选项序号
+					        content: '单选第一个选项' //选项内容
+					    }, {
+					        id: 'B',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'B', //选项序号
+					        content: '单选第二个选项' //选项内容
+					    }, {
+					        id: 'C',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'C', //选项序号
+					        content: '单选第三个选项' //选项内容
+					    },{
+					        id: 'D',
+					        state: 0, //是否选中(0未选中；1:已选中)
+					        //serial: 'C', //选项序号
+					        content: '单选第四个选项' //选项内容
+					    }]
+					},
+					]
                 },
             }
         },
@@ -111,7 +224,7 @@
 							 this.dataObj.questions[i].children[1].content=res.data[i].testChoB;
 							 if(res.data[i].testChoD!=='N'){this.dataObj.questions[i].children[3].content=res.data[i].testChoD;}
 							 if(res.data[i].testChoC!=='N'){this.dataObj.questions[i].children[2].content=res.data[i].testChoC;}
-							 this.questions[i].score=res.data[i].testScore;
+							 this.dataObj.questions[i].score=res.data[i].testScore;
 							 //this.questions[i].answer=res.data[i].testAnswer;
 						}
 					},
