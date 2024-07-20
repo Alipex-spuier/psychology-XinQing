@@ -20,6 +20,7 @@
 				<input class="input password" v-model="password" password type="text" placeholder="输入登录密码" placeholder-style="color:#c9c9c9;"/>
 			</view>
 			<text class="forget-pass" @click="jumpToReg" v-if="loginTypeid!=2">暂无账号？去注册</text>
+			<text class="forget-pass" @click="jumpToReg" v-if="loginTypeid==2">暂未认证？去申请</text>
 			<view class="login-btns">
 				<view class="btn-view login" @click="login"><text class="btn-text">登录</text></view>
 			</view>
@@ -139,9 +140,24 @@
 				});
 			},
 			jumpToReg(){
-				uni.navigateTo({
-					url:"/pages/login/register"
-				})
+				if(this.loginTypeid===2){
+					uni.setStorageSync("loginType","expert")
+					
+					uni.navigateTo({
+						url:"/pages/login/exregister"
+					})
+				}else if(this.loginTypeid===1){
+					uni.setStorageSync("loginType","user")
+					
+					uni.navigateTo({
+						url:"/pages/login/register"
+					})
+				}else{
+					uni.showToast({
+						title: '未选择身份',
+						icon: 'none'
+					});
+				}
 			},
 			getAllMusic() {
 				uni.request({

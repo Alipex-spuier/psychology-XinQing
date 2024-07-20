@@ -36,6 +36,13 @@
 			}
 		},
 		{
+			"path": "pages/login/exregister",
+			"style": {
+				"navigationBarTitleText": "专家认证",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/userCent/logout",
 			"style": {
 				"navigationBarTitleText": "账号设置",
