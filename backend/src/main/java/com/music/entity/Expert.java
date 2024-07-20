@@ -44,5 +44,7 @@ public class Expert implements Serializable {
 
     private String exQualification;
 
+    private Integer checked;
+
     private Date createdTime;
 }

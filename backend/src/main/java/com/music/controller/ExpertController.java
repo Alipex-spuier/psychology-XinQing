@@ -90,6 +90,7 @@ public class ExpertController {
             "\"avatar\": \"头像\",\n" +
             "\"exBio\":\"exBio测试\",\n" +
             "\"exDire\":\"exDire测试\",\n" +
+            "\"checked\":1(0表示未通过验证，1表示通过验证),\n" +
             "\"exQualification\":\"exQualification测试\"\n" +
             "}"
     )
@@ -127,6 +128,7 @@ public class ExpertController {
                 .put("exBio", newExpert.getExBio())
                 .put("exDire", newExpert.getExDire())
                 .put("exQualification", newExpert.getExQualification())
+                .put("checked", newExpert.getChecked())
                 .put("createdTime", newExpert.getCreatedTime())
                 .map());
     }

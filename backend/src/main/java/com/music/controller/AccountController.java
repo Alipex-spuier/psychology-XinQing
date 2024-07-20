@@ -1,6 +1,7 @@
 package com.music.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.music.Utils.JwtUtils;
@@ -105,6 +106,9 @@ public class AccountController {
         if (!expert.getExPassword().equals(SecureUtil.md5(expertLoginDto.getExPassword()))) {
             return Result.fail("密码不正确");
         }
+        if (expert.getChecked()==0){
+            return Result.fail("未通过认证！");
+        }
         String jwt = jwtUtils.generateToken(expert.getExId());
         response.setHeader("Authorization", jwt);
         response.setHeader("Access-control-Expose-Headers", "Authorization");
@@ -116,6 +120,7 @@ public class AccountController {
                 .put("exBio", expert.getExBio())
                 .put("exDire", expert.getExDire())
                 .put("exQualification", expert.getExQualification())
+                .put("checked", expert.getChecked())
                 .put("createdTime", expert.getCreatedTime())
                 .map()
         );
@@ -198,10 +203,21 @@ public class AccountController {
             "{\"exName\":\"test5\",\n" +
             "\"exPassword\":\"123\",\n" +
             "\"exEmail\":\"123@qq.com\"" +
-            "这三个必须，其他属性非必须，可通过update更新}"
+            "\"exBio\":\"exBio测试\",\n" +
+            "\"exDire\":\"exDire测试\",\n" +
+            "\"exQualification\":\"exQualification测试\"\n" +
+            "这些必须，其他属性非必须，可通过update更新}"
     )
     public Result expertRegister(@Validated @RequestBody Expert expert) {
-
+        if(expert.getExBio()==null || ObjectUtil.isEmpty(expert.getExBio().replace(" ",""))){
+            return Result.fail("请填写专家简介！");
+        }
+        if(expert.getExDire()==null || ObjectUtil.isEmpty(expert.getExDire().replace(" ",""))){
+            return Result.fail("请填写主治方向！");
+        }
+        if(expert.getExQualification()==null || ObjectUtil.isEmpty(expert.getExQualification().replace(" ",""))){
+            return Result.fail("请填写专家职称！");
+        }
         String encryptedPassword = SecureUtil.md5(expert.getExPassword());
         expert.setExPassword(encryptedPassword);
         expert.setCreatedTime(new Date());
