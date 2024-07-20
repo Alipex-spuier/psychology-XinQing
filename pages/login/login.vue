@@ -83,7 +83,6 @@
 								title: '登录失败：' + res.data.msg,
 								icon: 'none'
 							});
-							console.log(res);
 						}
 					},
 					fail: () => {
@@ -105,7 +104,6 @@
 					},
 					success: res => {
 						if (res.data.code === 200) {
-							console.log(res)
 							this.getAllMusic()
 							// 登录成功处理
 							uni.showToast({

@@ -86,7 +86,6 @@
 					if (img.indexOf('http') === 0) {
 						return img;
 					}
-
 					// 上传并替换图片
 					try {
 						const data = await new Promise((resolve, reject) => {

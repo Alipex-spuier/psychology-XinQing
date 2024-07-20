@@ -35,19 +35,28 @@
 					}
 				],
 				authorization: null,
-				userId:null
+				userId:null,
+				loginType:null,
+				logoutApi:null,
+				delApi:null
 			}
 		},
 		created() {
 			const res = uni.getStorageSync("res")
+			this.loginType=uni.getStorageSync("loginType")
 			this.authorization = res.header.authorization;
 			this.userId=res.data.data.userId;
 		},
 		methods: {
 			chooseConfig(item) {
+				if (this.loginType==="user"){
+					this.logoutApi='/api/v1/account/logout'
+				}else if(this.loginType==="expert"){
+					this.logoutApi='/api/v1/account/expertLogout'
+				}
 				if (item.id == 3) {
 					uni.request({
-						url: this.$baseURL + '/api/v1/account/logout',
+						url: this.$baseURL +this.logoutApi,
 						method: 'POST',
 						header: {
 							Authorization: this.authorization
