@@ -120,6 +120,7 @@ public class AccountController {
                 .put("exBio", expert.getExBio())
                 .put("exDire", expert.getExDire())
                 .put("exQualification", expert.getExQualification())
+                .put("avatar", expert.getAvatar())
                 .put("checked", expert.getChecked())
                 .put("createdTime", expert.getCreatedTime())
                 .map()
