@@ -25,7 +25,7 @@
 									mode=""></image>
 								<view class="sinchoose" v-else></view>
 							</view>
-							<view class="bodyr">{{items.serial}}、{{items.content}}</view>
+							<view class="bodyr">{{items.id}}、{{items.content}}</view>
 						</view>
 					</view>
 				</view>
@@ -74,7 +74,8 @@
 						questionType: this.questionsAnswer[i].questionType, //每个问题类型(单选:SINGLE  多选:MULTY  简答:QUESTION)
 						questionId: this.questionsAnswer[i].questionId, //每个问题ID
 						userAnswer: '', //每个问题用户选择的答案(逗号拼接)
-						questionAnswer:'',
+						questionScore:'',
+						questionProportion:'',
 					}
 					this.formSubmitData.push(arr)
 				}
@@ -90,6 +91,8 @@
 					})
 					this.questionsAnswer[j].children[e].state = 1
 					this.formSubmitData[j].userAnswer = this.questionsAnswer[j].children[e].id
+					this.formSubmitData[j].questionScore = this.questionsAnswer[j].score
+					this.formSubmitData[j].questionProportion = this.questionsAnswer[j].children[e].proportion
 				}
 				this.countNum()
 			},
@@ -125,7 +128,7 @@
 						break
 					}
 				}
-				console.log('==========:' + JSON.stringify(this.formSubmitData))
+				//console.log('==========:' + JSON.stringify(this.formSubmitData))
 				if (num) {
 					uni.showToast({
 						title: '请完成第' + num + '题',
