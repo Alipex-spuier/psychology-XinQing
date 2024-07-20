@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-let base = ''
+let base = 'http://8.217.178.86:8080'
 
-export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data) }
+export const requestLogin = params => { return axios.post(`${base}/api/v1/account/adminLogin`, params) }
 
-export const getUserList = params => { return axios.get(`${base}/user/list`, { params: params }) }
+export const getUserList = params => { return axios.post(`${base}/api/v1/user/indexPageByName`, params) }
 
-export const getUserListPage = params => { return axios.get(`${base}/user/listpage`, { params: params }) }
+export const getUserListPage = (params, auth) => { return axios.post(`${base}/api/v1/user/indexPage`, params, { headers: { Authorization: `${auth}` } }) }
 
 export const removeUser = params => { return axios.get(`${base}/user/remove`, { params: params }) }
 

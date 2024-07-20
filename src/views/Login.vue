@@ -2,11 +2,11 @@
   <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px"
            class="demo-ruleForm login-container">
     <h3 class="title">系统登录</h3>
-    <el-form-item prop="account">
-      <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="账号"></el-input>
+    <el-form-item prop="adminName">
+      <el-input type="text" v-model="ruleForm2.adminName" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
-    <el-form-item prop="checkPass">
-      <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="密码"></el-input>
+    <el-form-item prop="adminPassword">
+      <el-input type="password" v-model="ruleForm2.adminPassword" auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
     <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
     <el-form-item style="width:100%;">
@@ -23,14 +23,14 @@ export default {
     return {
       logining: false,
       ruleForm2: {
-        account: 'admin',
-        checkPass: '123456'
+        adminName: 'admin1',
+        adminPassword: '123'
       },
       rules2: {
-        account: [
+        adminName: [
           { required: true, message: '请输入账号', trigger: 'blur' }
         ],
-        checkPass: [
+        adminPassword: [
           { required: true, message: '请输入密码', trigger: 'blur' }
         ]
       },
@@ -45,17 +45,18 @@ export default {
       this.$refs.ruleForm2.validate((valid) => {
         if (valid) {
           this.logining = true
-          var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass }
-          requestLogin(loginParams).then(data => {
+          var loginParams = { adminName: this.ruleForm2.adminName, adminPassword: this.ruleForm2.adminPassword }
+          requestLogin(loginParams).then(res => {
+            console.log(res)
             this.logining = false
-            let { msg, code, user } = data
-            if (code !== 200) {
+            if (res.data.code !== 200) {
               this.$message({
-                message: msg,
+                message: res.data.msg,
                 type: 'error'
               })
             } else {
-              sessionStorage.setItem('user', JSON.stringify(user))
+              sessionStorage.setItem('user', JSON.stringify(res.data.data))
+              sessionStorage.setItem('auth', JSON.stringify(res.headers.authorization))
               this.$router.push({ path: '/table' })
             }
           })

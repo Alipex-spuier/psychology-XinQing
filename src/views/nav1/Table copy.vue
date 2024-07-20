@@ -116,7 +116,6 @@ export default {
       filters: {
         name: ''
       },
-      pageSize: 20,
       users: [],
       total: 0,
       page: 1,
@@ -170,13 +169,11 @@ export default {
     // 获取用户列表
     getUsers () {
       let para = {
-        pageSize: this.pageSize,
-        pageNum: this.page
+        page: this.page,
+        name: this.filters.name
       }
       this.listLoading = true
-      let auth = sessionStorage.getItem('auth').replace('"', '').replace('"', '')
-      console.log(auth)
-      getUserListPage(para, auth).then((res) => {
+      getUserListPage(para).then((res) => {
         this.total = res.data.total
         this.users = res.data.users
         this.listLoading = false
