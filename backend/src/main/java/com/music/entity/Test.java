@@ -43,12 +43,12 @@ public class Test implements Serializable {
 
     private String testChoD;
 
-    private Integer testProportionA;
+    private Double testProportionA;
 
-    private Integer testProportionB;
+    private Double testProportionB;
 
-    private Integer testProportionC;
+    private Double testProportionC;
 
-    private Integer testProportionD;
+    private Double testProportionD;
 
 }
