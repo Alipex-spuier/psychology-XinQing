@@ -1,5 +1,6 @@
 # vue-admin
 
+node version :10.24.1
 ## Project setup
 ```
 npm install
