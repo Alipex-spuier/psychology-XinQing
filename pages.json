@@ -13,6 +13,7 @@
 		// 		"navigationBarTitleText": "心晴"
 		// 	}
 		// },
+
 		{
 			"path": "pages/login/index",
 			"style": {
@@ -137,6 +138,18 @@
 			"path": "pages/editor/editor",
 			"style": {
 				"navigationBarTitleText": "文章编辑"
+			}
+		},
+		{
+			"path": "pages/chat/chatList",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/chat/chatExpert",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		}
 	],

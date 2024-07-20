@@ -165,8 +165,10 @@
 			},
 			login(){
 				if(this.loginTypeid===2){
+					uni.setStorageSync("loginType","expert")
 					this.exportLogin();
 				}else if(this.loginTypeid===1){
+					uni.setStorageSync("loginType","user")
 					this.userLogin();
 				}else{
 					uni.showToast({
@@ -279,7 +281,7 @@
 		align-items: center;
 	}
 	.form-item{
-		margin:45rpx 0 25rpx ;
+		margin:45rpx 0 25rpx;
 	}
 	.input{
 		height: 65rpx;

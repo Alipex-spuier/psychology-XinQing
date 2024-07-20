@@ -2,10 +2,10 @@
 	<view class="container">
 		<view class="ui-all">
 			<view class="avatar"  @click="chooseAvatar">
-				<view class="imgAvatar"  @click="chooseAvatar">
-					<view class="iavatar" :style="'background: url('+avatar+') no-repeat center/cover #eeeeee;'"  @click="chooseAvatar"></view>
+				<view class="imgAvatar">
+					<view class="iavatar" :style="'background: url('+avatar+') no-repeat center/cover #eeeeee;'"></view>
 				</view>
-				<text  @click="chooseAvatar">修改头像111111</text>
+				<text>修改头像</text>
 			</view>
 			<view class="ui-list">
 				<text>用户ID</text>
@@ -57,8 +57,9 @@
 			this.exId = expert.data.data.exId;
 			//this.lastLogin = export.data.data.lastLogin;
 			this.createdTime = expert.data.data.createdTime;
-			this.avatar = expert.data.data.avatar;
-			console.log(expert)
+			if(expert.data.data.avatar!==undefined){
+				this.avatar = expert.data.data.avatar;
+			}
 			this.email = expert.data.data.exEmail;
 			this.exname = expert.data.data.exName;
 			
@@ -221,6 +222,7 @@
 					width: 100%;
 					height: 100%;
 					display: block;
+					z-index: 999;
 				}
 			}
 
