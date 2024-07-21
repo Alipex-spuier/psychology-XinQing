@@ -57,7 +57,7 @@ export default {
             } else {
               sessionStorage.setItem('user', JSON.stringify(res.data.data))
               sessionStorage.setItem('auth', JSON.stringify(res.headers.authorization))
-              this.$router.push({ path: '/table' })
+              this.$router.push({ path: '/user' })
             }
           })
         } else {

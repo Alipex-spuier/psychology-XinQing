@@ -16,4 +16,4 @@ export const batchRemoveUser = params => { return axios.get(`${base}/user/batchr
 
 export const editUser = (params, auth) => { return axios.put(`${base}/api/v1/user/update`, params, { headers: { Authorization: `${auth}` } }) }
 
-export const addUser = params => { return axios.get(`${base}/user/add`, { params: params }) }
+export const addUser = (params, auth) => { return axios.post(`${base}/api/v1/user/save`, params, { headers: { Authorization: `${auth}` } }) }

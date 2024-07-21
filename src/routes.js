@@ -24,8 +24,8 @@ export default new Router({
       iconCls: 'fa fa-id-card-o', // 图标样式class
       children: [
         { path: '/main', component: () => import('./views/Main.vue'), name: '主页', hidden: true },
-        { path: '/table', component: () => import('./views/nav1/Table.vue'), name: '用户管理' },
-        { path: '/form', component: () => import('./views/nav1/Form.vue'), name: '专家管理' }
+        { path: '/user', component: () => import('./views/nav1/users.vue'), name: '用户管理' },
+        { path: '/expert', component: () => import('./views/nav1/expert.vue'), name: '专家管理' }
         // { path: '/user', component: () => import('./views/nav1/user.vue'), name: '列表' }
       ]
     },
