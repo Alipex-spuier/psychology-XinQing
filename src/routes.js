@@ -29,26 +29,26 @@ export default new Router({
         // { path: '/user', component: () => import('./views/nav1/user.vue'), name: '列表' }
       ]
     },
-    {
-      path: '/',
-      component: () => import('./views/Home.vue'),
-      name: '文章管理',
-      iconCls: 'el-icon-message', // 图标样式class
-      children: [
-        { path: '/table', component: () => import('./views/nav1/Table.vue'), name: '首页资讯管理' },
-        { path: '/form', component: () => import('./views/nav1/Form.vue'), name: '专家文章管理' }
-      ]
-    },
-    {
-      path: '/',
-      component: () => import('./views/Home.vue'),
-      name: '工具管理',
-      iconCls: 'fa fa-bar-chart', // 图标样式class
-      children: [
-        { path: '/table', component: () => import('./views/nav1/Table.vue'), name: '音乐管理' },
-        { path: '/form', component: () => import('./views/nav1/Form.vue'), name: '问卷管理' }
-      ]
-    },
+    // {
+    //   path: '/',
+    //   component: () => import('./views/Home.vue'),
+    //   name: '文章管理',
+    //   iconCls: 'el-icon-message', // 图标样式class
+    //   children: [
+    //     { path: '/table', component: () => import('./views/nav1/Table.vue'), name: '首页资讯管理' },
+    //     { path: '/form', component: () => import('./views/nav1/Form.vue'), name: '专家文章管理' }
+    //   ]
+    // },
+    // {
+    //   path: '/',
+    //   component: () => import('./views/Home.vue'),
+    //   name: '工具管理',
+    //   iconCls: 'fa fa-bar-chart', // 图标样式class
+    //   children: [
+    //     { path: '/table', component: () => import('./views/nav1/Table.vue'), name: '音乐管理' },
+    //     { path: '/form', component: () => import('./views/nav1/Form.vue'), name: '问卷管理' }
+    //   ]
+    // },
     // {
     //   path: '/',
     //   component: () => import('./views/Home.vue'),
