@@ -26,6 +26,10 @@ public class Result implements Serializable {
         return succ(200,msg,data,total);
     }
 
+    public static Result succ(int code, String msg, Object data) {
+        return succ(code,msg,data,0);
+    }
+
     public static Result succ(int code, String msg, Object data,long total) {
         Result r = new Result();
         r.setCode(code);
@@ -51,6 +55,11 @@ public class Result implements Serializable {
     public static Result fail(String msg, Object data, long total) {
 
         return fail(400,msg,data,total);
+    }
+
+    public static Result fail(int code,String msg, Object data) {
+
+        return fail(code,msg,data,0);
     }
 
     public static Result fail(int code, String msg, Object data,long total) {

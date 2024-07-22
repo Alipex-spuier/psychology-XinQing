@@ -70,7 +70,7 @@ public class ArticleController {
         page.setSize(query.getPageSize());
 
         IPage result = articleService.page(page);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }
 
     @PostMapping("/indexPageByTitle")
@@ -96,7 +96,7 @@ public class ArticleController {
         lambdaQueryWrapper.like(Article::getArtTitle,name);
 
         IPage result = articleService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     @ApiOperation(value = "通过artAuthor分页查询数据库中的资讯文章 "+
@@ -122,7 +122,7 @@ public class ArticleController {
         lambdaQueryWrapper.like(Article::getArtAuthor,name);
 
         IPage result = articleService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     @ApiOperation(value ="更新资讯文章信息,artId必填，根据artId来确定改哪个，其他几个想改啥填啥 "+

@@ -71,7 +71,7 @@ public class CommentController {
         page.setSize(query.getPageSize());
 
         IPage result = commentService.page(page);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     @RequiresAuthentication
@@ -99,7 +99,7 @@ public class CommentController {
         lambdaQueryWrapper.eq(Comment::getUserId,id);
 
         IPage result = commentService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     @RequiresAuthentication
@@ -127,7 +127,7 @@ public class CommentController {
         lambdaQueryWrapper.eq(Comment::getArtId,id);
 
         IPage result = commentService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     @RequiresAuthentication

@@ -72,7 +72,7 @@ public class TestResultController {
         page.setSize(query.getPageSize());
 
         IPage result = testResultService.page(page);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     //@RequiresAuthentication
@@ -100,7 +100,7 @@ public class TestResultController {
         lambdaQueryWrapper.eq(TestResult::getUserId,userId);
 
         IPage result = testResultService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     //@RequiresAuthentication

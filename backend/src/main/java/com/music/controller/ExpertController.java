@@ -54,6 +54,21 @@ public class ExpertController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="分页查询数据库中的专家 "+
+            "{\"pageSize\":2,\n" +
+            "\"pageNum\":1}"
+    )
+    @PostMapping("/indexPage")
+    public Result indexPage(@RequestBody QueryPageParam query){
+        Page<Expert> page = new Page();
+        page.setCurrent(query.getPageNum());
+        page.setSize(query.getPageSize());
+
+        IPage result = expertService.page(page);
+        return Result.succ(result.getRecords(),result.getTotal());
+    }
+
+    @RequiresAuthentication
     @ApiOperation(value ="通过名字（模糊查询）分页查询数据库中的专家 "+
             "{\"pageSize\":2,\n" +
             "\"pageNum\":1,\n" +
@@ -61,8 +76,8 @@ public class ExpertController {
             "    \"name\":\"te\"\n" +
             "}}"
     )
-    @PostMapping("/indexPage")
-    public Result indexPage(@RequestBody QueryPageParam query){
+    @PostMapping("/indexPageByName")
+    public Result indexPageByName(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
         String name = (String)param.get("name");
 
@@ -78,7 +93,7 @@ public class ExpertController {
         lambdaQueryWrapper.like(Expert::getExName,name);
 
         IPage result = expertService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }
 
     @RequiresAuthentication

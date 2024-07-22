@@ -61,7 +61,7 @@ public class TestController {
         page.setSize(query.getPageSize());
 
         IPage result = testService.page(page);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     //@RequiresAuthentication
@@ -89,7 +89,7 @@ public class TestController {
         lambdaQueryWrapper.like(Test::getTestContent,word).or().like(Test::getTestName,word);
 
         IPage result = testService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     //@RequiresAuthentication
@@ -116,7 +116,7 @@ public class TestController {
         lambdaQueryWrapper.eq(Test::getBelongingId,belongingId);
 
         IPage result = testService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     //@RequiresAuthentication
@@ -143,7 +143,7 @@ public class TestController {
         lambdaQueryWrapper.like(Test::getTestName,name);
 
         IPage result = testService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     //@RequiresAuthentication
@@ -170,7 +170,7 @@ public class TestController {
         lambdaQueryWrapper.like(Test::getTestContent,content);
 
         IPage result = testService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     //@RequiresAuthentication

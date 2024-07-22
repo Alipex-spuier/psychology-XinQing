@@ -70,7 +70,7 @@ public class UserController {
         page.setSize(query.getPageSize());
 
         IPage result = userService.page(page);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     @RequiresAuthentication
@@ -98,7 +98,7 @@ public class UserController {
         }
 
         IPage result = userService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(), result.getTotal());
     }
 
     @RequiresAuthentication
