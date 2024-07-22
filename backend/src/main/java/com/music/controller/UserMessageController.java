@@ -65,7 +65,7 @@ public class UserMessageController {
 
         IPage result = userMessageService.page(page);
 
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }//分页模糊查询显示
 
     @ApiOperation(value = "用于根据userId的分页查询（查询一个用户的所有message）"+
@@ -94,7 +94,7 @@ public class UserMessageController {
         lambdaQueryWrapper.like(UserMessage::getUserId,userId);
 
         IPage result = userMessageService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }//根据userId分页模糊查询显示
     @ApiOperation(value = "用于根据adminId的分页查询（查询一个管理员的所有message）"+
             "   \"pageSize\":2,\n" +
@@ -123,7 +123,7 @@ public class UserMessageController {
 
         IPage result = userMessageService.pageCC(page,lambdaQueryWrapper);
 
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }//根据adminId分页模糊查询显示
     @ApiOperation(value = "用于删除一条记录"+
             "\"mesId\": *")

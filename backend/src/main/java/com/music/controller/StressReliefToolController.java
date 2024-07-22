@@ -49,7 +49,7 @@ public class StressReliefToolController {
         page.setCurrent(queryPageParam.getPageNum());
 
         IPage<StressReliefTool> result = stressReliefToolService.pageCC(page,null);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }
     @ApiOperation(value = "用于根据id更新一条记录 id和toolName是必须的"+
             "    \"id\":1,\n" +

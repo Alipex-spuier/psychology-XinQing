@@ -80,7 +80,7 @@ public class AppointmentController {
 
         IPage result = appointmentService.page(page);
 
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }//分页模糊查询显示
     @ApiOperation(value = "用于根据userId搜索所有预约记录（已分页） "+
             "    \"pageSize\":1,\n" +
@@ -109,7 +109,7 @@ public class AppointmentController {
 
         IPage result = appointmentService.pageCC(page,lambdaQueryWrapper);
 
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }//根据userId分页模糊查询显示
     @ApiOperation(value = "用于根据expertId搜索所有预约记录（已分页） "+
             "    \"pageSize\":1,\n" +
@@ -138,7 +138,7 @@ public class AppointmentController {
 
         IPage result = appointmentService.pageCC(page,lambdaQueryWrapper);
 
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }//根据expertId分页模糊查询显示
     @ApiOperation(value = "用于删除一条预约记录 apt对应的consultationLog也会随之删除"+
             "    \"aptId\":1" )

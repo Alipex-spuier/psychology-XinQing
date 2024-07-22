@@ -64,7 +64,7 @@ public class ConsultationLogController {
         page.setSize(queryPageParam.getPageSize());
 
         IPage<ConsultationLog> result = consultationLogService.page(page);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }//分页查询
 
     @ApiOperation(value = "用于从起始时间到当前时间的记录查询（已做分页处理） "+
@@ -89,7 +89,7 @@ public class ConsultationLogController {
         lambdaQueryWrapper.ge(ConsultationLog::getLogTime,logTime);
 
         IPage<ConsultationLog> result = consultationLogService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }//根据起始时间分页查询
     @ApiOperation(value = "用于根据时间范围查询记录（已做分页处理） "+
             " \"pageSize\":2,\n" +
@@ -116,7 +116,7 @@ public class ConsultationLogController {
         lambdaQueryWrapper.between(ConsultationLog::getLogTime,startTime,endTime);
 
         IPage<ConsultationLog> result = consultationLogService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }//分页查询
 
     @ApiOperation(value = "用于增加记录 logTime要是没传后端会自动赋当前时间"+
@@ -133,7 +133,6 @@ public class ConsultationLogController {
             consultationLog.setLogTime(new Date().getTime());
         if(ObjectUtil.isEmpty(consultationLog.getLogContent()))
             return  Result.fail("请输入内容");
-
         if(!consultationLogService.save(consultationLog))
             return Result.fail("保存失败");
         return Result.succ(consultationLogService.getById(consultationLog.getLogId()));
