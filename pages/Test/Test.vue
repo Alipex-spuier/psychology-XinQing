@@ -10,7 +10,7 @@
             return {
 				userId:'',
 				sumScore:0,
-				result:"您的得分为：",
+				result:"您的得分为:",
                 testNumber: 1,
                 dataObj: {
                     pkId: '1', //问卷ID
@@ -39,9 +39,19 @@
 				for(let i=0;i<e.userAnswerList.length;i++){
 					_this.sumScore+=e.userAnswerList[i].questionScore * e.userAnswerList[i].questionProportion
 				}
-				_this.result=_this.result + _this.sumScore
-				console.log(_this.result)
+				this.result=_this.sumScore
+				// _this.result=_this.result + _this.sumScore
+				// if(this.sumScore>=80)
+				// 	_this.result=_this.result + ',程度为重度'
+				// else if(this.sumScore>=60)
+				// 	_this.result=_this.result + ',程度为中度'
+				// else 
+				// 	_this.result=_this.result + ',程度为轻度'
+				// console.log(_this.result)
     //             console.log('提交回调信息：' + JSON.stringify(e));
+	
+	
+	
 				uni.request({
 					url:this.$baseURL+'/api/v1/testResult/save',
 					method:'POST',
@@ -54,11 +64,12 @@
 				})
 				uni.showModal({
 					title: '答题完毕',
-					content: _this.result+" 是否前往指数分析",
+					content:"您的得分为:"+_this.result+" 是否前往指数分析",
 					success: function(res) {
 						if (res.confirm) {
 							uni.navigateTo({
-								url:'/pages/index'
+								url:'/pages/score/score',
+								//url: '/pages/score/score?score=' + encodeURIComponent(this.sumScore), // 将得分编码
 							})
 							} else {
 							uni.navigateTo({
