@@ -12,6 +12,7 @@
 				sumScore:0,
 				result:"您的得分为:",
                 testNumber: 1,
+				degree:null,
                 dataObj: {
                     pkId: '1', //问卷ID
                     title: '抑郁指数测试', //问卷标题
@@ -41,17 +42,14 @@
 				}
 				this.result=_this.sumScore
 				// _this.result=_this.result + _this.sumScore
-				// if(this.sumScore>=80)
-				// 	_this.result=_this.result + ',程度为重度'
-				// else if(this.sumScore>=60)
-				// 	_this.result=_this.result + ',程度为中度'
-				// else 
-				// 	_this.result=_this.result + ',程度为轻度'
+				if(this.sumScore>=80)
+					_this.degree=',程度为重度,'
+				else if(this.sumScore>=60)
+					_this.degree=',程度为中度,'
+				else 
+					_this.degree=',程度为轻度,'
 				// console.log(_this.result)
     //             console.log('提交回调信息：' + JSON.stringify(e));
-	
-	
-	
 				uni.request({
 					url:this.$baseURL+'/api/v1/testResult/save',
 					method:'POST',
@@ -64,7 +62,7 @@
 				})
 				uni.showModal({
 					title: '答题完毕',
-					content:"您的得分为:"+_this.result+" 是否前往指数分析",
+					content:"您的得分为:"+_this.result+_this.degree+" 是否前往指数分析",
 					success: function(res) {
 						if (res.confirm) {
 							uni.navigateTo({
