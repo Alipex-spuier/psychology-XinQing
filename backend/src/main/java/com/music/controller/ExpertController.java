@@ -69,6 +69,44 @@ public class ExpertController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value ="分页查询数据库中未审核的专家 "+
+            "{\"pageSize\":2,\n" +
+            "\"pageNum\":1}"
+    )
+    @PostMapping("/indexPageCheck0")
+    public Result indexPageCheck0(@RequestBody QueryPageParam query){
+
+        Page<Expert> page = new Page();
+        page.setCurrent(query.getPageNum());
+        page.setSize(query.getPageSize());
+
+        LambdaQueryWrapper<Expert> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(Expert::getChecked,"0");
+
+        IPage result = expertService.pageCC(page,lambdaQueryWrapper);
+        return Result.succ(result.getRecords(),result.getTotal());
+    }
+
+    @RequiresAuthentication
+    @ApiOperation(value ="分页查询数据库中已审核的专家 "+
+            "{\"pageSize\":2,\n" +
+            "\"pageNum\":1}"
+    )
+    @PostMapping("/indexPageCheck1")
+    public Result indexPageCheck1(@RequestBody QueryPageParam query){
+
+        Page<Expert> page = new Page();
+        page.setCurrent(query.getPageNum());
+        page.setSize(query.getPageSize());
+
+        LambdaQueryWrapper<Expert> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(Expert::getChecked,"1");
+
+        IPage result = expertService.pageCC(page,lambdaQueryWrapper);
+        return Result.succ(result.getRecords(),result.getTotal());
+    }
+
+    @RequiresAuthentication
     @ApiOperation(value ="通过名字（模糊查询）分页查询数据库中的专家 "+
             "{\"pageSize\":2,\n" +
             "\"pageNum\":1,\n" +
