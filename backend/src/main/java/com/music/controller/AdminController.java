@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.music.common.lang.PageResult;
 import com.music.common.lang.Result;
 import com.music.common.page.QueryPageParam;
 import com.music.entity.Admin;
@@ -83,7 +84,7 @@ public class AdminController {
         lambdaQueryWrapper.like(Admin::getAdminName,name);
 
         IPage result = adminService.pageCC(page,lambdaQueryWrapper);
-        return Result.succ(result.getRecords());
+        return Result.succ(result.getRecords(),result.getTotal());
     }
 
     @RequiresAuthentication
