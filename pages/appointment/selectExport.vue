@@ -17,7 +17,7 @@
 		},
 		onLoad(options) {//反序列化
 			this.resultsArr = JSON.parse(decodeURIComponent(options.result)).data;//解码
-			console.log(options.result)
+			//console.log(options.result)
 			
 			uni.setNavigationBarTitle({
 				title: "专家列表"
@@ -29,7 +29,7 @@
 		methods: {
 			handleResultClick(item) {
 				uni.navigateTo({
-					url: '../appointment/selectTime?result=' + encodeURIComponent(JSON.stringify(this.resultsArr))
+					url: '../appointment/selectTime?result=' + encodeURIComponent(JSON.stringify(item))
 				})
 			}
 		}

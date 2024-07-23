@@ -416,7 +416,7 @@
 						
 						//response.sort((a, b) => a.mesTime - b.mesTime);
 						const res = response.data.data;
-						console.log(res)
+						//console.log(res)
 						res.sort((a, b) => a.mesTime - b.mesTime);
 							this.usermessage=res[0].mesContent;
 								if(this.isWindowVisialbe==true){

@@ -160,6 +160,7 @@
 		},
 		onLoad(options) {
 			this.result = JSON.parse(decodeURIComponent(options.result));
+			console.log(this.result)
 		},
 		methods: {
 			initOnload() {
@@ -329,7 +330,7 @@
 						end: `${this.selectDate} ${item.end}:00`,
 					}
 				}
-				//console.log(this.orderTimeArr)
+				
 			},
 			handleChange() {
 				this.timeQuanBegin > this.timeQuanEnd && ([this.timeQuanBegin, this.timeQuanEnd] = [this.timeQuanEnd, this
@@ -345,7 +346,8 @@
 					})
 					return
 				}
-				//console.log(this.orderTimeArr)
+				
+				
 				if (this.isMultiple) {
 					if (this.isQuantum) {
 						this.$emit('change', this.orderTimeArr)
@@ -362,8 +364,35 @@
 					this.$emit('change', this.orderDateTime)
 					//all time
 					const timestamp = dateToTimestamp(this.orderDateTime);
+					this.createAppointment(timestamp)
+					console.log(timestamp)
 				}
 
+			},
+			createAppointment(timestamp){
+				uni.request({
+					url:this.$baseURL+'/api/v1/appointment/appoint',
+					method:'POST',
+					header:{Authorization:uni.getStorageSync("res").header.authorization},
+					data:{
+						userId:uni.getStorageSync("res").data.data.userId,
+						expertId:this.result.exId,
+						aptTime:timestamp
+					},
+					success: (response) => {
+						//const res = response.data;
+						uni.showToast({
+										title: '预约成功',
+										icon: 'success',    //将值设置为 success 或者 ''
+										duration: 1557   //持续时间为 2秒
+									})
+						setTimeout(function() {
+							uni.navigateTo({
+								url: '/pages/index'
+							})
+						}, 2000)
+					}
+				})
 			}
 		}
 	}
