@@ -96,6 +96,7 @@
 			this.getArtcles();
 			//this.getMusic(this.qu);
 			this.getLocation();
+			this.messageWindow()
 		},
 		mounted() {
 			//this.getAllMusic();
@@ -399,28 +400,32 @@
 			},
 			messageWindow(){
 				uni.request({
-					url: this.$baseURL + '/api/v1/userMessage/indexPage/user/'+this.userId,
+					url: this.$baseURL + '/api/v1/userMessage/indexPageByUserId',
 					method: 'POST',
+					header:{Authorization:uni.getStorageSync("res").header.authorization},
 					data:{
-						  "pageNum": 1,
-						  "pageSize": 1
+						 pageSize:this.pageSize, 
+						 pageNum:this.pageNum, 
+						 param:{ userId: this.userId }
 					},
 					success: (response) => {
-						responseData.sort((a, b) => a.mesTime - b.mesTime);
-						const res = response.data;
-						this.usermessage=res[0].mesContent;
-							uni.showModal({
-							title: '用户消息通知',
-							content:this.usermessage,
-							//content: '您的预约已成功',
-							success: function(res) {
-							if (res.confirm) {
-								console.log('祝您预约顺利(●·◡·●)')
-							} else {
-								console.log('预约失败┭┮﹏┭┮')
+						
+						//response.sort((a, b) => a.mesTime - b.mesTime);
+						const res = response.data.data;
+						console.log(res)
+							this.usermessage=res[0].mesContent;
+								uni.showModal({
+								title: '用户消息通知',
+								content:this.usermessage,
+								//content: '您的预约已成功',
+								success: function(res) {
+								if (res.confirm) {
+									console.log('祝您预约顺利(●·◡·●)')
+								} else {
+									console.log('预约失败┭┮﹏┭┮')
+										}
 									}
-								}
-							})
+								})
 						}
 					})
 				
