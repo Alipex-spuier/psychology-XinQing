@@ -168,30 +168,10 @@
 				})
 			},
 			toHis() {
-				uni.request({
-					url: this.$baseURL + '/history/' + this.userId,
-					method: "GET",
-					header: {
-						Authorization: this.authorization
-					},
-					success: res => {
-						const response = res.data.data.records;
-						const allMusicTmp = uni.getStorageSync("allMusic").data.records;
-						let history = []
-						for (let j = 0; j < response.length; j++) {
-							for (let i = 0; i < allMusicTmp.length; i++) {
-								if (allMusicTmp[i].recommendId === response[j].musicId) {
-									history[j] = allMusicTmp[i];
-									break
-								}
-							}
-						}
-						uni.navigateTo({
-							url: './result/result?result=' + encodeURIComponent(JSON.stringify(
-								history))
-						})
-					}
+				uni.navigateTo({
+					url:'/pages/history/history'
 				})
+		
 			},
 			init(res){
 				this.loginTypeid=uni.getStorageSync("loginTypeid")

@@ -2,21 +2,22 @@
 	<view>
 		<view class="header">
 			<view class="header_body">
-				<view>36</view>
-				<view>我的账户</view>
+				<view>共{{resultsArr.length}}条记录</view>
+				<view>我的预约</view>
 			</view>
 		</view>
 
 		<view class="record">预约记录</view>
 
 		<view class="main_body">
-			<view class="item" v-for="item,index in 20">
+			<view  class="item" v-for="(item,resultsArr) in resultsArr" :key="index" @tap="redirectToInput(item)">
+			<!-- <view class="item" v-for="item,index in 20"> -->
 				<view>
-					<text>提现成功</text>
-					<text>2024/02/09 07:58</text>
+					<text>第{{(resultsArr+1) || 'unknownerror'}}条记录</text>
+					<text>{{item.aptTime.allDate || 'unknownerror'}} {{item.aptTime.hour || 'unknownerror'}}</text>
 				</view>
 				<view>
-					+30
+					预约专家:{{item.expertId || 'unknownerror'}}
 				</view>
 			</view>
 		</view>
@@ -36,14 +37,28 @@
 </template>
 
 <script>
+	import {
+		initData,
+		initTime,
+		timeStamp,
+		currentTime,
+		dateToTimestamp
+	} from '@/utils/date.js'
 	export default {
 		name: "pointsMallDetails",
 		created() {
 			this.loginType = uni.getStorageSync("loginType");
+			this.userId = uni.getStorageSync("res").data.data.userId;
+			this.getResult();
 		},
 		data() {
 			return {
+				userId:null,
 				loginType:null,
+				pageSize:20,
+				pageNum:1,
+				resultsArr: [],
+				tmpName:" "
 			}
 		},
 
@@ -54,6 +69,52 @@
 					url: '/pages/index'
 				})
 				
+			},
+			getResult(){
+				//console.log("11")
+				uni.request({
+					url:this.$baseURL+'/api/v1/appointment/indexPageByUserId',
+					method:'POST',
+					header:{Authorization:uni.getStorageSync("res").header.authorization},
+					data:{
+						pageSize:this.pageSize, 
+						pageNum:this.pageNum, 
+						param:{ 
+							userId:this.userId
+						}
+					},
+					success: (response) => {
+						const res = response.data;
+						if (Array.isArray(res.data)) {
+						    // 使用 sort() 方法进行排序
+						    res.data.sort((a, b) => b.aptTime - a.aptTime);
+						    // 打印排序后的数据
+							this.getExpertName(res)
+						//this.resultsArr=res.data;
+						} else {
+						    console.error('Response data is not an array');
+						}
+						//console.log(resultsArr);
+					}
+				})
+			},
+			getExpertName(res){
+				let _this=this
+				for(let i=0;i<res.data.length;i++){
+				uni.request({
+					url:this.$baseURL+'/api/v1/expert/index/'+res.data[i].expertId,
+					method:'POST',
+					header:{Authorization:uni.getStorageSync("res").header.authorization},
+					
+					success: (response) => {
+						
+							res.data[i].aptTime=timeStamp(res.data[i].aptTime,true);
+							res.data[i].expertId=response.data.data.exName
+						
+						_this.resultsArr=res.data
+					}
+				})
+				}
 			}
 		},
 	}
