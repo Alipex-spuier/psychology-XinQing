@@ -13,13 +13,13 @@
 		// 		"navigationBarTitleText": "心晴"
 		// 	}
 		// },
-		{
-			"path" : "pages/history/history",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
-			}
-		},
+		// {
+		// 	"path" : "pages/history/history",
+		// 	"style" : 
+		// 	{
+		// 		"navigationBarTitleText" : ""
+		// 	}
+		// },
 		{
 			"path": "pages/login/index",
 			"style": {
