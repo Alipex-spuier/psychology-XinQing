@@ -266,29 +266,32 @@
 					url: './Test/Skip' 
 				})
 				} else if (item.class == "nav4-color") {//指数分析
-					uni.request({
-						url: this.$baseURL+'/history/'+this.userId,
-						method: "GET",
-						header: {
-							Authorization: this.authorization
-						},
-						success: res => {
-							const response = res.data.data.records;
-							const allMusicTmp=uni.getStorageSync("allMusic").data.records;
-							let history=[]
-							for(let j=0;j<response.length;j++){
-								for(let i =0;i<allMusicTmp.length;i++){
-									if(allMusicTmp[i].recommendId===response[j].musicId){
-										history[j]=allMusicTmp[i];
-										break
-									}
-								}
-							}
-							uni.navigateTo({
-								url: './result/result?result=' + encodeURIComponent(JSON.stringify(history))
-							})
-						}
+					uni.navigateTo({
+						url: './score/score' 
 					})
+					// uni.request({
+					// 	url: this.$baseURL+'/history/'+this.userId,
+					// 	method: "GET",
+					// 	header: {
+					// 		Authorization: this.authorization
+					// 	},
+					// 	success: res => {
+					// 		const response = res.data.data.records;
+					// 		const allMusicTmp=uni.getStorageSync("allMusic").data.records;
+					// 		let history=[]
+					// 		for(let j=0;j<response.length;j++){
+					// 			for(let i =0;i<allMusicTmp.length;i++){
+					// 				if(allMusicTmp[i].recommendId===response[j].musicId){
+					// 					history[j]=allMusicTmp[i];
+					// 					break
+					// 				}
+					// 			}
+					// 		}
+					// 		uni.navigateTo({
+					// 			url: './result/result?result=' + encodeURIComponent(JSON.stringify(history))
+					// 		})
+					// 	}
+					// })
 				}else if(item.class == "nav5-color"){
 					this.$emit('custom-event2',item);
 				}
