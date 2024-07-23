@@ -180,9 +180,11 @@
 			login(){
 				if(this.loginTypeid===2){
 					uni.setStorageSync("loginType","expert")
+					uni.setStorageSync("isWindowVisialbe",true)
 					this.exportLogin();
 				}else if(this.loginTypeid===1){
 					uni.setStorageSync("loginType","user")
+					uni.setStorageSync("isWindowVisialbe",true)
 					this.userLogin();
 				}else{
 					uni.showToast({

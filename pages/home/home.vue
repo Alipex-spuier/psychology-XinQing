@@ -84,6 +84,7 @@
 			this.getAllMusic();
 			const res = uni.getStorageSync("res");
 			this.loginType=uni.getStorageSync("loginType")
+			this.isWindowVisialbe=uni.getStorageSync("isWindowVisialbe")
 			if(this.loginType==="user"){
 				this.username=res.data.data.username
 				this.userId = res.data.data.userId;
@@ -416,19 +417,24 @@
 						//response.sort((a, b) => a.mesTime - b.mesTime);
 						const res = response.data.data;
 						console.log(res)
+						res.sort((a, b) => a.mesTime - b.mesTime);
 							this.usermessage=res[0].mesContent;
-								uni.showModal({
-								title: '用户消息通知',
-								content:this.usermessage,
-								//content: '您的预约已成功',
-								success: function(res) {
-								if (res.confirm) {
-									console.log('祝您预约顺利(●·◡·●)')
-								} else {
-									console.log('预约失败┭┮﹏┭┮')
+								if(this.isWindowVisialbe==true){
+									uni.showModal({
+									title: '用户消息通知',
+									content:this.usermessage,
+									//content: '您的预约已成功',
+									success: function(res) {
+									if (res.confirm) {
+										//console.log('祝您预约顺利(●·◡·●)')
+										uni.setStorageSync("isWindowVisialbe",false)
+										//this.isWindowVisialbe=false
+									} else {
+										//console.log('预约失败┭┮﹏┭┮')
+											}
 										}
-									}
-								})
+									})
+								}
 						}
 					})
 				
