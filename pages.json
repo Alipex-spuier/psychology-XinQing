@@ -13,7 +13,13 @@
 		// 		"navigationBarTitleText": "心晴"
 		// 	}
 		// },
-
+		{
+			"path" : "pages/history/history",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
 		{
 			"path": "pages/login/index",
 			"style": {
@@ -104,6 +110,13 @@
 				"enablePullDownRefresh": false
 			}
 		},
+		// {
+		// 	"path": "pages/userCent/userCent",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false
+		// 	}
+		// },
 		{
 			"path": "pages/Test/Skip",
 			"style": {
@@ -167,12 +180,13 @@
 			}
 		},
 		{
-			"path" : "pages/score/score_copy/score_copy",
+			"path" : "pages/history/history",
 			"style" : 
 			{
 				"navigationBarTitleText" : ""
 			}
 		}
+		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
