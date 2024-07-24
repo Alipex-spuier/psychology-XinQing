@@ -28,17 +28,17 @@
 			</view>
 			
 			<view class="form-item">
-				<input class="input password" v-model="bio" password type="text" placeholder="请输入自我简介"
+				<input class="input account" v-model="bio"  type="text" placeholder="请输入自我简介"
 					placeholder-style="color:#c9c9c9;" />
 			</view>
 			
 			<view class="form-item">
-				<input class="input password" v-model="dire" password type="text" placeholder="请输入研究方向"
+				<input class="input account" v-model="dire"  type="text" placeholder="请输入研究方向"
 					placeholder-style="color:#c9c9c9;" />
 			</view>
 			
 			<view class="form-item">
-				<input class="input password" v-model="qualification" password type="text" placeholder="请输入职称"
+				<input class="input account" v-model="qualification"  type="text" placeholder="请输入职称"
 					placeholder-style="color:#c9c9c9;" />
 			</view>
 			

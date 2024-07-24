@@ -1,0 +1,175 @@
+Date : 2024-07-24 09:09:51
+Directory : d:\个人文件夹\大三下实训\前端\psychology-frontend
+Total : 91 files,  11491 codes, 996 comments, 1625 blanks, all 14112 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| CSS                |          5 |      4,726 |        111 |      1,038 |      5,875 |
+| JavaScript         |         31 |      3,534 |        725 |        287 |      4,546 |
+| JSON               |         13 |      1,007 |         41 |          9 |      1,057 |
+| SCSS               |         18 |        919 |        117 |         96 |      1,132 |
+| Markdown           |         17 |        904 |          0 |        156 |      1,060 |
+| XML                |          5 |        365 |          0 |         37 |        402 |
+| HTML               |          1 |         18 |          0 |          1 |         19 |
+| JSON with Comments |          1 |         18 |          2 |          1 |         21 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                             | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                |         91 |     11,491 |        996 |      1,625 |     14,112 |
+| . (Files)                                                                                                        |          8 |        407 |         61 |         24 |        492 |
+| .hbuilderx                                                                                                       |          1 |         18 |          2 |          1 |         21 |
+| .idea                                                                                                            |          4 |         60 |          0 |          0 |         60 |
+| colorui                                                                                                          |          3 |      4,257 |        110 |        984 |      5,351 |
+| common                                                                                                           |          2 |        260 |         86 |         60 |        406 |
+| pages                                                                                                            |          1 |         96 |          4 |          6 |        106 |
+| pages\appointment                                                                                                |          1 |         96 |          4 |          6 |        106 |
+| static                                                                                                           |          1 |        327 |          1 |          7 |        335 |
+| static\css                                                                                                       |          1 |        327 |          1 |          7 |        335 |
+| uni_modules                                                                                                      |         69 |      5,720 |        724 |        523 |      6,967 |
+| uni_modules\HJ2002-loginView                                                                                     |          2 |         97 |          7 |          1 |        105 |
+| uni_modules\bow-page-search                                                                                      |         13 |        449 |         54 |         22 |        525 |
+| uni_modules\bow-page-search (Files)                                                                              |          3 |        190 |          0 |         14 |        204 |
+| uni_modules\bow-page-search\components                                                                           |          7 |        243 |         46 |          5 |        294 |
+| uni_modules\bow-page-search\components\bow-page-search                                                           |          7 |        243 |         46 |          5 |        294 |
+| uni_modules\bow-page-search\components\bow-page-search\bow-box                                                   |          1 |         12 |          0 |          0 |         12 |
+| uni_modules\bow-page-search\components\bow-page-search\bow-col                                                   |          1 |         25 |          5 |          0 |         30 |
+| uni_modules\bow-page-search\components\bow-page-search\bow-icon                                                  |          2 |         76 |         17 |          2 |         95 |
+| uni_modules\bow-page-search\components\bow-page-search\bow-option                                                |          1 |         18 |          0 |          1 |         19 |
+| uni_modules\bow-page-search\components\bow-page-search\bow-row                                                   |          1 |         16 |          3 |          1 |         20 |
+| uni_modules\bow-page-search\components\bow-page-search\bow-search                                                |          1 |         96 |         21 |          1 |        118 |
+| uni_modules\bow-page-search\static                                                                               |          3 |         16 |          8 |          3 |         27 |
+| uni_modules\bow-page-search\static\css                                                                           |          3 |         16 |          8 |          3 |         27 |
+| uni_modules\cc-horBarCharts                                                                                      |          3 |        131 |          0 |         15 |        146 |
+| uni_modules\liu-clean-time                                                                                       |          4 |        200 |          0 |         11 |        211 |
+| uni_modules\lsj-edit                                                                                             |          8 |      1,099 |         73 |        141 |      1,313 |
+| uni_modules\lsj-edit (Files)                                                                                     |          3 |        311 |          0 |         60 |        371 |
+| uni_modules\lsj-edit\components                                                                                  |          5 |        788 |         73 |         81 |        942 |
+| uni_modules\lsj-edit\components\lsj-edit                                                                         |          5 |        788 |         73 |         81 |        942 |
+| uni_modules\lsj-edit\components\lsj-edit (Files)                                                                 |          2 |        368 |         66 |         32 |        466 |
+| uni_modules\lsj-edit\components\lsj-edit\edit-btns                                                               |          3 |        420 |          7 |         49 |        476 |
+| uni_modules\lsj-edit\components\lsj-edit\edit-btns\icon                                                          |          1 |        142 |          0 |         47 |        189 |
+| uni_modules\lsj-edit\components\lsj-edit\edit-btns\mixins                                                        |          2 |        278 |          7 |          2 |        287 |
+| uni_modules\select-lay                                                                                           |          3 |        249 |          0 |         16 |        265 |
+| uni_modules\uni-scss                                                                                             |         15 |        603 |         78 |         62 |        743 |
+| uni_modules\uni-scss (Files)                                                                                     |          6 |        150 |         24 |         19 |        193 |
+| uni_modules\uni-scss\styles                                                                                      |          9 |        453 |         54 |         43 |        550 |
+| uni_modules\uni-scss\styles (Files)                                                                              |          1 |          7 |          0 |          1 |          8 |
+| uni_modules\uni-scss\styles\setting                                                                              |          7 |        429 |         53 |         40 |        522 |
+| uni_modules\uni-scss\styles\tools                                                                                |          1 |         17 |          1 |          2 |         20 |
+| uni_modules\uni-swipe-action                                                                                     |         10 |      1,306 |        186 |        123 |      1,615 |
+| uni_modules\uni-swipe-action (Files)                                                                             |          3 |        137 |          0 |          7 |        144 |
+| uni_modules\uni-swipe-action\components                                                                          |          7 |      1,169 |        186 |        116 |      1,471 |
+| uni_modules\uni-swipe-action\components\uni-swipe-action-item                                                    |          7 |      1,169 |        186 |        116 |      1,471 |
+| uni_modules\zero-markdown-view                                                                                   |         11 |      1,586 |        326 |        132 |      2,044 |
+| uni_modules\zero-markdown-view (Files)                                                                           |          3 |        204 |          0 |         33 |        237 |
+| uni_modules\zero-markdown-view\components                                                                        |          8 |      1,382 |        326 |         99 |      1,807 |
+| uni_modules\zero-markdown-view\components\mp-html                                                                |          8 |      1,382 |        326 |         99 |      1,807 |
+| uni_modules\zero-markdown-view\components\mp-html (Files)                                                        |          1 |      1,017 |        253 |         66 |      1,336 |
+| uni_modules\zero-markdown-view\components\mp-html\highlight                                                      |          3 |        106 |         12 |          6 |        124 |
+| uni_modules\zero-markdown-view\components\mp-html\markdown                                                       |          2 |         25 |         11 |          5 |         41 |
+| uni_modules\zero-markdown-view\components\mp-html\style                                                          |          2 |        234 |         50 |         22 |        306 |
+| utils                                                                                                            |          2 |        346 |          8 |         20 |        374 |
++------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                         | language           | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\.hbuilderx\launch.json                                                     | JSON with Comments |         18 |          2 |          1 |         21 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\.idea\modules.xml                                                          | XML                |          8 |          0 |          0 |          8 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\.idea\psychology-frontend.iml                                              | XML                |          9 |          0 |          0 |          9 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\.idea\vcs.xml                                                              | XML                |          6 |          0 |          0 |          6 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\.idea\workspace.xml                                                        | XML                |         37 |          0 |          0 |         37 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\colorui\animation.css                                                      | CSS                |        141 |          6 |         37 |        184 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\colorui\icon.css                                                           | CSS                |        921 |          4 |        302 |      1,227 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\colorui\main.css                                                           | CSS                |      3,195 |        100 |        645 |      3,940 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\common\html-parser.js                                                      | JavaScript         |        210 |         86 |         57 |        353 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\common\util.js                                                             | JavaScript         |         50 |          0 |          3 |         53 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\env.js                                                                     | JavaScript         |         31 |          0 |          0 |         31 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\index.html                                                                 | HTML               |         18 |          0 |          1 |         19 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\jest.config.js                                                             | JavaScript         |         11 |          0 |          1 |         12 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\main.js                                                                    | JavaScript         |         11 |          2 |          3 |         16 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\manifest.json                                                              | JSON               |        119 |          8 |          1 |        128 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\package.json                                                               | JSON               |         13 |          0 |          0 |         13 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\pages.json                                                                 | JSON               |        167 |         26 |          4 |        197 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\pages\appointment\pretty-times.scss                                        | SCSS               |         96 |          4 |          6 |        106 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\static\css\index-app.css                                                   | CSS                |        327 |          1 |          7 |        335 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni.scss                                                                   | SCSS               |         37 |         25 |         14 |         76 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\HJ2002-loginView\manifest.json                                 | JSON               |         88 |          7 |          1 |         96 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\HJ2002-loginView\package.json                                  | JSON               |          9 |          0 |          0 |          9 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\changelog.md                                   | Markdown           |          6 |          0 |          1 |          7 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\components\bow-page-search\bow-box\props.js    | JavaScript         |         12 |          0 |          0 |         12 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\components\bow-page-search\bow-col\props.js    | JavaScript         |         25 |          5 |          0 |         30 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\components\bow-page-search\bow-icon\icons.js   | JavaScript         |          4 |          0 |          1 |          5 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\components\bow-page-search\bow-icon\props.js   | JavaScript         |         72 |         17 |          1 |         90 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\components\bow-page-search\bow-option\props.js | JavaScript         |         18 |          0 |          1 |         19 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\components\bow-page-search\bow-row\props.js    | JavaScript         |         16 |          3 |          1 |         20 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\components\bow-page-search\bow-search\props.js | JavaScript         |         96 |         21 |          1 |        118 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\package.json                                   | JSON               |         82 |          0 |          0 |         82 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\readme.md                                      | Markdown           |        102 |          0 |         13 |        115 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\static\css\color.scss                          | SCSS               |          2 |          0 |          0 |          2 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\static\css\components.scss                     | SCSS               |         10 |          4 |          2 |         16 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\bow-page-search\static\css\mixin.scss                          | SCSS               |          4 |          4 |          1 |          9 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\cc-horBarCharts\changelog.md                                   | Markdown           |          4 |          0 |          1 |          5 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\cc-horBarCharts\package.json                                   | JSON               |         85 |          0 |          0 |         85 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\cc-horBarCharts\readme.md                                      | Markdown           |         42 |          0 |         14 |         56 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\liu-clean-time\changelog.md                                    | Markdown           |         18 |          0 |          1 |         19 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\liu-clean-time\license.md                                      | Markdown           |          4 |          0 |          3 |          7 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\liu-clean-time\package.json                                    | JSON               |         85 |          0 |          0 |         85 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\liu-clean-time\readme.md                                       | Markdown           |         93 |          0 |          7 |        100 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\lsj-edit\changelog.md                                          | Markdown           |         12 |          0 |          1 |         13 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\lsj-edit\components\lsj-edit\edit-btns\icon\iconfont.css       | CSS                |        142 |          0 |         47 |        189 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\lsj-edit\components\lsj-edit\edit-btns\mixins\font.js          | JavaScript         |        213 |          7 |          1 |        221 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\lsj-edit\components\lsj-edit\edit-btns\mixins\props.js         | JavaScript         |         65 |          0 |          1 |         66 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\lsj-edit\components\lsj-edit\edit.js                           | JavaScript         |        339 |         60 |         31 |        430 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\lsj-edit\components\lsj-edit\observer.js                       | JavaScript         |         29 |          6 |          1 |         36 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\lsj-edit\package.json                                          | JSON               |         27 |          0 |          0 |         27 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\lsj-edit\readme.md                                             | Markdown           |        272 |          0 |         59 |        331 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\select-lay\changelog.md                                        | Markdown           |         10 |          0 |          1 |         11 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\select-lay\package.json                                        | JSON               |         80 |          0 |          1 |         81 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\select-lay\readme.md                                           | Markdown           |        159 |          0 |         14 |        173 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\changelog.md                                          | Markdown           |          8 |          0 |          1 |          9 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\index.scss                                            | SCSS               |          1 |          0 |          1 |          2 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\package.json                                          | JSON               |         82 |          0 |          1 |         83 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\readme.md                                             | Markdown           |          3 |          0 |          1 |          4 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\styles\index.scss                                     | SCSS               |          7 |          0 |          1 |          8 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\styles\setting\_border.scss                           | SCSS               |          3 |          0 |          0 |          3 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\styles\setting\_color.scss                            | SCSS               |         49 |         16 |          2 |         67 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\styles\setting\_radius.scss                           | SCSS               |         52 |          1 |          3 |         56 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\styles\setting\_space.scss                            | SCSS               |         54 |          0 |          2 |         56 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\styles\setting\_styles.scss                           | SCSS               |        149 |          3 |         16 |        168 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\styles\setting\_text.scss                             | SCSS               |         19 |          4 |          2 |         25 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\styles\setting\_variables.scss                        | SCSS               |        103 |         29 |         15 |        147 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\styles\tools\functions.scss                           | SCSS               |         17 |          1 |          2 |         20 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\theme.scss                                            | SCSS               |         19 |         11 |          2 |         32 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-scss\variables.scss                                        | SCSS               |         37 |         13 |         13 |         63 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\changelog.md                                  | Markdown           |         47 |          0 |          1 |         48 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\components\uni-swipe-action-item\bindingx.js  | JavaScript         |        247 |         37 |         19 |        303 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\components\uni-swipe-action-item\isPC.js      | JavaScript         |         12 |          0 |          1 |         13 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\components\uni-swipe-action-item\mpalipay.js  | JavaScript         |        160 |         24 |         12 |        196 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\components\uni-swipe-action-item\mpother.js   | JavaScript         |        204 |         43 |         14 |        261 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\components\uni-swipe-action-item\mpwxs.js     | JavaScript         |         72 |          8 |          5 |         85 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\components\uni-swipe-action-item\render.js    | JavaScript         |        169 |         74 |         28 |        271 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\components\uni-swipe-action-item\wx.wxs       | XML                |        305 |          0 |         37 |        342 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\package.json                                  | JSON               |         84 |          0 |          1 |         85 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\uni-swipe-action\readme.md                                     | Markdown           |          6 |          0 |          5 |         11 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\changelog.md                                | Markdown           |         15 |          0 |          1 |         16 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\components\mp-html\highlight\config.js      | JavaScript         |          5 |          0 |          1 |          6 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\components\mp-html\highlight\index.js       | JavaScript         |         96 |         10 |          4 |        110 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\components\mp-html\highlight\prism.min.js   | JavaScript         |          5 |          2 |          1 |          8 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\components\mp-html\markdown\index.js        | JavaScript         |         24 |          6 |          5 |         35 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\components\mp-html\markdown\marked.min.js   | JavaScript         |          1 |          5 |          0 |          6 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\components\mp-html\parser.js                | JavaScript         |      1,017 |        253 |         66 |      1,336 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\components\mp-html\style\index.js           | JavaScript         |         95 |         28 |          7 |        130 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\components\mp-html\style\parser.js          | JavaScript         |        139 |         22 |         15 |        176 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\package.json                                | JSON               |         86 |          0 |          0 |         86 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\uni_modules\zero-markdown-view\readme.md                                   | Markdown           |        103 |          0 |         32 |        135 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\utils\date.js                                                              | JavaScript         |         86 |          6 |          6 |         98 |
+| d:\个人文件夹\大三下实训\前端\psychology-frontend\utils\list.scss                                                            | SCSS               |        260 |          2 |         14 |        276 |
+| Total                                                                                                            |                    |     11,491 |        996 |      1,625 |     14,112 |
++------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

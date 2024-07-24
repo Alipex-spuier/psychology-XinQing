@@ -8,7 +8,7 @@
 	        <view style="margin-left: 10px;font-size: 20px;color: black;padding: 10px 0px;">您的历史得分记录</view>
 				<view  v-for="(item,resultsArr) in resultsArr" :key="index" @tap="redirectToInput(item)">
 					<!--barTitle:文字标题 barTime:更新时间 barValue:得分值 color:背景颜色 selColor:得分选中颜色 maxValue:最大值  -->
-					<cc-horBarCharts :barTitle="'您的本次得分:'+item.resResult" :barTime="'答题时间:'+item.resTime" :barValue="item.resResult" color="#C0DDFA" selColor="#1890FF" maxValue="100"></cc-horBarCharts>     	
+					<cc-horBarCharts :barTitle="'您的第'+(resultsArr+1)+'次分析:'+item.belongingId+'指数 '+item.resResult" :barTime="'答题时间:'+item.resTime" :barValue="item.resResult" color="#C0DDFA" selColor="#1890FF" maxValue="100"></cc-horBarCharts>     	
 				</view>
 	
 	    </view>
@@ -100,8 +100,19 @@
 						} else {
 						    console.error('Response data is not an array');
 						}
-						console.log(res);
+						
 						this.resultsArr=res.data;
+						for (let i = 0; i < this.resultsArr.length; i++) {
+									if( this.resultsArr[i].belongingId==1)
+										this.resultsArr[i].belongingId = '自卑'; 
+									else if( this.resultsArr[i].belongingId==2)
+										this.resultsArr[i].belongingId = '抑郁'; 
+									else if( this.resultsArr[i].belongingId==3)
+										this.resultsArr[i].belongingId = '伤心'; 
+									if( this.resultsArr[i].belongingId==4)
+										this.resultsArr[i].belongingId = '疯狂'; 
+						        }
+						console.log(res);
 						//console.log(this.resultsArr.length);
 					}
 				})
