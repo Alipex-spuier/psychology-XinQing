@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.mapper.CommentMapper">
+    <select id = "pageCC" resultType = "com.music.entity.Comment">
+        select * from articlescomments ${ew.customSqlSegment}
+    </select>
+    <select id = "searchByArtId" resultType = "com.music.entity.Comment">
+        select * from articlescomments where art_id = #{artId}
+    </select>
+</mapper>

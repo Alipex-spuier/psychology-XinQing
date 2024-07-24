@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.mapper.MusicMapper">
+    <select id="selectMusicRecommendVOList" resultType="com.music.vo.MusicRecommendVO">
+        SELECT
+            t_music.*,
+            t_recommend.*
+        FROM
+            t_music,
+            t_recommend
+        WHERE
+            t_music.details_id = t_recommend.recommend_id;
+    </select>
+    <select id="selectMusicList" resultType="com.music.entity.Music">
+        SELECT * FROM t_music
+        WHERE author LIKE CONCAT('%', #{pattern}, '%') OR title LIKE CONCAT('%',#{pattern}, '%')
+        ORDER BY
+            CASE
+                WHEN title LIKE CONCAT('%', #{pattern}, '%') THEN 1
+                ELSE 2
+                END,
+            title;
+    </select>
+</mapper>

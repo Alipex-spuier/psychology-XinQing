@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.mapper.ConsultationLogMapper">
+    <select id = "pageCC" resultType = "com.music.entity.ConsultationLog">
+        select * from consultationlogs ${ew.customSqlSegment}
+    </select>
+    <select id="getByAptId" resultType="com.music.entity.ConsultationLog">
+        select * from consultationlogs where apt_id = #{aptId}
+    </select>
+</mapper>
