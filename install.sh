@@ -1,8 +1,8 @@
 #!/bin/sh
 if [ "$1" == "true" ]; then
 sudo apt update &&sudo apt install -y openjdk-8-jdk openjdk-17-jdk
-git clone git@gitee.com:boliang2190/psychology.git
-cd psychology
+git clone https://gitee.com/boliang2190/psychology-backend.git
+cd psychology-backend
 sudo docker run -itd --name nginx spuieralipex/nginx:v1 /bin/bash
 sudo docker cp nginx:/var/www/ ./
 sudo docker stop nginx&&sudo docker rm nginx
