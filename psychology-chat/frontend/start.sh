@@ -1,4 +1,4 @@
 #!/bin/sh
 npm cache clean -f
 npm install
-npm run dev
+npm run dev --host
