@@ -12,7 +12,6 @@ sudo docker-compose down --rmi local
 # Navigate to ./backend directory
 echo "请选择java8:"
 sudo update-alternatives --config java
-read -p "按enter继续:"
 cd ./psychology-backend/backend || { echo "Failed to change directory to ./psychology-backend/backend"; exit 1; }
 
 # Execute mvn install
@@ -36,7 +35,6 @@ cd - || { echo "Failed to change back to the original directory"; exit 1; }
 # Navigate to ./backend directory
 echo "请选择java17:"
 sudo update-alternatives --config java
-read -p "按enter继续:"
 cd ./psychology-chat/backend || { echo "Failed to change directory to ./psychology-chat/backend"; exit 1; }
 
 # Execute mvn install
