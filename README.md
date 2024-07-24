@@ -7,3 +7,7 @@ bash <(curl -o- https://gitee.com/boliang2190/psychology-server/raw/main/install
 ```
 cd psychology-server && sudo sh ./install.sh false
 ```
+## 地址
+```
+http://8.217.178.86:8081 //后台
+```
