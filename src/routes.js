@@ -23,9 +23,11 @@ export default new Router({
       name: '账号管理',
       iconCls: 'fa fa-id-card-o', // 图标样式class
       children: [
-        { path: '/main', component: () => import('./views/Main.vue'), name: '主页', hidden: true },
+        // { path: '/main', component: () => import('./views/Main.vue'), name: '主页', hidden: true },
         { path: '/user', component: () => import('./views/nav1/users.vue'), name: '用户管理' },
-        { path: '/expert', component: () => import('./views/nav1/expert.vue'), name: '专家管理' }
+        { path: '/expert', component: () => import('./views/nav1/expert.vue'), name: '专家管理' },
+        { path: '/appointment', component: () => import('./views/nav1/appointment.vue'), name: '预约管理' }
+
         // { path: '/user', component: () => import('./views/nav1/user.vue'), name: '列表' }
       ]
     },

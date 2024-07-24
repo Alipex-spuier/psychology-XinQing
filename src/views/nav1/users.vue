@@ -10,6 +10,9 @@
           <el-button type="primary" v-on:click="getUsersByName">查询</el-button>
         </el-form-item>
         <el-form-item>
+          <el-button type="primary" v-on:click="getUsers">刷新</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="handleAdd">新增</el-button>
         </el-form-item>
       </el-form>
@@ -259,9 +262,7 @@ export default {
       }
       this.listLoading = true
       getUserListPage(para, this.auth).then((res) => {
-        // todo 返回一个total
-        // _this.total = res.data.data.length
-        _this.total = 20
+        _this.total = res.data.total
         _this.users = res.data.data
         _this.listLoading = false
       })
@@ -280,7 +281,7 @@ export default {
           console.log(para)
           this.listLoading = true
           getUsersListByName(para, this.auth).then((res) => {
-            _this.total = res.data.data.length
+            _this.total = res.data.total
             _this.users = res.data.data
             _this.listLoading = false
           })
@@ -319,11 +320,14 @@ export default {
     handleAdd: function () {
       this.addFormVisible = true
       this.addForm = {
-        name: '',
-        sex: -1,
+        username: '',
+        email: '',
         age: 0,
-        birth: '',
-        addr: ''
+        avatar: '',
+        country: '',
+        work: '',
+        newOnePwd: '',
+        reNewOnePwd: ''
       }
     },
     // 编辑

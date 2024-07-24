@@ -1,46 +1,63 @@
 <template>
   <section>
     <!--工具条-->
-    <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-      <el-form :inline="true" :model="filters">
-        <el-form-item>
-          <el-input v-model="filters.name" placeholder="姓名"></el-input>
+    <el-col :span="24" class="toolbar" style="padding-bottom: 10px; padding-top: 15px;">
+      <el-form :inline="true" :model="filters" :rules="filtersRules" ref="filters">
+        <el-form-item prop="name">
+          <el-input v-model="filters.name" placeholder="专家姓名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getUsersByName">查询</el-button>
+          <el-button type="primary" v-on:click="getExpertsByName">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" v-on:click="getExperts">刷新</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleAdd">新增</el-button>
+        </el-form-item>
+       <el-form-item>
+          <el-button type="primary" v-on:click="getExpertsByChecked">批量审核</el-button>
         </el-form-item>
       </el-form>
     </el-col>
 
     <!--列表-->
-    <el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
+    <el-table :data="experts" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
               style="width: 100%;">
       <!-- <el-table-column type="selection" width="55">
       </el-table-column> -->
-      <el-table-column type="index" prop="userId" label="ID" width="60" align="center">
+      <el-table-column type="index" prop="exId" label="ID" width=60 align="center">
       </el-table-column>
-      <el-table-column prop="username" label="用户名" width="120" sortable>
+      <el-table-column prop="exName" label="专家名" width=100 sortable>
       </el-table-column>
-      <el-table-column prop="email" label="邮箱" width="100" sortable>
+      <el-table-column prop="avatar" label="头像地址" width=130 >
       </el-table-column>
-      <el-table-column prop="age" label="年龄" width="80" sortable>
+      <el-table-column prop="exBio" label="专家简介" width=180 >
       </el-table-column>
-      <el-table-column prop="avatar" label="头像地址" width="120" sortable>
+      <el-table-column prop="exDire" label="研究方向" width=80 >
       </el-table-column>
-      <el-table-column prop="country" label="国籍" min-width="180" sortable width="100">
+      <el-table-column prop="exQualification" label="职称" width=120>
       </el-table-column>
-      <el-table-column prop="work" label="职业" min-width="180" sortable width="100">
+      <el-table-column prop="exEmail" label="邮箱" width=120>
       </el-table-column>
-      <el-table-column prop="created" label="账号创建时间" min-width="180" sortable>
+      <el-table-column prop="createdTime" label="账号创建时间" width=130 sortable>
       </el-table-column>
-      <el-table-column prop="lastLogin" label="上次登录时间" min-width="180" sortable>
+      <el-table-column prop="checked" label="审核状态" width=220 >
+        <template v-slot="scope" >
+          <el-switch
+            v-model="scope.row.checked"
+            class="mb-2"
+            inline-prompt
+            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+            active-text="审核通过"
+            inactive-text="待审核"
+            @change="handleChange(scope.$index, scope.row)"
+          />
+        </template>
       </el-table-column>
-      <el-table-column label="操作" width="170">
+      <el-table-column label="操作" width="90">
         <template scope="scope">
-          <el-button type="danger" size="small" @click="handleEditPwd(scope.$index, scope.row)">修改密码</el-button>
+<!--          <el-button type="danger" size="small" @click="handleEditPwd(scope.$index, scope.row)">修改认证</el-button> -->
           <el-button type="primary" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <!-- <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button> -->
         </template>
@@ -58,27 +75,38 @@
     <!--编辑界面-->
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
       <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-        <el-form-item label="ID" prop="userId" class="inputDeep">
-          <el-input v-model="editForm.userId" auto-complete="off" :readonly="true"></el-input>
+        <el-form-item label="专家ID" prop="exId" class="inputDeep">
+          <el-input v-model="editForm.exId" auto-complete="off" :readonly="true"></el-input>
         </el-form-item>
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="editForm.username" auto-complete="off"></el-input>
+        <el-form-item label="专家名" prop="exName">
+          <el-input v-model="editForm.exName" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="editForm.email" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input-number v-model="editForm.age" :min="0" :max="200"></el-input-number>
-        </el-form-item>
-        <el-form-item label="头像地址" prop="avatar">
+        <el-form-item label="专家头像" prop="avatar">
           <el-input v-model="editForm.avatar" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="国籍" prop="country">
-          <el-input v-model="editForm.country" auto-complete="off"></el-input>
+        <el-form-item label="专家简介" prop="exBio">
+          <el-input v-model="editForm.exBio" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="职业" prop="work">
-          <el-input v-model="editForm.work" auto-complete="off"></el-input>
+        <el-form-item label="研究方向" prop="exDire">
+          <el-input v-model="editForm.exDire" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="专家职称" prop="exQualification">
+          <el-input v-model="editForm.exQualification" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="专家邮箱" prop="exEmail">
+          <el-input v-model="editForm.exEmail" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="审核状态" prop="checked">
+          <el-switch
+            v-model="editForm.checked"
+            class="ml-2"
+            width=40
+            inline-prompt
+            active-text="审核通过"
+            inactive-text="待审核"
+          />
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="editFormVisible = false">取消</el-button>
@@ -86,47 +114,26 @@
       </div>
     </el-dialog>
 
-    <!--修改密码-->
-    <el-dialog title="修改密码" :visible.sync="editPwdFormVisible" :close-on-click-modal="false">
-      <el-form :model="editPwdForm" label-width="140px" :rules="editPwdFormRules" ref="editPwdForm">
-        <el-form-item label="ID" prop="userId" class="inputDeep" label-align="left">
-          <el-input v-model="editPwdForm.userId" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="用户名" prop="username" class="inputDeep">
-          <el-input v-model="editPwdForm.username" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="请输入新密码" prop="newPwd">
-          <el-input type="password" v-model="editPwdForm.newPwd" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="请再次输入新密码" prop="reNewPwd">
-          <el-input type="password" v-model="editPwdForm.reNewPwd" auto-complete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click.native="editPwdFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="editPwdSubmit" :loading="editPwdLoading">提交</el-button>
-      </div>
-    </el-dialog>
     <!--新增界面-->
     <el-dialog title="新增" :visible.sync="addFormVisible" :close-on-click-modal="false">
       <el-form :model="addForm" label-width="140px" :rules="addFormRules" ref="addForm">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="addForm.username" auto-complete="off"></el-input>
+        <el-form-item label="专家名" prop="exName">
+          <el-input v-model="addForm.exName" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="addForm.email" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input-number v-model="addForm.age" :min="0" :max="200"></el-input-number>
-        </el-form-item>
-        <el-form-item label="头像地址" prop="avatar">
+        <el-form-item label="专家头像" prop="avatar">
           <el-input v-model="addForm.avatar" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="国籍" prop="country">
-          <el-input v-model="addForm.country" auto-complete="off"></el-input>
+        <el-form-item label="专家简介" prop="exBio">
+          <el-input v-model="addForm.exBio" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="职业" prop="work">
-          <el-input v-model="addForm.work" auto-complete="off"></el-input>
+        <el-form-item label="研究方向" prop="exDire">
+          <el-input v-model="addForm.exDire" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="专家职称" prop="exQualification">
+          <el-input v-model="addForm.exQualification" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="专家邮箱" prop="exEmail">
+          <el-input v-model="addForm.email" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="请输入密码" prop="newOnePwd">
           <el-input type="password" v-model="addForm.newOnePwd" auto-complete="off"></el-input>
@@ -134,6 +141,17 @@
         <el-form-item label="请再次输入密码" prop="reNewOnePwd">
           <el-input type="password" v-model="addForm.reNewOnePwd" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="审核状态" prop="checked">
+          <el-switch
+            v-model="addForm.checked"
+            class="ml-2"
+            width=40
+            inline-prompt
+            active-text="1"
+            inactive-text="2"
+          />
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
@@ -145,16 +163,23 @@
 
 <script>
 import util from '../../common/js/util'
-import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser, getUsersListByName } from '../../api/api'
-// todo 专家界面
+import { addExpert, getExpertsListByName, getExpertsListPage, editExperts, getExpertsListByChecked_0 } from '../../api/api'
+// 审核通过checked为1，“通过”，未通过为“待审”
+
 export default {
   data () {
     return {
       filters: {
         name: ''
       },
+      filtersRules: {
+        name: [
+          { required: true, message: '请输入查询的专家名', trigger: 'blur' }
+        ]
+      },
+
       pageSize: 20,
-      users: [],
+      experts: [],
       total: 0,
       page: 1,
       listLoading: false,
@@ -163,59 +188,49 @@ export default {
       editFormVisible: false, // 编辑界面是否显示
       editLoading: false,
       editFormRules: {
-        userId: [
-          { required: true, message: '请输入ID', trigger: 'blur' }
-        ]
+      //   userId: [
+      //     { required: true, message: '请输入ID', trigger: 'blur' }
+      //   ]
       },
+
       // 编辑界面数据
       editForm: {
-        userId: 0,
-        username: '',
-        email: '',
-        age: 0,
+        exId: 0,
+        exName: '',
         avatar: '',
-        country: '',
-        work: ''
+        exBio: '',
+        exDire: '',
+        exQualification: '',
+        exEmail: '',
+        checked: false
       },
-      editPwdFormVisible: false,
-      editPwdLoading: false,
-      editPwdFormRules: {
-        newPwd: [
-          { required: true, message: '请输入新密码', trigger: 'blur' }
-        ],
-        reNewPwd: [
-          { required: true, validator: this.validatePass2, trigger: 'blur' }
-        ]
-      },
-      editPwdForm: {
-        userId: 0,
-        username: '',
-        newPwd: '',
-        reNewPwd: ''
-      },
+
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
       addFormRules: {
-        username: [
-          { required: true, message: '请输入姓名', trigger: 'blur' }
+        exName: [
+          { required: true, message: '请输入专家姓名', trigger: 'blur' }
         ],
         newOnePwd: [
-          { required: true, message: '请输入新密码', trigger: 'blur' }
+          { required: true, message: '请输入密码', trigger: 'blur' }
         ],
         reNewOnePwd: [
           { required: true, validator: this.validatePass1, trigger: 'blur' }
         ]
       },
+
       // 新增界面数据
       addForm: {
-        username: '',
-        email: '',
-        age: 0,
+        exId: 0,
+        exName: '',
         avatar: '',
-        country: '',
-        work: '',
+        exBio: '',
+        exDire: '',
+        exQualification: '',
+        exEmail: '',
         newOnePwd: '',
-        reNewOnePwd: ''
+        reNewOnePwd: '',
+        checked: false
       }
 
     }
@@ -235,60 +250,65 @@ export default {
         callback()
       }
     },
-    // 性别显示转换
-    // formatSex: function (row, column) {
-    //   return row.sex === 1 ? '男' : row.sex === 0 ? '女' : '未知'
-    // },
     handleCurrentChange (val) {
       this.page = val
-      this.getUsers()
+      this.getExperts()
     },
-    // 获取用户列表
-    getUsers () {
+    getExpertsByChecked () {
       let para = {
         pageSize: this.pageSize,
         pageNum: this.page
       }
       this.listLoading = true
-      getUserListPage(para, this.auth).then((res) => {
+      getExpertsListByChecked_0(para, this.auth).then((res) => {
+        console.log(res)
         this.total = res.data.data.length
-        this.users = res.data.data
+        this.experts = res.data.data
         this.listLoading = false
       })
     },
-    getUsersByName () {
+    // 获取用户列表
+    getExperts () {
       let para = {
         pageSize: this.pageSize,
-        pageNum: this.page,
-        param: {
-          name: this.filters.name
-        }
+        pageNum: this.page
       }
-      console.log(para)
       this.listLoading = true
-      getUsersListByName(para, this.auth).then((res) => {
+      getExpertsListPage(para, this.auth).then((res) => {
         this.total = res.data.data.length
-        this.users = res.data.data
+        this.experts = res.data.data
+        // console.log(this.experts)
+        this.setCheckedBoolean(this.experts)
+        console.log(this.experts)
         this.listLoading = false
       })
     },
-    // 删除
-    handleDel: function (index, row) {
-      this.$confirm('确认删除该记录吗?', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        let para = { id: row.id }
-        removeUser(para).then((res) => {
-          this.listLoading = false
-          this.$message({
-            message: '删除成功',
-            type: 'success'
+    setCheckedBoolean (experts) {
+      for (let i = 0; i < experts.length; i++) {
+        if (experts[i].checked == 0) {
+          experts[i].checked = false
+        } else {
+          experts[i].checked = true
+        }
+      }
+    },
+    getExpertsByName () {
+      this.$refs.filters.validate((valid) => {
+        if (valid) {
+          let para = {
+            pageSize: this.pageSize,
+            pageNum: this.page,
+            param: {
+              name: this.filters.name
+            }
+          }
+          this.listLoading = true
+          getExpertsListByName(para, this.auth).then((res) => {
+            this.total = res.data.data.length
+            this.experts = res.data.data
+            this.listLoading = false
           })
-          this.getUsers()
-        })
-      }).catch(() => {
-
+        }
       })
     },
     // 显示编辑界面
@@ -300,15 +320,35 @@ export default {
       this.editPwdFormVisible = true
       this.editPwdForm = Object.assign({}, row)
     },
+    handleChange: function (index, row) {
+      this.editForm = Object.assign({}, row)
+      this.$confirm('确认审核信息无误吗？', '提示', {}).then(() => {
+        let para = Object.assign({}, this.editForm)
+        this.setCheckedInt(para)
+        editExperts(para, this.auth).then((res) => {
+          this.$message({
+            message: '审核完成',
+            type: 'success'
+          })
+          this.$refs['editForm'].resetFields()
+          this.getExperts()
+        })
+      })
+    },
     // 显示新增界面
     handleAdd: function () {
       this.addFormVisible = true
       this.addForm = {
-        name: '',
-        sex: -1,
-        age: 0,
-        birth: '',
-        addr: ''
+        exId: 0,
+        exName: '',
+        avatar: '',
+        exBio: '',
+        exDire: '',
+        exQualification: '',
+        exEmail: '',
+        newOnePwd: '',
+        reNewOnePwd: '',
+        checked: false
       }
     },
     // 编辑
@@ -318,7 +358,8 @@ export default {
           this.$confirm('确认提交吗？', '提示', {}).then(() => {
             this.editLoading = true
             let para = Object.assign({}, this.editForm)
-            editUser(para, this.auth).then((res) => {
+            this.setCheckedInt(para)
+            editExperts(para, this.auth).then((res) => {
               this.editLoading = false
               this.$message({
                 message: '提交成功',
@@ -326,34 +367,18 @@ export default {
               })
               this.$refs['editForm'].resetFields()
               this.editFormVisible = false
-              this.getUsers()
+              this.getExperts()
             })
           })
         }
       })
     },
-    editPwdSubmit: function () {
-      this.$refs.editPwdForm.validate((valid) => {
-        if (valid) {
-          this.$confirm('确认提交吗？', '提示', {}).then(() => {
-            this.editPwdLoading = true
-            let para = Object.assign({}, this.editPwdForm)
-            para.password = this.editPwdForm.newPwd
-            console.log(para)
-            editUser(para, this.auth).then((res) => {
-              console.log(res)
-              this.editPwdLoading = false
-              this.$message({
-                message: '提交成功',
-                type: 'success'
-              })
-              this.$refs['editPwdForm'].resetFields()
-              this.editPwdFormVisible = false
-              this.getUsers()
-            })
-          })
-        }
-      })
+    setCheckedInt (para) {
+      if (para.checked == true) {
+        para.checked = 1
+      } else if (para.checked == false) {
+        para.checked = 0
+      }
     },
     // 新增
     addSubmit: function () {
@@ -363,9 +388,13 @@ export default {
             this.addLoading = true
             // NProgress.start();
             let para = Object.assign({}, this.addForm)
-            para.password = this.addForm.newOnePwd
-            para.birth = (!para.birth || para.birth === '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd')
-            addUser(para).then((res) => {
+            para.exPassword = this.addForm.newOnePwd
+            // this.setCheckInt(para)
+            para.checked = 1
+            delete para.exId
+            delete para.newOnePwd
+            delete para.reNewOnePwd
+            addExpert(para, this.auth).then((res) => {
               this.addLoading = false
               // NProgress.done();
               this.$message({
@@ -374,7 +403,7 @@ export default {
               })
               this.$refs['addForm'].resetFields()
               this.addFormVisible = false
-              this.getUsers()
+              this.getExperts()
             })
           })
         }
@@ -382,31 +411,11 @@ export default {
     },
     selsChange: function (sels) {
       this.sels = sels
-    },
-    // 批量删除
-    batchRemove: function () {
-      var ids = this.sels.map(item => item.id).toString()
-      this.$confirm('确认删除选中记录吗？', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        let para = { ids: ids }
-        batchRemoveUser(para).then((res) => {
-          this.listLoading = false
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          this.getUsers()
-        })
-      }).catch(() => {
-
-      })
     }
   },
   mounted () {
     this.auth = sessionStorage.getItem('auth').replace('"', '').replace('"', '')
-    this.getUsers()
+    this.getExperts()
   }
 }
 
