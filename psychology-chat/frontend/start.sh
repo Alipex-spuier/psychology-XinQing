@@ -1,3 +1,4 @@
-#!/bin/bash
+#!/bin/sh
+npm cache clean -f
 npm install
-npm run build
+npm run dev

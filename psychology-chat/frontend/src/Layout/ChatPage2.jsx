@@ -98,7 +98,7 @@ export const ChatPage2 = () => {
   };
 
   const connect = () => {
-    let sock = new SockJS("http://localhost:8080/ws");
+    let sock = new SockJS("http://8.217.178.86:8083/ws");
     stompClient = over(sock);
     stompClient.connect({}, onConnect, onError);
   };

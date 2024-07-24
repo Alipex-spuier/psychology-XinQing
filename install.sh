@@ -1,6 +1,6 @@
 #!/bin/sh
-if [ "$1" == "true" ]; then
-sudo apt update &&sudo apt install -y openjdk-8-jdk openjdk-17-jdk
+if [ "$1" = "true" ]; then
+sudo apt update &&sudo apt install -y openjdk-8-jdk openjdk-17-jdk maven
 git clone https://gitee.com/boliang2190/psychology-server.git
 cd psychology-server
 sudo docker run -itd --name nginx spuieralipex/nginx:v1 /bin/bash

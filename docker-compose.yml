@@ -22,13 +22,15 @@ services:
     build: ./psychology-admin
     container_name: admin
     volumes:
-      - ./www/admin:/app/dist
+      - ./psychology-admin:/app
 
   chat-frontend:
     build: ./psychology-chat/frontend
     container_name: chat-frontend
     volumes:
-      - ./www/chat:/app/dist
+      - ./psychology-chat/frontend:/app
+    ports:
+      - "8082:5173"
   
   chat-backend:
     build: ./psychology-chat/backend
@@ -77,9 +79,12 @@ services:
         - "8081:8081"
     depends_on:
       - backend-api
+      - admin
+      - chat-frontend
     volumes:
       - ./psychology.conf:/etc/nginx/conf.d/psychology.conf
       - ./www:/var/www
+      - ./psychology-admin:/var/admin
 
 networks:
   app-network:
