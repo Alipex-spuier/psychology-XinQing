@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<view class="list-item" v-for="(item,index) in users" :key="index" @click="connect(item)">
+<!-- 		<view class="list-item" v-for="(item,index) in users" :key="index" @click="connect(item)">
 			<view class="avatar">
 				<text class="round" v-if="item.read"></text>
 				<image :src="item.avatar" mode="widthFix"></image>
@@ -16,7 +16,8 @@
 		</view>
 		<view class="hide">
 		
-		</view>
+		</view> -->
+		<web-view src="http://8.217.178.86:5173"></web-view>
 	</view>
 </template>
 
