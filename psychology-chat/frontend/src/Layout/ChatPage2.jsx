@@ -187,17 +187,26 @@ export const ChatPage2 = () => {
         backgroundSize: "cover",
       }}
     >
-      <div className="container d-flex p-0">
+      <div className="container d-flex p-0" style={{
+            justifyContent: "flex-end",
+            flexWrap:"wrap",
+            top:0,
+            position:"absolute"
+          }}>
         {/*Member List */}
         <div
           className="chat-tab p-3"
           style={{
-            width: "200px",
-            height: "551px",
+            // width: "250px",
+            // height: "100px",
             backgroundColor: "transparent",
+            marginTop:"30px"
           }}
         >
-          <ul className="list-group">
+          <ul className="list-group" style={{
+            width: "485px",
+            flexDirection:"row"
+          }}>
             <li
               key={"o"}
               className={`list-group-item ${
@@ -205,7 +214,7 @@ export const ChatPage2 = () => {
               }`}
               onClick={() => setTab("CHATROOM")}
             >
-              <span className="">Chat Room</span>
+              <span className="">聊天室</span>
             </li>
             {[...privateChats.keys()].map((name, index) => {
               return (
@@ -222,15 +231,15 @@ export const ChatPage2 = () => {
             })}
           </ul>
         </div>
-        <div className="d-flex flex-column" style={{ flexGrow: 1 }}>
+        <div className="d-flex flex-column" style={{ flexGrow: 1 ,width:"450px",padding:"30px",}}>
           {/*Chat box */}
           <div
             className="chat-messages p-3"
             style={{
-              height: "500px",
+              height: "600px",
               flexGrow: 1,
               backgroundColor: "#d3d3c5",
-              overflowY: "scroll",
+              overflowY: "auto",
               padding: "2px",
               border: "1px solid green",
               display: "flex",
@@ -394,7 +403,7 @@ export const ChatPage2 = () => {
             <input
               className="px-2 py-2"
               type="text"
-              placeholder="Message"
+              placeholder="请输入消息..."
               value={message}
               onKeyUp={(e) => {
                 console.log(e.key);
@@ -439,17 +448,17 @@ export const ChatPage2 = () => {
             <input
               type="button"
               className="btn btn-dark text-light"
-              value={"Send"}
+              value={"发送"}
               onClick={tab === "CHATROOM" ? sendMessage : sendPrivate}
               style={{ marginLeft: "10px" }}
             />
-            <input
+            {/* <input
               type="button"
               className="btn btn-dark text-light"
               value={"Logout"}
               onClick={handleLogout}
-              style={{ marginLeft: "10px" }}
-            />
+              style={{ marginLeft: "10px" ,opacity:0}}
+            /> */}
           </div>
         </div>
       </div>
