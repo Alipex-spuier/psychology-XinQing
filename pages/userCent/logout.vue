@@ -44,7 +44,11 @@
 		created() {
 			const res = uni.getStorageSync("res")
 			this.loginType=uni.getStorageSync("loginType")
-			this.authorization = res.header.authorization;
+			if(this.loginType==="expert"){
+				this.authorization=uni.getStorageSync("authorization")
+			}else{
+				this.authorization = res.header.authorization;
+			}
 			this.userId=res.data.data.userId;
 		},
 		methods: {

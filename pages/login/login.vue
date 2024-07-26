@@ -70,7 +70,9 @@
 									if(res.header.authorization===undefined&&res.header.Authorization !== undefined){
 										res.header.authorization=res.header.Authorization;
 									}
+									uni.setStorageSync("authorization",res.header.authorization)
 									uni.setStorageSync("res",res)
+									console.log(res)
 									setTimeout(function() {
 										uni.navigateTo({
 											url: '/pages/index'
@@ -113,6 +115,7 @@
 									if(res.header.authorization===undefined&&res.header.Authorization !== undefined){
 										res.header.authorization=res.header.Authorization;
 									}
+									uni.setStorageSync("authorization",res.header.authorization)
 									uni.setStorageSync("res",res)
 									setTimeout(function() {
 										uni.navigateTo({
