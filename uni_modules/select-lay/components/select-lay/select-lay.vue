@@ -389,7 +389,7 @@
 			top: calc(100% + 5px);
 			left: 0;
 			width: 100%;
-			height: 220rpx;
+			height: 260rpx;
 			// overflow-y: auto;
 			border-radius: 4px;
 			border: 1px solid rgb(229, 229, 229);

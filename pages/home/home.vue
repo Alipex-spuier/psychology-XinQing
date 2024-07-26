@@ -97,7 +97,9 @@
 			this.getArtcles();
 			//this.getMusic(this.qu);
 			this.getLocation();
-			this.messageWindow()
+			if(this.loginType==="user"){
+				this.messageWindow()
+			}
 		},
 		mounted() {
 			//this.getAllMusic();

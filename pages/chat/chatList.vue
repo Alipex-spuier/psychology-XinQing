@@ -17,7 +17,7 @@
 		<view class="hide">
 		
 		</view> -->
-		<web-view src="http://8.217.178.86:5173"></web-view>
+		<web-view :src="webURL"></web-view>
 	</view>
 </template>
 
@@ -29,6 +29,7 @@
 		},
 		data() {
 			return {
+				webURL:"",
 				options: [{
 					text: '取消',
 					style: {
@@ -63,6 +64,15 @@
 					}
 				]
 			};
+		},
+		created() {
+			let name=uni.getStorageSync("res")
+			if(!name.data.data.username){
+				name=name.data.data.exName
+			}else{
+				name=name.data.data.username
+			}
+			this.webURL=`http://8.217.178.86:5173/login?name=${encodeURIComponent(name)}`
 		},
 		methods: {
 			onClick(e) {
