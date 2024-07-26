@@ -162,8 +162,8 @@
 				showTow:false,
 				// 消息体,定义机器人初次的消息(或者自定义出现时机)
 				// my->谁发的消息 msg->消息文本 type->客服消息模板类型 questionList->快速获取问题答案的问题列表
-				msgList:[{my:false,msg:"你好我是客服机器人娜娜,请问有什么问题可以帮助您?(问候模板)",
-				type:1,questionList:["如何注销用户","我想了解业务流程","手机号如何更换"]}],
+				msgList:[{my:false,msg:"你好我是客服机器人娜娜,请问有什么问题可以帮助您?",
+				type:1,questionList:["如何注销用户","如何进行预约服务","个人信息如何更换"]}],
 				msg:"",
 				go:0,
 				srcollHeight:0
@@ -223,6 +223,18 @@
 			},
 			// 回答问题的业务逻辑
 			answer(id){
+				console.log(id)
+				if(id===0){
+					let msg={msg:"点击个人中心的账号设置功能，点击注销账号"}
+					this.msgList.push(msg)
+				}else if(id===1){
+					let msg={msg:"注意导航栏中间的“go”图标，点击后可选择专家，并在合适的时间进行预约"}
+					this.msgList.push(msg)
+				}else if(id===2){
+					let msg={msg:"点击个人中心的账号设置，就可进行个人信息的修改，记得点击保存按钮哦"}
+					this.msgList.push(msg)
+				}
+				
 				// 这里应该传入问题的id,模拟就用index代替了
 				
 			},
@@ -248,9 +260,8 @@
 				setTimeout(()=>{
 					// 取消loading
 					this.msgLoad=false
-					this.msgList.push({my:false,msg:"娜娜还在学习中,没能明白您的问题,您点击下方提交反馈与问题,我们会尽快人工处理(无法回答模板)",type:0,questionList:["如何注销用户","我想了解业务流程","手机号如何更换"]})
-					this.msgList.push({my:false,msg:"单消息模板",type:-1})
-					this.msgList.push({my:false,msg:"根据您的问题,已为您匹配了下列问题(多个答案模板)",type:2,questionList:["如何注销用户","我想了解业务流程","手机号如何更换"]})
+					this.msgList.push({my:false,msg:"娜娜还在学习中,没能明白您的问题,您点击下方提交反馈与问题,我们会尽快人工处理",type:0,questionList:["如何注销用户","我想了解业务流程","手机号如何更换"]})
+					this.msgList.push({my:false,msg:"根据您的问题,已为您匹配了下列问题",type:2,questionList:["如何注销用户","我想了解业务流程","手机号如何更换"]})
 					this.msgGo()
 				},2000)
 			},
