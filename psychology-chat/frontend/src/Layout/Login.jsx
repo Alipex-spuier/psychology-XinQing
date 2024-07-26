@@ -1,15 +1,21 @@
-import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import "./button.css";
 
 export const Login = () => {
   const history = useHistory();
-  const [username, setUsername] = useState();
+  const location = useLocation();
+  const [username, setUsername] = useState("");
+
+  // Extract the query parameter
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const name = query.get("name");
+    localStorage.setItem("chat-username", name);
+    history.push("/chat");
+  }, [location.search]);
 
   const handleLogin = () => {
-    localStorage.setItem("chat-username", username);
-
-    history.push("/chat");
   };
 
   return (
